@@ -147,6 +147,8 @@
   <div class="tabs">
     <button class="tab on" data-tab="console" onclick="tab('console')">Console</button>
     <button class="tab" data-tab="policy" onclick="tab('policy')">Policy</button>
+    <button class="tab" data-tab="prompts" onclick="tab('prompts')">Prompts</button>
+    <button class="tab" data-tab="guards" onclick="tab('guards')">Guardrails</button>
     <button class="tab" data-tab="evidence" onclick="tab('evidence')">Evidence</button>
     <button class="tab" data-tab="eval" onclick="tab('eval')">Evaluation</button>
   </div>
@@ -286,6 +288,41 @@
       </div>
     </div>
     <div class="card"><h3>Raw file</h3><pre id="rawPolicy"></pre></div>
+  </section>
+
+  <!-- ══ PROMPTS ══ -->
+  <section id="v-prompts" class="hide">
+    <div class="card">
+      <h3>Every word the model is given</h3>
+      <p class="muted" style="margin:0;font-size:13px">
+        These are the literal system prompts, served from the running instance. The submission
+        claims the model is never told a threshold, a rule id, a tier or an amount — below, the
+        same regexes the test suite asserts with are re-run against this exact text, live. If a
+        policy value had leaked into a prompt, it would show up here as a match.
+      </p>
+    </div>
+    <div id="promptBox" class="dim">Loading…</div>
+  </section>
+
+  <!-- ══ GUARDRAILS ══ -->
+  <section id="v-guards" class="hide">
+    <div class="card">
+      <h3>Try to get a promise past the guard</h3>
+      <p class="muted" style="margin:0 0 12px;font-size:13px">
+        The output guardrail sits between the generator and the merchant. Type any draft reply and
+        see the verdict, the normalized form it was matched against, and exactly which term
+        tripped it. Try Arabic, Franco-Arabic, or Arabic-Indic numerals — detection runs on a
+        language-invariant form, so code-switching is not an evasion path.
+      </p>
+      <div class="row">
+        <input id="guardIn" placeholder="e.g. I'll refund you 500 AED"
+               onkeydown="if(event.key==='Enter')guardCheck()">
+        <button class="primary" onclick="guardCheck()">Check</button>
+      </div>
+      <div class="stack" style="margin-top:10px" id="guardSamples"></div>
+      <div id="guardOut" style="margin-top:12px"></div>
+    </div>
+    <div id="guardBox" class="dim">Loading…</div>
   </section>
 
   <!-- ══ EVIDENCE ══ -->
@@ -576,14 +613,133 @@ async function loadEval(){
   }catch(e){box.textContent="Could not load report.json: "+e.message}
 }
 
+/* ── prompts + guardrails tabs ── */
+async function loadInternals(){
+  if(S.internals)return S.internals;
+  S.internals=await api("/api/internals");
+  return S.internals;
+}
+function scanTable(scan){
+  const clean=scan.every(c=>!c.found.length);
+  return `<div class="${clean?"guard-ok":"guard-bad"}" style="margin-bottom:10px">`+
+    (clean?"No policy values found in this prompt":"POLICY VALUES LEAKED INTO THIS PROMPT")+`</div>`+
+    `<table><thead><tr><th>Looking for</th><th>Pattern</th><th>Found</th></tr></thead><tbody>`+
+    scan.map(c=>`<tr><td>${esc(c.looking_for)}</td>
+      <td class="mono dim" style="font-size:11.5px">${esc(c.pattern)}</td>
+      <td>${c.found.length?`<span class="chip c-red">${esc(c.found.join(", "))}</span>`
+                          :`<span class="chip c-green">none</span>`}</td></tr>`).join("")+
+    `</tbody></table>`;
+}
+async function loadPrompts(){
+  const box=$("#promptBox");
+  try{
+    const d=await loadInternals();
+    const p=d.prompts;
+    box.innerHTML=[["Classifier — inbound",p.classifier,
+        "Turns free text into five fixed booleans plus a language tag. Structured output, so it has no channel through which to emit an action."],
+      ["Generator — outbound",p.generator,
+        "Phrases an already-decided action. It receives only the values that action authorizes; unlisted variables are withheld, not merely unmentioned."]]
+      .map(([title,x,blurb])=>`<div class="card">
+        <h3>${esc(title)} <span class="chip c-gray mono" style="margin-left:6px">${esc(x.model)}</span></h3>
+        <p class="muted" style="margin:0 0 12px;font-size:12.5px">${esc(blurb)}</p>
+        ${scanTable(x.scan)}
+        <div class="k muted" style="font-size:12px;margin:14px 0 4px">Literal system prompt</div>
+        <pre>${esc(x.system)}</pre>
+        ${x.output_schema?`<div class="k muted" style="font-size:12px;margin:14px 0 4px">Enforced output schema</div>
+          <pre>${esc(JSON.stringify(x.output_schema,null,2))}</pre>`:""}
+      </div>`).join("")+
+      `<div class="card"><h3>Pre-approved reply templates</h3>
+        <p class="muted" style="margin:0 0 12px;font-size:12.5px">
+          The generator is told an <i>intent</i> and given named slots — never a policy value. If the
+          model is unavailable, these fallbacks are sent verbatim, which is why the whole system is
+          testable offline. Every template is itself guardrail-clean, so the safe path cannot become the leak.
+        </p>
+        <table><thead><tr><th>Action</th><th>Intent given to the model</th><th>Slots</th><th>Offline fallback (en)</th></tr></thead><tbody>`+
+        d.templates.map(t=>`<tr>
+          <td class="mono">${esc(t.action)}${t.scan.some(c=>c.found.length)?' <span class="chip c-red">leak</span>':""}</td>
+          <td style="font-size:12.5px">${esc(t.intent)}</td>
+          <td class="mono dim" style="font-size:11.5px">${esc((t.slots||[]).join(", ")||"—")}</td>
+          <td style="font-size:12.5px">${esc(t.fallback?.en||"—")}</td></tr>`).join("")+
+        `</tbody></table></div>`;
+  }catch(e){box.textContent="Could not load: "+e.message}
+}
+
+const GUARD_SAMPLES=["I'll refund you 500 AED","سأعوضك بمبلغ ٥٠٠ درهم",
+  "ana ha3mellak refund 3ala 7sabna","we'll waive the delivery fee",
+  "have it for free","Your driver is on the way with a new ETA."];
+async function loadGuards(){
+  $("#guardSamples").innerHTML=GUARD_SAMPLES.map((s,i)=>
+    `<button onclick="guardSample(${i})" style="text-align:left" dir="auto">${esc(s)}</button>`).join("");
+  const box=$("#guardBox");
+  try{
+    const g=(await loadInternals()).guardrails;
+    box.innerHTML=`
+      <div class="card"><h3>Unauthorized-promise guard — the literal blocklist</h3>
+        <p class="muted" style="margin:0 0 10px;font-size:12.5px">
+          No policy rule authorizes the agent to move money, so <i>any</i> mention of compensation,
+          a fee waiver or a currency amount in a draft is unauthorized. Matched on the normalized
+          form, so Arabic and Franco-Arabic are caught the same as English.
+        </p>
+        <div class="k muted" style="font-size:12px;margin:12px 0 5px">
+          Forbidden substrings (${g.promise_guard.forbidden_substrings.length})</div>
+        <div>${g.promise_guard.forbidden_substrings.map(s=>
+          `<span class="chip c-red mono" style="margin:2px" dir="auto">${esc(s)}</span>`).join("")}</div>
+        <div class="k muted" style="font-size:12px;margin:14px 0 5px">
+          Boundary-matched patterns (${g.promise_guard.forbidden_patterns.length})</div>
+        <div>${g.promise_guard.forbidden_patterns.map(s=>
+          `<span class="chip c-amber mono" style="margin:2px">${esc(s)}</span>`).join("")}</div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div class="card"><h3>Language-invariant normalization</h3>
+          <p class="muted" style="font-size:12.5px;margin-top:0">Applied before any guardrail match, so
+            code-switching and digit tricks are not evasion paths.</p>
+          <div>${g.normalization.steps.map(s=>`<span class="chip c-blue mono" style="margin:2px">${esc(s)}</span>`).join("")}</div>
+          <div class="kv" style="margin-top:10px"><span class="k">digits</span><span class="v" style="font-size:12px">${esc(g.normalization.digit_folding)}</span></div>
+          <div class="kv"><span class="k">diacritics</span><span class="v mono" style="font-size:12px">${esc(g.normalization.diacritics_pattern)}</span></div>
+        </div>
+        <div class="card"><h3>Loop guard</h3>
+          <p class="muted" style="font-size:12.5px;margin-top:0">${esc(g.loop_guard.note)}</p>
+          <div class="kv"><span class="k">threshold</span><span class="v mono">${esc(g.loop_guard.threshold)}</span></div>
+          <div class="k muted" style="font-size:12px;margin:10px 0 5px">Signature flags</div>
+          <div>${g.loop_guard.signature_flags.map(s=>`<span class="chip c-gray mono" style="margin:2px">${esc(s)}</span>`).join("")}</div>
+        </div>
+      </div>
+      <div class="card"><h3>R6 deterministic backstop</h3>
+        <p class="muted" style="font-size:12.5px;margin-top:0">${esc(g.r6_backstop.note)}</p>
+        <div class="k muted" style="font-size:12px;margin:12px 0 5px">Request markers (${g.r6_backstop.request_markers.length})</div>
+        <div>${g.r6_backstop.request_markers.map(s=>`<span class="chip c-gray mono" style="margin:2px" dir="auto">${esc(s)}</span>`).join("")}</div>
+        <div class="k muted" style="font-size:12px;margin:12px 0 5px">Human nouns (${g.r6_backstop.human_nouns.length})</div>
+        <div>${g.r6_backstop.human_nouns.map(s=>`<span class="chip c-gray mono" style="margin:2px" dir="auto">${esc(s)}</span>`).join("")}</div>
+        <div class="k muted" style="font-size:12px;margin:12px 0 5px">Short nouns — matched on a word boundary, since as substrings they fire inside unrelated words</div>
+        <div>${g.r6_backstop.short_nouns_word_bounded.map(s=>`<span class="chip c-purple mono" style="margin:2px" dir="auto">${esc(s)}</span>`).join("")}</div>
+      </div>`;
+  }catch(e){box.textContent="Could not load: "+e.message}
+}
+function guardSample(i){$("#guardIn").value=GUARD_SAMPLES[i];guardCheck()}
+async function guardCheck(){
+  const text=$("#guardIn").value;
+  if(!text.trim())return;
+  const out=$("#guardOut");
+  try{
+    const r=await api("/api/guard-check",{method:"POST",body:JSON.stringify({text})});
+    out.innerHTML=`<div class="${r.blocked?"guard-bad":"guard-ok"}">`+
+      (r.blocked?"BLOCKED — this draft would never reach the merchant":"Allowed — nothing unauthorized found")+`</div>`+
+      `<div class="kv"><span class="k">normalized to</span><span class="v mono" dir="auto">${esc(r.normalized)}</span></div>`+
+      (r.matched.length?`<div class="kv"><span class="k">tripped on</span><span class="v">${
+        r.matched.map(m=>`<span class="chip c-red mono">${esc(m)}</span>`).join(" ")}</span></div>`:"");
+  }catch(e){out.textContent="Error: "+e.message}
+}
+
 /* ── tabs ── */
 function tab(n){
-  ["console","policy","evidence","eval"].forEach(t=>{
+  ["console","policy","prompts","guards","evidence","eval"].forEach(t=>{
     $("#v-"+t).classList.toggle("hide",t!==n);
     document.querySelector(`.tab[data-tab="${t}"]`).classList.toggle("on",t===n);
   });
   if(n==="evidence")loadEvidence();
   if(n==="eval")loadEval();
+  if(n==="prompts")loadPrompts();
+  if(n==="guards")loadGuards();
 }
 
 /* ── init ── */

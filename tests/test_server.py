@@ -240,6 +240,59 @@ def test_event_injection_over_http(client: TestClient) -> None:
     assert turn["matched_rule"] == "R5"
 
 
+def test_internals_exposes_the_literal_prompts(client: TestClient) -> None:
+    body = client.get("/api/internals", headers=AUTH).json()
+    assert body["prompts"]["classifier"]["system"], "the real classifier prompt"
+    assert body["prompts"]["generator"]["system"], "the real generator prompt"
+    assert body["prompts"]["classifier"]["output_schema"]["properties"]
+    assert body["templates"], "the pre-approved reply templates"
+
+
+def test_live_no_hardcoding_scan_agrees_with_the_test_suite(client: TestClient) -> None:
+    """The console shows this scan to the reviewer, so it must not be able to disagree with
+    what the unit tests assert about the same strings."""
+    body = client.get("/api/internals", headers=AUTH).json()
+    for role in ("classifier", "generator"):
+        for check in body["prompts"][role]["scan"]:
+            assert check["found"] == [], f"{role} prompt leaked {check['looking_for']}"
+    for template in body["templates"]:
+        for check in template["scan"]:
+            assert check["found"] == [], f"{template['action']} intent leaked {check['looking_for']}"
+
+
+def test_internals_exposes_guardrail_vocabularies(client: TestClient) -> None:
+    guards = client.get("/api/internals", headers=AUTH).json()["guardrails"]
+    assert guards["promise_guard"]["forbidden_substrings"]
+    assert guards["promise_guard"]["forbidden_patterns"]
+    assert guards["loop_guard"]["signature_flags"]
+    # The Egyptian-Arabic short nouns whose absence was a real R6 gap.
+    assert "حد" in guards["r6_backstop"]["short_nouns_word_bounded"]
+
+
+@pytest.mark.parametrize(
+    ("text", "blocked"),
+    [
+        ("I'll refund you 500 AED", True),
+        ("سأعوضك بمبلغ ٥٠٠ درهم", True),          # Arabic + Arabic-Indic numerals
+        ("ana ha3mellak refund 3ala 7sabna", True),  # Franco-Arabic
+        ("we'll waive the delivery fee", True),
+        ("Your driver is on the way with a new ETA.", False),
+    ],
+)
+def test_guard_check_probe(client: TestClient, text: str, blocked: bool) -> None:
+    """The console lets a reviewer probe the guard directly; the verdicts must be real."""
+    body = client.post("/api/guard-check", json={"text": text}, headers=AUTH).json()
+    assert body["blocked"] is blocked, body
+    if blocked:
+        assert body["matched"], "a blocked draft must say what tripped it"
+
+
+def test_guard_check_shows_the_normalized_form(client: TestClient) -> None:
+    """Digit folding is what makes the guard language-invariant, so it must be visible."""
+    body = client.post("/api/guard-check", json={"text": "خصم ٥٠٠"}, headers=AUTH).json()
+    assert "500" in body["normalized"], "Arabic-Indic numerals should fold to ASCII"
+
+
 def test_unknown_session_is_a_404_not_a_crash(client: TestClient) -> None:
     assert client.get("/api/sessions/nope/trace", headers=AUTH).status_code == 404
 
