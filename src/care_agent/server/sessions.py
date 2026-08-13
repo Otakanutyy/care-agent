@@ -29,7 +29,12 @@ from typing import Any
 
 from care_agent.agent import CareAgent
 from care_agent.domain.models import Event, EventType, SessionState
-from care_agent.llm.client import AnthropicClient, LLMClient
+from care_agent.llm.client import (
+    CLASSIFIER_MODEL,
+    GENERATOR_MODEL,
+    AnthropicClient,
+    LLMClient,
+)
 from care_agent.llm.offline import OfflineLLMClient
 from care_agent.policy.loader import PolicySnapshot, load_policy
 from care_agent.tools.stubs import ToolConfig
@@ -90,6 +95,11 @@ class SessionManager:
         self.mode = (mode or os.getenv("CARE_AGENT_MODE", "offline")).lower()
         self.max_sessions = max_sessions
         self.max_turns = max_turns
+        # Serving models are overridable per-deployment via env, so a cost-constrained instance
+        # can run the cheaper tier without changing the code's documented defaults. Only the
+        # generator is worth downshifting; the classifier is already the cheapest tier.
+        self.classifier_model = os.getenv("CLASSIFIER_MODEL", CLASSIFIER_MODEL)
+        self.generator_model = os.getenv("GENERATOR_MODEL", GENERATOR_MODEL)
         self._sessions: dict[str, ManagedSession] = {}
 
     @property
@@ -115,7 +125,13 @@ class SessionManager:
             )
 
         session_id = uuid.uuid4().hex[:12]
-        agent = CareAgent(self.policy, build_client(self.mode), tool_config=ToolConfig(**(tools or {})))
+        agent = CareAgent(
+            self.policy,
+            build_client(self.mode),
+            tool_config=ToolConfig(**(tools or {})),
+            classifier_model=self.classifier_model,
+            generator_model=self.generator_model,
+        )
         state = SessionState(
             order_id=order_id or f"order-{session_id}",
             merchant_name=merchant_name,

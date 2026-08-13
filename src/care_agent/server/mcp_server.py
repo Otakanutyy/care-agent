@@ -389,6 +389,10 @@ def build_app(manager: SessionManager | None = None, token: str | None = None): 
                 "mode": sessions.mode,
                 "policy_version": sessions.policy_version,
                 "active_sessions": len(sessions.list_sessions()),
+                "models": {
+                    "classifier": sessions.classifier_model,
+                    "generator": sessions.generator_model,
+                },
             }
         )
 
