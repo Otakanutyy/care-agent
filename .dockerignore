@@ -17,15 +17,14 @@ dist/
 .coverage
 htmlcov/
 
-# Generated outputs (regenerated inside the container)
-report.json
-report.md
+# NOTE: report.json / report.md are intentionally NOT ignored. The evaluation image regenerates
+# them anyway, and the server image serves report.json to the console's Evaluation tab.
 
-# Design documents - useful for review, not needed in the image
+# Design documents - useful for review, not needed in the image.
+# WRITEUP.md and TESTING.md are kept: the server image serves them as doc:// MCP resources.
 PLAN.md
 DESIGN_DECISIONS.md
 DESIGN_AUDIT.md
-WRITEUP.md
 
 # Editor / OS
 .idea/

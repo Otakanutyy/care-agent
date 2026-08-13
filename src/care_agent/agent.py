@@ -189,10 +189,18 @@ class CareAgent:
                     "context_snapshot": effect.context_snapshot,
                 }
             )
-            self._trace("escalate", detail=effect.reason)
+            # Attribute the escalation to the rule that caused it. Without this the evidence
+            # record shows an escalation with no rule behind it, which is precisely the question
+            # a reader of the trace is trying to answer.
+            deciding = self.session.last_action
+            rule_id = deciding.rule_id if deciding else None
+            self._trace("escalate", detail=effect.reason, rule_id=rule_id)
             # Tell the merchant a human is taking over, rather than going silent. This is a
             # courtesy message on an already-traced action, so it does not add a trajectory step.
-            self._say(ActionEnvelope(action=ActionType.ESCALATE, reason=effect.reason), trace=False)
+            self._say(
+                ActionEnvelope(action=ActionType.ESCALATE, reason=effect.reason, rule_id=rule_id),
+                trace=False,
+            )
             return []
 
         if isinstance(effect, ResolveEffect):

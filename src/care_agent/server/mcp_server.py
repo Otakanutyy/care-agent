@@ -37,6 +37,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from care_agent.server import render
+from care_agent.server.web import build_routes
 from care_agent.server.sessions import (
     POLICY_PATH,
     REPO_ROOT,
@@ -60,7 +61,9 @@ def _result(payload: dict[str, Any], markdown: str) -> mcp_types.CallToolResult:
     )
 
 MCP_PATH = "/mcp"
-PUBLIC_PATHS = frozenset({"/health"})
+# The UI shell and the health probe carry no data — every /api/* call that returns anything
+# about a session still requires the token.
+PUBLIC_PATHS = frozenset({"/health", "/"})
 
 INSTRUCTIONS = """\
 This server exposes a Care Agent that handles delayed-order conversations with merchants for a
@@ -397,6 +400,10 @@ def build_app(manager: SessionManager | None = None, token: str | None = None): 
         )
 
     app = server.streamable_http_app(streamable_http_path=MCP_PATH, host="0.0.0.0")
+    # The browser console shares this SessionManager with the MCP tools, so the two surfaces
+    # cannot drift apart — a reviewer clicking buttons and an agent calling tools see the same
+    # engine. Routes are added before the middleware so auth still covers them.
+    app.routes.extend(build_routes(sessions))
     app.add_middleware(BearerAuthMiddleware, token=token)
     return app
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-13T14:10:55+00:00",
+  "generated_at": "2026-08-13T16:22:48+00:00",
   "policy_version": 1,
   "subjective_judge_ran": false,
   "summary": {
@@ -1238,7 +1238,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 3,
-        "total_latency_ms": 1
+        "total_latency_ms": 2
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1287,7 +1287,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 0
+        "total_latency_ms": 1
       },
       "failure_reason": null,
       "guardrail_blocks": 0,

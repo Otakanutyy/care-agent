@@ -26,6 +26,7 @@ from care_agent.server.sessions import (  # noqa: E402
 )
 
 TOKEN = "unit-test-token"
+AUTH = {"Authorization": f"Bearer {TOKEN}"}
 
 
 @pytest.fixture
@@ -178,6 +179,75 @@ def test_health_stays_open_for_platform_probes(client: TestClient) -> None:
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
+
+
+# --- the browser console ----------------------------------------------------
+
+
+def test_ui_shell_is_served_without_a_token(client: TestClient) -> None:
+    """The shell carries no data, so it loads before the reviewer has pasted anything."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "Careem Care Agent" in response.text
+
+
+def test_ui_data_endpoints_still_require_the_token(client: TestClient) -> None:
+    for path in ("/api/config", "/api/sessions/anything/trace", "/api/report"):
+        assert client.get(path).status_code == 401, f"{path} leaked without a token"
+    assert client.post("/api/sessions", json={}).status_code == 401
+
+
+def test_config_serves_the_real_policy_file(client: TestClient) -> None:
+    """The UI renders the rule table from this, so it must be the file, not a copy in code."""
+    response = client.get("/api/config", headers=AUTH)
+    assert response.status_code == 200
+    body = response.json()
+    assert body["policy"]["rules"], "the live rule table"
+    assert body["mode"] in {"offline", "live"}
+    assert body["models"]["generator"]
+
+
+def test_full_console_flow_over_http(client: TestClient) -> None:
+    started = client.post(
+        "/api/sessions", json={"merchant_tier": "Silver", "delay_minutes": 25}, headers=AUTH
+    ).json()
+    assert started["matched_rule"] == "R4"
+
+    sid = started["session_id"]
+    turn = client.post(
+        f"/api/sessions/{sid}/messages", json={"message": "put me through to a real person"},
+        headers=AUTH,
+    ).json()
+    assert turn["matched_rule"] == "R6"
+    # The escalation reply must carry the rule that caused it, or the console shows an
+    # untagged message and the whole "policy decided this" claim goes unevidenced.
+    assert turn["agent_replies"][0]["rule_id"] == "R6"
+
+    trace = client.get(f"/api/sessions/{sid}/trace", headers=AUTH).json()
+    assert trace["trajectory"] == ["ask_reassign_or_wait", "escalate"]
+
+
+def test_event_injection_over_http(client: TestClient) -> None:
+    sid = client.post(
+        "/api/sessions", json={"merchant_tier": "Silver", "delay_minutes": 25}, headers=AUTH
+    ).json()["session_id"]
+    turn = client.post(
+        f"/api/sessions/{sid}/events",
+        json={"event_type": "SYSTEM_ETA_UPDATED", "new_eta": 55},
+        headers=AUTH,
+    ).json()
+    assert turn["delay_minutes"] == 55
+    assert turn["matched_rule"] == "R5"
+
+
+def test_unknown_session_is_a_404_not_a_crash(client: TestClient) -> None:
+    assert client.get("/api/sessions/nope/trace", headers=AUTH).status_code == 404
+
+
+def test_empty_message_is_rejected(client: TestClient) -> None:
+    sid = client.post("/api/sessions", json={}, headers=AUTH).json()["session_id"]
+    response = client.post(f"/api/sessions/{sid}/messages", json={"message": "   "}, headers=AUTH)
+    assert response.status_code == 400
 
 
 def test_server_refuses_to_start_unauthenticated(monkeypatch: pytest.MonkeyPatch) -> None:

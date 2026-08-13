@@ -26,6 +26,9 @@ RUN pip install -r requirements-server.txt
 
 COPY src/ ./src/
 COPY policy/ ./policy/
+# The console's Evaluation tab reads the committed report, so the offline results are visible
+# without anyone rerunning the suite. TESTING.md/WRITEUP.md back the doc:// MCP resources.
+COPY report.json report.md TESTING.md WRITEUP.md ./
 RUN pip install --no-deps -e .
 
 RUN useradd --create-home --uid 1000 care && chown -R care:care /app
