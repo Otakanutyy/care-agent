@@ -1,0 +1,36 @@
+{
+  "id": "SCN_03",
+  "title": "Merchant goes unresponsive",
+  "description": "A 15-minute delay where the merchant never replies. Two reply timeouts exhaust the attempt budget and the session must escalate.",
+  "context": {
+    "order_id": "order-1003",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Bronze",
+    "delay_minutes": 15,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {},
+  "max_turns": 0,
+  "events": [
+    {
+      "after_turn": 0,
+      "event": "merchant_reply_timeout"
+    },
+    {
+      "after_turn": 0,
+      "event": "merchant_reply_timeout"
+    }
+  ],
+  "expect": {
+    "governing_rule": "R2",
+    "terminal_state": "ESCALATED",
+    "must_escalate": true,
+    "expected_terminal_reason": "unresponsive",
+    "forbidden_actions": [
+      "auto_reassign",
+      "reassign"
+    ],
+    "note": "The attempt budget comes from the policy file, not from code."
+  }
+}

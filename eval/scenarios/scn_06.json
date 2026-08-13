@@ -1,0 +1,30 @@
+{
+  "id": "SCN_06",
+  "title": "Transient tool failure then success",
+  "description": "A 30-minute Gold delay where the first reassignment attempt fails transiently. The broker retries within the policy cap using the same idempotency key, so no second captain is ever assigned.",
+  "context": {
+    "order_id": "order-1006",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true,
+    "reassign_outcomes": [
+      "transient",
+      "success"
+    ],
+    "new_captain_id": "captain-311"
+  },
+  "max_turns": 2,
+  "events": [],
+  "expect": {
+    "governing_rule": "R3",
+    "terminal_state": "RESOLVED",
+    "must_escalate": false,
+    "expect_idempotent_retry": true,
+    "note": "A retry must reuse the key; only one captain may end up assigned."
+  }
+}

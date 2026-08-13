@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Careem Care Agent policy pack",
+  "description": "Shape validation for policy.json. Semantic invariants (coverage, ordering, R6-preemption, boundary consistency, override integrity) are enforced separately by care_agent.policy.loader.check_invariants.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "delay_formula",
+    "tick_interval_seconds",
+    "rules",
+    "boundary_inclusivity",
+    "r6_preemption",
+    "boolean_precedence",
+    "override_map",
+    "retry_cap",
+    "loop_guard_threshold",
+    "unresponsive_attempts"
+  ],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "delay_formula": { "type": "string", "minLength": 1 },
+    "tick_interval_seconds": { "type": "integer", "minimum": 1 },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "delay", "tier", "action", "escalates"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^R[0-9]+$" },
+          "delay": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "additionalItems": false,
+            "items": [
+              { "type": "number", "minimum": 0 },
+              { "type": ["number", "null"], "minimum": 0 }
+            ]
+          },
+          "tier": {
+            "oneOf": [
+              { "type": "string", "enum": ["*", "Gold", "Silver", "Bronze"] },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "enum": ["Gold", "Silver", "Bronze"] }
+              }
+            ]
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "log_only",
+              "notify_confirm_eta",
+              "auto_reassign",
+              "ask_reassign_or_wait",
+              "escalate_immediate"
+            ]
+          },
+          "escalates": {
+            "type": "string",
+            "enum": [
+              "never",
+              "unresponsive_after_attempts",
+              "tool_fail_or_no_captain",
+              "cancellation_requested",
+              "always"
+            ]
+          }
+        }
+      }
+    },
+    "boundary_inclusivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["R3_R4_upper", "R5_lower"],
+      "properties": {
+        "R3_R4_upper": { "type": "string", "enum": ["inclusive", "exclusive"] },
+        "R5_lower": { "type": "string", "enum": ["inclusive", "exclusive"] }
+      }
+    },
+    "r6_preemption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["flag", "action"],
+      "properties": {
+        "flag": {
+          "type": "string",
+          "enum": [
+            "requests_human",
+            "confirms_new_eta",
+            "requests_cancellation",
+            "accepts_reassignment",
+            "prefers_to_wait"
+          ]
+        },
+        "action": { "type": "string", "enum": ["escalate"] }
+      }
+    },
+    "boolean_precedence": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "requests_human",
+          "confirms_new_eta",
+          "requests_cancellation",
+          "accepts_reassignment",
+          "prefers_to_wait"
+        ]
+      }
+    },
+    "override_map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["suppressed_rules", "escalation_mode", "notification"],
+        "properties": {
+          "suppressed_rules": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^R[0-9]+$" }
+          },
+          "escalation_mode": {
+            "type": "string",
+            "enum": ["attach_to_incident", "per_order"]
+          },
+          "notification": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "retry_cap": { "type": "integer", "minimum": 1 },
+    "loop_guard_threshold": { "type": "integer", "minimum": 1 },
+    "unresponsive_attempts": { "type": "integer", "minimum": 1 },
+    "authoring_gaps": { "type": "array", "items": { "type": "string" } }
+  }
+}

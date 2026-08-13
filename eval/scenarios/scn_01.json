@@ -1,0 +1,28 @@
+{
+  "id": "SCN_01",
+  "title": "Within grace period - log only",
+  "description": "A 5-minute delay sits inside the grace band. The agent must stay silent and take no action.",
+  "context": {
+    "order_id": "order-1001",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 5,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {},
+  "max_turns": 0,
+  "events": [],
+  "expect": {
+    "governing_rule": "R1",
+    "terminal_state": null,
+    "must_escalate": false,
+    "forbidden_actions": [
+      "auto_reassign",
+      "reassign",
+      "escalate",
+      "notify_confirm_eta"
+    ],
+    "note": "No outbound message at all - the merchant should never be contacted."
+  }
+}

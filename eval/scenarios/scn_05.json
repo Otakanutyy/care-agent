@@ -1,0 +1,25 @@
+{
+  "id": "SCN_05",
+  "title": "Gold reassignment - no captain available",
+  "description": "A 30-minute Gold delay where no replacement captain exists. The tool reports unavailability and the session must escalate rather than retrying forever.",
+  "context": {
+    "order_id": "order-1005",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": false
+  },
+  "max_turns": 2,
+  "events": [],
+  "expect": {
+    "governing_rule": "R3",
+    "terminal_state": "ESCALATED",
+    "must_escalate": true,
+    "expected_terminal_reason": "tool_fail_or_no_captain",
+    "note": "reassign_captain must never be called once availability fails."
+  }
+}

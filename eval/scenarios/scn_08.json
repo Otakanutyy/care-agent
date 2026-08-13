@@ -1,0 +1,30 @@
+{
+  "id": "SCN_08",
+  "title": "Captain cancels while the reassignment is in flight",
+  "description": "A non-Gold merchant accepts a reassignment; while the tool chain is still running, the backend reports the original captain cancelled. The in-flight call is never cancelled and its result is reconciled against the newer state.",
+  "context": {
+    "order_id": "order-1008",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Silver",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true,
+    "new_captain_id": "captain-515"
+  },
+  "max_turns": 3,
+  "events": [
+    {
+      "during_tool_flight": true,
+      "event": "CAPTAIN_CANCELLED_MID_CALL"
+    }
+  ],
+  "expect": {
+    "governing_rule": "R4",
+    "terminal_state": null,
+    "must_escalate": false,
+    "note": "Losing the old captain does not invalidate a reassignment already in flight."
+  }
+}

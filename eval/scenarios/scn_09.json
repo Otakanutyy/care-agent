@@ -1,0 +1,35 @@
+{
+  "id": "SCN_09",
+  "title": "ETA update crosses the escalation threshold mid-conversation",
+  "description": "The session opens in the notify band and the agent contacts the merchant; a backend ETA update then pushes the delay past the escalation threshold while the agent is still awaiting a reply. The governing rule changes underneath the open conversation.",
+  "context": {
+    "order_id": "order-1009",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 15,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true
+  },
+  "max_turns": 3,
+  "events": [
+    {
+      "after_turn": 0,
+      "event": "SYSTEM_ETA_UPDATED",
+      "new_eta": 55
+    }
+  ],
+  "expect": {
+    "governing_rule": "R5",
+    "terminal_state": "ESCALATED",
+    "must_escalate": true,
+    "expected_terminal_reason": "delay_over_threshold",
+    "forbidden_actions": [
+      "auto_reassign",
+      "reassign"
+    ],
+    "note": "Past the threshold the policy forbids offering reassignment at all."
+  }
+}

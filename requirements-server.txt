@@ -1,0 +1,10 @@
+# Extra dependencies for the optional MCP testing surface only.
+#
+# The five graded deliverables — engine, policy pack, evaluation harness, report, write-up —
+# need none of this. Install it only to run `python -m care_agent.server.mcp_server`.
+
+-r requirements.txt
+
+mcp>=2.0
+starlette>=1.6
+uvicorn>=0.34

@@ -1,0 +1,31 @@
+{
+  "id": "SCN_10",
+  "title": "Active outage suppresses reassignment",
+  "description": "A Gold merchant during a declared platform outage. Reassignment is suppressed because the delay is systemic, the notice must not promise an ETA, and any escalation attaches to the incident instead of spawning a per-order ticket.",
+  "context": {
+    "order_id": "order-1010",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": [
+      "active_outage"
+    ]
+  },
+  "tools": {
+    "available": true
+  },
+  "max_turns": 3,
+  "events": [],
+  "expect": {
+    "governing_rule": "R3",
+    "terminal_state": null,
+    "must_escalate": false,
+    "forbidden_actions": [
+      "auto_reassign",
+      "reassign"
+    ],
+    "expected_escalation_mode": "attach_to_incident",
+    "note": "active_system_overrides is absent from the source policy table - this is an adopted decision."
+  }
+}

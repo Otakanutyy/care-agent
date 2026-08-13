@@ -1,0 +1,25 @@
+{
+  "id": "SCN_02",
+  "title": "Notify and confirm new ETA",
+  "description": "A 15-minute delay: the agent notifies the merchant and asks them to confirm the updated ETA. A cooperative merchant confirms and the session closes.",
+  "context": {
+    "order_id": "order-1002",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Silver",
+    "delay_minutes": 15,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {},
+  "max_turns": 3,
+  "events": [],
+  "expect": {
+    "governing_rule": "R2",
+    "must_escalate": false,
+    "forbidden_actions": [
+      "auto_reassign",
+      "reassign"
+    ],
+    "note": "Reassignment is not offered in this delay band. The terminal state is deliberately not asserted: it depends on how the persona replies, and an adversarial merchant may legitimately drive this to escalation."
+  }
+}

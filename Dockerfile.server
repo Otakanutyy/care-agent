@@ -1,0 +1,35 @@
+# Image for the optional MCP testing surface (see TESTING.md).
+#
+#   docker build -f Dockerfile.server -t care-agent-mcp .
+#   docker run --rm -p 8000:8000 -e MCP_AUTH_TOKEN=<secret> care-agent-mcp
+#
+# Separate from the main Dockerfile on purpose: the graded deliverables must build and run
+# without the web stack, so those dependencies stay out of the evaluation image.
+#
+# Defaults to CARE_AGENT_MODE=offline. A deployment that sets it to `live` and supplies
+# ANTHROPIC_API_KEY is spending real credits on every merchant message, which is exactly why
+# the server refuses to start without MCP_AUTH_TOKEN.
+
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    CARE_AGENT_MODE=offline \
+    PORT=8000
+
+WORKDIR /app
+
+COPY requirements.txt requirements-server.txt pyproject.toml ./
+RUN pip install -r requirements-server.txt
+
+COPY src/ ./src/
+COPY policy/ ./policy/
+RUN pip install --no-deps -e .
+
+RUN useradd --create-home --uid 1000 care && chown -R care:care /app
+USER care
+
+EXPOSE 8000
+CMD ["python", "-m", "care_agent.server.mcp_server"]

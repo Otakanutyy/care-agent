@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "careem-care-agent"
+version = "0.1.0"
+description = "Proactive Care agent for delayed merchant orders (Careem FDE assessment)"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6",
+    "anthropic>=0.49",
+    "jsonschema>=4.21",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+# The optional MCP testing surface. No graded deliverable depends on these.
+server = ["mcp>=2.0", "starlette>=1.6", "uvicorn>=0.34"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

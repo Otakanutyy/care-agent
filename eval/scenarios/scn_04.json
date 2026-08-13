@@ -1,0 +1,30 @@
+{
+  "id": "SCN_04",
+  "title": "Gold auto-reassignment succeeds",
+  "description": "A 30-minute delay for a Gold merchant: the agent reassigns the captain automatically and tells the merchant the new captain and ETA.",
+  "context": {
+    "order_id": "order-1004",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true,
+    "new_captain_id": "captain-207",
+    "estimated_eta_minutes": 11
+  },
+  "max_turns": 2,
+  "events": [],
+  "expect": {
+    "governing_rule": "R3",
+    "terminal_state": "RESOLVED",
+    "must_escalate": false,
+    "required_tool_order": [
+      "check_captain_availability",
+      "reassign_captain"
+    ],
+    "note": "Availability must be checked before any reassignment is attempted."
+  }
+}

@@ -1,0 +1,1732 @@
+{
+  "generated_at": "2026-08-13T14:10:55+00:00",
+  "policy_version": 1,
+  "subjective_judge_ran": false,
+  "summary": {
+    "runs": 30,
+    "passed": 30,
+    "failed": 0,
+    "scenarios": 10,
+    "scenarios_passed": 10,
+    "guardrail_violations": 0,
+    "guardrail_blocks": 0,
+    "all_passed": true
+  },
+  "policy_authoring_gaps": [
+    "40-min boundary undefined in source policy; adopted <=40 -> R3/R4, >40 -> R5.",
+    "R4 cancellation branch unspecified in source policy; adopted mandatory escalation.",
+    "active_system_overrides handling absent from source policy; adopted override_map (active_outage suppresses reassignment + attach-to-incident)."
+  ],
+  "results": [
+    {
+      "scenario_id": "SCN_01",
+      "persona_id": "aggressive_negotiator",
+      "title": "Within grace period - log only",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'log_only', agent did 'log_only'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_01",
+      "persona_id": "indecisive_switcher",
+      "title": "Within grace period - log only",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'log_only', agent did 'log_only'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_01",
+      "persona_id": "uncovered_intent",
+      "title": "Within grace period - log only",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'log_only', agent did 'log_only'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_02",
+      "persona_id": "aggressive_negotiator",
+      "title": "Notify and confirm new ETA",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_02",
+      "persona_id": "indecisive_switcher",
+      "title": "Notify and confirm new ETA",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=AWAITING_MERCHANT_REPLY"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_02",
+      "persona_id": "uncovered_intent",
+      "title": "Notify and confirm new ETA",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "aggressive_negotiator",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "indecisive_switcher",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "uncovered_intent",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "aggressive_negotiator",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "indecisive_switcher",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "uncovered_intent",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "aggressive_negotiator",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "indecisive_switcher",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "uncovered_intent",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "aggressive_negotiator",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "indecisive_switcher",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "uncovered_intent",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "aggressive_negotiator",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "indecisive_switcher",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "uncovered_intent",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_08",
+      "persona_id": "aggressive_negotiator",
+      "title": "Captain cancels while the reassignment is in flight",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=AWAITING_MERCHANT_REPLY"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_08",
+      "persona_id": "indecisive_switcher",
+      "title": "Captain cancels while the reassignment is in flight",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_08",
+      "persona_id": "uncovered_intent",
+      "title": "Captain cancels while the reassignment is in flight",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_09",
+      "persona_id": "aggressive_negotiator",
+      "title": "ETA update crosses the escalation threshold mid-conversation",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected delay_over_threshold, got delay_over_threshold"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_09",
+      "persona_id": "indecisive_switcher",
+      "title": "ETA update crosses the escalation threshold mid-conversation",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected delay_over_threshold, got delay_over_threshold"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_09",
+      "persona_id": "uncovered_intent",
+      "title": "ETA update crosses the escalation threshold mid-conversation",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 0
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected delay_over_threshold, got delay_over_threshold"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_10",
+      "persona_id": "aggressive_negotiator",
+      "title": "Active outage suppresses reassignment",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_10",
+      "persona_id": "indecisive_switcher",
+      "title": "Active outage suppresses reassignment",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
+        }
+      ],
+      "judge": null
+    },
+    {
+      "scenario_id": "SCN_10",
+      "persona_id": "uncovered_intent",
+      "title": "Active outage suppresses reassignment",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 3,
+        "total_latency_ms": 1
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=MONITORING"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
+        }
+      ],
+      "judge": null
+    }
+  ]
+}

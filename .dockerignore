@@ -1,0 +1,34 @@
+# VCS and local envs
+.git/
+.gitignore
+.venv/
+venv/
+env/
+
+# Python build artefacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated outputs (regenerated inside the container)
+report.json
+report.md
+
+# Design documents - useful for review, not needed in the image
+PLAN.md
+DESIGN_DECISIONS.md
+DESIGN_AUDIT.md
+WRITEUP.md
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

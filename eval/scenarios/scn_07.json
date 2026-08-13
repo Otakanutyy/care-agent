@@ -1,0 +1,27 @@
+{
+  "id": "SCN_07",
+  "title": "Partial failure - reassigned but notification fails",
+  "description": "The reassignment commits but the confirmation dispatch fails. There is no unassign tool, so the agent must escalate with the assigned captain recorded for the human to reconcile.",
+  "context": {
+    "order_id": "order-1007",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Gold",
+    "delay_minutes": 30,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true,
+    "new_captain_id": "captain-412",
+    "notify_succeeds": false
+  },
+  "max_turns": 2,
+  "events": [],
+  "expect": {
+    "governing_rule": "R3",
+    "terminal_state": "ESCALATED",
+    "must_escalate": true,
+    "expected_terminal_reason": "partial_failure",
+    "note": "The ticket must carry the captain that was actually assigned."
+  }
+}

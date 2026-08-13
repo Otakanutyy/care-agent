@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Env / secrets
+.env
+.env.*
+*.local
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# NOTE: report.json and report.md are deliberately NOT ignored. They are deliverable 4 (the
+# pass/fail execution report), so the committed copy is part of the submission — a reviewer
+# should be able to read the results without running anything. `python run_all.py` regenerates
+# them deterministically.
