@@ -9,6 +9,23 @@ chain, guardrails, and the full 30-run evaluation are all deterministic and repr
 
 ---
 
+## ▶ Start here: the live console
+
+**https://care-agent-production-2eaf.up.railway.app** — access token is in the submission email.
+
+Nothing to clone, install, or run. Open it, paste the token, and talk to the agent as the
+merchant. Every reply is tagged with **the policy rule that produced it**, so the claim below is
+something you can check rather than take on trust.
+
+One-click probes are built in — demand a refund, attempt a prompt injection, ask for a human in
+Arabic — alongside tabs for the live policy file, the full decision record, and the committed
+30-run evaluation. See **[TESTING.md](TESTING.md)**.
+
+> The hosted instance is a convenience, not a dependency. If it is down, this repository proves
+> the same things offline: `python run_all.py`.
+
+---
+
 ## The core invariant
 
 **The LLM never makes a decision.** A deterministic policy engine, reading `policy/policy.json`,
@@ -68,9 +85,14 @@ docker run --rm -v "$PWD":/out care-agent \
 
 ### Against the real Claude API
 
-Set `ANTHROPIC_API_KEY`, then add `--live` to either entry point. Models used:
+Set `ANTHROPIC_API_KEY`, then add `--live` to either entry point. Default models:
 Haiku 4.5 (classifier), Sonnet 5 (generator and adversarial personas), Opus 5 (judge — a
 different tier from the agent, so it is not grading its own prose).
+
+The serving models are overridable per deployment via `CLASSIFIER_MODEL` / `GENERATOR_MODEL`.
+The hosted console runs **Haiku for both** to keep a public endpoint's worst-case spend bounded,
+which is why its `/health` reports a different generator than the default above. Policy
+decisions, guardrails, and rule matching are identical either way — only the phrasing differs.
 
 ---
 

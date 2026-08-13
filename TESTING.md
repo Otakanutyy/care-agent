@@ -1,10 +1,17 @@
 # Testing the Care Agent
 
-This describes the **MCP server** — an optional layer that lets you (or your own AI agent) drive
-the Care Agent directly through structured tool calls, instead of reading the code and trusting
-it.
+There are two ways to drive this agent without reading the code and trusting it. Both are hosted
+at the same URL, and both are optional.
 
-> **This layer is not required to evaluate the submission.** Everything graded — the engine, the
+| | For | Setup |
+|---|---|---|
+| **[Browser console](#the-console-zero-setup)** | Looking at it yourself | None — open a link, paste a token |
+| **[MCP server](#driving-it-from-your-own-agent)** | Driving it with your own AI agent | One `claude mcp add` command |
+
+**Start here → https://care-agent-production-2eaf.up.railway.app**
+(access token is in the submission email)
+
+> **Neither layer is required to evaluate the submission.** Everything graded — the engine, the
 > policy pack, the adversarial harness, `report.json`, and the write-up — runs from the repo with
 > no network and no API key (`python run_all.py`). If the hosted endpoint is down when you read
 > this, nothing is lost; see [README.md](README.md).
@@ -47,19 +54,45 @@ tool count still at zero.
 
 ---
 
-## Connecting
+## The console (zero setup)
 
-The server speaks MCP over streamable HTTP at `/mcp` and requires a bearer token on every
-request.
+**https://care-agent-production-2eaf.up.railway.app**
+
+Paste the token from the submission email and you are in. Nothing to install.
+
+**Four tabs:**
+
+- **Console** — talk to the agent as the merchant. Each agent message carries the rule badge that
+  produced it, and a live decision panel shows the matched rule, action, reason, guardrail
+  verdict, FSM state, and a financial-tool counter.
+- **Policy** — the rule table, read from the running instance's own `policy.json`. Read a rule,
+  then reproduce it in the Console. This is how you confirm nothing is hardcoded in a prompt.
+- **Evidence** — the full decision record for the current session: transcript, trajectory, tool
+  calls in order, guardrail blocks, escalation tickets.
+- **Evaluation** — the committed 30-run offline report (10 scenarios × 3 adversarial personas).
+
+**The fastest tour:** click the one-click probes down the left — *Demand a refund*, *Prompt
+injection*, *Ask in Arabic*, *Repeat (loop guard)* — and watch the decision panel. Then inject a
+backend event (*ETA worsens to 55 min*) and see the rule change underneath the conversation.
+Every probe below in "Probes worth running" has a matching button.
+
+The console and the MCP server share one session manager, so they cannot drift apart: a reviewer
+clicking buttons and an agent calling tools are exercising the same engine.
+
+---
+
+## Driving it from your own agent
+
+The server also speaks MCP over streamable HTTP at `/mcp`, with a bearer token on every request.
 
 **Claude Code / Claude Desktop:**
 
 ```bash
-claude mcp add --transport http care-agent <SERVER_URL>/mcp \
+claude mcp add --transport http care-agent https://care-agent-production-2eaf.up.railway.app/mcp \
   --header "Authorization: Bearer <TOKEN>"
 ```
 
-The URL and token are in the submission email — they are deliberately not in this repository.
+The token is in the submission email — it is deliberately not in this repository.
 
 **Anything else:** any MCP client that supports streamable HTTP works. Send
 `Authorization: Bearer <TOKEN>`; without it every call returns `401`.
@@ -67,7 +100,7 @@ The URL and token are in the submission email — they are deliberately not in t
 **Check it is alive** (`/health` needs no token):
 
 ```bash
-curl <SERVER_URL>/health
+curl https://care-agent-production-2eaf.up.railway.app/health
 ```
 
 ### Running it yourself instead
@@ -238,3 +271,9 @@ Finish with `get_session_trace` — it is the evidence for everything above.
 - **Offline mode phrases replies from pre-approved templates** and labels them `used_fallback`.
   Policy decisions are identical either way — only the wording differs — so the invariant is
   fully testable without an API key.
+- **The hosted instance runs Haiku 4.5 for both the classifier and the generator**, set via
+  `GENERATOR_MODEL`, to bound a public endpoint's worst-case spend. The repository's default is
+  Sonnet 5 for the generator, so `/health` reports a different model than `README.md` documents.
+  Policy decisions, guardrails, and rule matching are unaffected — only phrasing.
+- **`/health` needs no token** and reports mode, policy version, and the active models, so you can
+  confirm what is actually running before you start.
