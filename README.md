@@ -182,7 +182,7 @@ run_all.py           the full evaluation suite
 | 2. Policy config + verification script | `policy/policy.json`, `scripts/verify_policy.py` |
 | 3. Adversarial evaluation framework | `eval/personas/`, `eval/scenarios/`, `src/care_agent/eval/` |
 | 4. Pass/fail execution report | `report.json`, `report.md` (regenerate with `python run_all.py`) |
-| 5. Architectural write-up | [WRITEUP.md](WRITEUP.md) |
+| 5. Architectural write-up | [WRITEUP.md](WRITEUP.md), or [WRITEUP.pdf](WRITEUP.pdf) — same text, 2 pages |
 
 ## Driving it from your own agent (optional)
 
@@ -224,7 +224,8 @@ dependencies.
 
 - **[WRITEUP.md](WRITEUP.md)** — the architectural write-up: why an FSM rather than a DAG or an
   autonomous loop, how the tool boundaries are secured, three production vulnerabilities at high
-  concurrency, and the gaps the specification left open.
+  concurrency, and the gaps the specification left open. [WRITEUP.pdf](WRITEUP.pdf) is the same
+  document typeset to two pages; regenerate it with `python scripts/build_writeup_pdf.py`.
 - **[TESTING.md](TESTING.md)** — how to drive the running agent yourself, from a browser or from
   your own AI agent.
 
