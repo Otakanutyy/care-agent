@@ -255,13 +255,32 @@ def test_event_injection_over_http(client: TestClient) -> None:
     sid = client.post(
         "/api/sessions", json={"merchant_tier": "Silver", "delay_minutes": 25}, headers=AUTH
     ).json()["session_id"]
-    turn = client.post(
+    # Default is asynchronous: the queue accepts and answers immediately (202), because a
+    # backend event does not wait for the conversation to stop talking.
+    accepted = client.post(
         f"/api/sessions/{sid}/events",
         json={"event_type": "SYSTEM_ETA_UPDATED", "new_eta": 55},
+        headers=AUTH,
+    )
+    assert accepted.status_code == 202
+    assert accepted.json()["accepted"] is True
+
+    # `wait` is for callers that want the outcome rather than a receipt.
+    turn = client.post(
+        f"/api/sessions/{sid}/events",
+        json={"event_type": "SYSTEM_ETA_UPDATED", "new_eta": 55, "wait": True},
         headers=AUTH,
     ).json()
     assert turn["delay_minutes"] == 55
     assert turn["matched_rule"] == "R5"
+
+
+def test_a_bad_event_is_rejected_before_being_accepted(client: TestClient) -> None:
+    """Async acceptance must not mean swallowing nonsense and dropping it silently."""
+    sid = client.post("/api/sessions", json={}, headers=AUTH).json()["session_id"]
+    assert client.post(
+        f"/api/sessions/{sid}/events", json={"event_type": "NONSENSE"}, headers=AUTH
+    ).status_code == 400
 
 
 def test_internals_exposes_the_literal_prompts(client: TestClient) -> None:

@@ -131,6 +131,10 @@ def run_once(
         for spec in scenario.events:
             if spec.get("during_tool_flight"):
                 agent.inject_before_tool_result.append(_build_event(spec))
+            # ...and these land while a reply is being composed, the narrowest mid-turn window
+            # the spec describes ("reality changes while the agent is talking").
+            if spec.get("during_generation"):
+                agent.inject_before_generate.append(_build_event(spec))
 
         _apply_events(agent, scenario, after_turn=0)
 
@@ -150,8 +154,8 @@ def run_once(
 
 def _apply_events(agent: CareAgent, scenario: Scenario, after_turn: int) -> None:
     for spec in scenario.events:
-        if spec.get("during_tool_flight"):
-            continue  # queued separately; fires inside the tool chain
+        if spec.get("during_tool_flight") or spec.get("during_generation"):
+            continue  # queued separately; fires inside the turn, not between turns
         if spec.get("after_turn", 0) != after_turn:
             continue
         if agent.is_terminal:

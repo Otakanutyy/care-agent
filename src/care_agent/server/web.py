@@ -111,20 +111,38 @@ def build_routes(sessions: SessionManager) -> list[Route]:
         return JSONResponse(result)
 
     async def event(request: Request) -> JSONResponse:
+        """Accept the event and answer immediately (202).
+
+        A backend event queue does not wait for the conversation to stop talking. Blocking here
+        until the event had been applied meant an event fired mid-reply held the caller for as
+        long as that reply took, which made an asynchronous queue behave synchronously from the
+        outside. Pass `wait=true` to get the applied result instead — the MCP tool does, because
+        an agent calling a tool wants the outcome, not a receipt.
+        """
         data = await _body(request)
         new_eta = data.get("new_eta")
+        eta = int(new_eta) if new_eta not in (None, "") else None
+        apply_now = bool(data.get("wait")) or request.query_params.get("wait") == "true"
         try:
+            if apply_now:
+                result = await run_in_threadpool(
+                    sessions.trigger_event,
+                    request.path_params["session_id"],
+                    data.get("event_type") or "",
+                    new_eta=eta,
+                )
+                return JSONResponse(result)
             result = await run_in_threadpool(
-                sessions.trigger_event,
+                sessions.accept_event,
                 request.path_params["session_id"],
                 data.get("event_type") or "",
-                new_eta=int(new_eta) if new_eta not in (None, "") else None,
+                new_eta=eta,
             )
         except UnknownSessionError as exc:
             return _fail(exc, 404)
         except ValueError as exc:
             return _fail(exc)
-        return JSONResponse(result)
+        return JSONResponse(result, status_code=202)
 
     async def trace(request: Request) -> JSONResponse:
         try:

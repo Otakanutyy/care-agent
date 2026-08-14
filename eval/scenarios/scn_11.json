@@ -1,0 +1,30 @@
+{
+  "id": "SCN_11",
+  "title": "ETA worsens while the agent is composing its reply",
+  "description": "The narrowest mid-turn window the spec describes: the action is already decided and the model is mid-sentence when the backend reports the delay has crossed into a higher band. The committed reply still goes out - the agent does not retract something it has already decided to say - and the new reality is then evaluated on top of it, which escalates. Complements SCN_08, where the event lands during a tool call rather than during generation.",
+  "context": {
+    "order_id": "order-1011",
+    "merchant_name": "Al Safadi Restaurant",
+    "merchant_tier": "Silver",
+    "delay_minutes": 25,
+    "current_captain_id": "captain-100",
+    "active_system_overrides": []
+  },
+  "tools": {
+    "available": true,
+    "new_captain_id": "captain-611"
+  },
+  "max_turns": 3,
+  "events": [
+    {
+      "during_generation": true,
+      "event": "SYSTEM_ETA_UPDATED",
+      "new_eta": 55
+    }
+  ],
+  "expect": {
+    "governing_rule": "R5",
+    "must_escalate": true,
+    "note": "The delay crosses the top band mid-turn. R5 escalates immediately and must not offer reassignment, so whatever the agent was about to say about a driver is superseded by a handover."
+  }
+}

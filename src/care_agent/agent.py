@@ -88,6 +88,8 @@ class CareAgent:
         # dispatched but before its result comes back. That is the hardest ordering the spec
         # asks for, and the only way to reproduce it against a synchronous tool layer.
         self.inject_before_tool_result: list[Event] = []
+        #: Events timed to land while a reply is being generated (see ``_say``).
+        self.inject_before_generate: list[Event] = []
         self.transcript: list[TranscriptEntry] = []
         self.trace: list[dict[str, Any]] = []
         self.tickets: list[dict[str, Any]] = []
@@ -221,6 +223,9 @@ class CareAgent:
         """Phrase an already-decided action and send it, guardrailed."""
         if not has_message(envelope.action):
             return
+        pending_mid_generation = self.inject_before_generate[:]
+        del self.inject_before_generate[:]
+
         reply = generate(envelope, self.client, language=self.language, model=self.generator_model)
         if reply.blocked:
             self.guardrail_violations += 1
@@ -243,6 +248,16 @@ class CareAgent:
                 detail=envelope.reason,
                 blocked=reply.blocked,
             )
+
+        # An event that arrived while this reply was being composed. The narrowest mid-turn
+        # window there is: the action was already decided and the model was mid-sentence, so the
+        # reply is committed and goes out — the agent does not retract a sentence it has started
+        # — and the new reality is evaluated on top of it. Draining after the append rather than
+        # before is what keeps the transcript in the order the merchant actually saw it.
+        while pending_mid_generation:
+            injected = pending_mid_generation.pop(0)
+            self._trace("inject_mid_generation", detail=injected.type.value)
+            self._dispatch(self.mailbox.send(self.order_id, injected))
 
     # --- bookkeeping ------------------------------------------------------------
 

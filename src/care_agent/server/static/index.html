@@ -354,7 +354,7 @@
 
 <script>
 "use strict";
-const S={tok:null,cfg:null,id:null,turns:0,last:null};
+const S={tok:null,cfg:null,id:null,turns:0,last:null,shown:0,report:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const isAr=s=>/[؀-ۿ]/.test(s||"");
@@ -431,7 +431,7 @@ async function startSession(){
     const r=await api("/api/sessions",{method:"POST",body:JSON.stringify({
       merchant_tier:$("#tier").value,delay_minutes:+$("#delay").value,
       active_system_overrides:ov?[ov]:[]})});
-    S.id=r.session_id;S.turns=0;
+    S.id=r.session_id;S.turns=0;S.shown=0;
     $("#chat").innerHTML="";
     $("#sessMeta").textContent="session "+r.session_id;
     sys(`Session opened · ${r.context.merchant_tier} merchant · ${r.context.delay_minutes} min delay`
@@ -442,23 +442,58 @@ async function startSession(){
 async function send(){
   const box=$("#msg"),t=box.value.trim();
   if(!t||!S.id)return;
-  bubble("merchant",t);box.value="";lockInputs(true,true);
+  bubble("merchant",t);S.shown++;box.value="";lockInputs(true,true);
   try{apply(await api(`/api/sessions/${S.id}/messages`,{method:"POST",body:JSON.stringify({message:t})}))}
   catch(e){sys("Error: "+e.message)}
   lockInputs(false);box.focus();
 }
+/* Deliberately usable while a reply is generating — that is the case the spec cares about
+   ("reality changes while the agent is talking"), and the endpoint accepts the event
+   immediately rather than waiting for the turn in front of it. The applied effect shows up a
+   moment later, so poll the trace until the record grows. */
 async function fire(type,eta){
   if(!S.id)return;
-  sys("backend event injected → "+type+(eta?` (new ETA ${eta} min)`:""));
-  lockInputs(true,true);
-  try{apply(await api(`/api/sessions/${S.id}/events`,{method:"POST",
-    body:JSON.stringify({event_type:type,new_eta:eta})}))}
-  catch(e){sys("Error: "+e.message)}
-  lockInputs(false);
+  sys("backend event injected → "+type+(eta?` (new ETA ${eta} min)`:"")+" — queued");
+  const before=(S.last&&S.last.__traceLen)||await traceLen();
+  try{
+    await api(`/api/sessions/${S.id}/events`,{method:"POST",
+      body:JSON.stringify({event_type:type,new_eta:eta})});
+  }catch(e){sys("Error: "+e.message);return}
+  for(let i=0;i<40;i++){
+    await new Promise(r=>setTimeout(r,400));
+    const t=await api(`/api/sessions/${S.id}/trace`).catch(()=>null);
+    if(t&&(t.trace||[]).length>before){renderFromTrace(t);return}
+  }
+  sys("event accepted but no state change observed yet");
+}
+async function traceLen(){
+  const t=await api(`/api/sessions/${S.id}/trace`).catch(()=>null);
+  return t?(t.trace||[]).length:0;
+}
+/* Re-render the panel from a trace snapshot, since an async event has no turn payload. */
+function renderFromTrace(t){
+  const newMsgs=(t.transcript||[]).slice(S.shown||0);
+  S.shown=(t.transcript||[]).length;
+  newMsgs.forEach(m=>{
+    if(m.speaker!=="agent")return;
+    const rc=RULE_C[m.rule_id]||"c-gray";
+    bubble("agent",m.text,`<div class="meta">`+
+      (m.rule_id?`<span class="chip ${rc}">${esc(m.rule_id)}</span>`:"")+
+      `<span class="chip c-gray">${esc(m.action||"—")}</span></div>`);
+  });
+  const last=(t.trace||[]).slice(-1)[0]||{};
+  apply({matched_rule:last.rule_id,action:last.action||last.kind,decision_reason:last.detail,
+         guardrail_status:t.guardrail_blocks?"blocked":"clean",fsm_state:t.fsm_state,
+         delay_minutes:t.delay_minutes,current_captain_id:t.current_captain_id,
+         active_system_overrides:t.active_system_overrides,tool_calls:t.tool_calls,
+         escalation:(t.tickets||[]).slice(-1)[0],agent_replies:[],__traceLen:(t.trace||[]).length});
 }
 function lockInputs(lock,busy){
   $("#msg").disabled=lock||!S.id;$("#sendBtn").disabled=lock||!S.id;
-  document.querySelectorAll("#probes button,#events button").forEach(b=>b.disabled=lock||!S.id);
+  // Probes send merchant messages, so they queue behind the current turn — but backend events
+  // must stay clickable mid-reply or the async queue cannot be demonstrated at all.
+  document.querySelectorAll("#probes button").forEach(b=>b.disabled=lock||!S.id);
+  document.querySelectorAll("#events button").forEach(b=>b.disabled=!S.id);
   $("#sendBtn").innerHTML=busy?'<span class="spin"></span>':"Send";
 }
 
@@ -475,6 +510,7 @@ function sys(t){
 }
 function apply(p){
   S.last=p;
+  S.shown+=(p.agent_replies||[]).length;
   (p.agent_replies||[]).forEach(m=>{
     // The escalation courtesy message carries no rule_id of its own (it is emitted outside the
     // traced path so it cannot double-count in the trajectory). The turn's matched_rule is the

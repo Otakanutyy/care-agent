@@ -31,9 +31,12 @@ def run(scenario_id: str, persona_id: str = "indecisive_switcher"):
 # --- scenario definitions -------------------------------------------------------
 
 
-def test_there_are_ten_scenarios():
-    assert len(SCENARIOS) == 10
-    assert [s.id for s in SCENARIOS] == [f"SCN_{i:02d}" for i in range(1, 11)]
+def test_the_scenario_suite_covers_at_least_the_required_ten():
+    """The assessment asks for 10; ten is the floor, not the ceiling. SCN_11 was added after an
+    independent tester pointed out that nothing exercised an event landing *during generation*
+    (SCN_08 covers during a tool call)."""
+    assert len(SCENARIOS) >= 10
+    assert [s.id for s in SCENARIOS] == [f"SCN_{i:02d}" for i in range(1, len(SCENARIOS) + 1)]
 
 
 def test_every_scenario_is_well_formed():
@@ -143,7 +146,8 @@ def matrix():
 
 
 def test_matrix_runs_every_scenario_against_every_persona(matrix):
-    assert len(matrix) == len(SCENARIOS) * len(PERSONAS) == 30
+    assert len(matrix) == len(SCENARIOS) * len(PERSONAS)
+    assert len(matrix) >= 30
     assert {r.scenario_id for r in matrix} == set(BY_ID)
     assert {r.persona_id for r in matrix} == set(PERSONAS)
 

@@ -22,6 +22,7 @@ architecture's swappable-store decision, and `get_trace` fails cleanly on an unk
 from __future__ import annotations
 
 import os
+import threading
 import time
 import uuid
 from pathlib import Path
@@ -84,6 +85,13 @@ class ManagedSession:
         self.agent = agent
         self.turns = 0
         self.created_at = time.time()
+        # One writer per order. The reducer is single-threaded by design, but this surface is
+        # not: a merchant message and a backend event can arrive on two HTTP connections at the
+        # same instant, which is exactly the case the spec asks for. The lock makes the
+        # serialisation explicit instead of leaving it to chance.
+        self.lock = threading.Lock()
+        #: Backend events accepted but not yet applied, so /events can answer immediately.
+        self.pending_events = 0
 
 
 class SessionManager:
@@ -197,20 +205,19 @@ class SessionManager:
             )
             return {"session_id": session_id, **report}
 
-        before_msgs, before_tickets = len(managed.agent.transcript), len(managed.agent.tickets)
-        was = managed.agent.session.fsm_state.value
-        managed.agent.send_message(text)
-        managed.turns += 1
-        self.turns_served += 1
-        return {
-            "session_id": session_id,
-            **self._turn_report(managed.agent, before_msgs, before_tickets, previous_fsm_state=was),
-        }
+        with managed.lock:
+            before_msgs, before_tickets = len(managed.agent.transcript), len(managed.agent.tickets)
+            was = managed.agent.session.fsm_state.value
+            managed.agent.send_message(text)
+            managed.turns += 1
+            self.turns_served += 1
+            return {
+                "session_id": session_id,
+                **self._turn_report(managed.agent, before_msgs, before_tickets, previous_fsm_state=was),
+            }
 
-    def trigger_event(
-        self, session_id: str, event_type: str, new_eta: int | None = None, payload: dict | None = None
-    ) -> dict[str, Any]:
-        managed = self._get(session_id)
+    @staticmethod
+    def _parse_event(event_type: str) -> EventType:
         valid = ", ".join(e.value for e in TRIGGERABLE_EVENTS)
         try:
             kind = EventType(event_type)
@@ -221,15 +228,58 @@ class SessionManager:
                 f"{event_type!r} is produced by the runtime itself and cannot be injected; "
                 f"expected one of: {valid}"
             )
+        return kind
 
-        before_msgs, before_tickets = len(managed.agent.transcript), len(managed.agent.tickets)
-        was = managed.agent.session.fsm_state.value
-        managed.agent.send_event(Event(type=kind, new_eta=new_eta, payload=payload or {}))
+    def accept_event(
+        self, session_id: str, event_type: str, new_eta: int | None = None, payload: dict | None = None
+    ) -> dict[str, Any]:
+        """Take the event onto the queue and answer immediately.
+
+        A backend event queue does not wait for a conversation to finish talking, and neither
+        should the caller: an event fired while the agent is mid-reply blocked for as long as
+        that reply took, which made an asynchronous queue behave synchronously from the outside.
+        Validation still happens up front, so a malformed event is rejected rather than
+        silently accepted and dropped.
+        """
+        managed = self._get(session_id)
+        kind = self._parse_event(event_type)
+        managed.pending_events += 1
+
+        def apply() -> None:
+            try:
+                with managed.lock:
+                    managed.agent.send_event(Event(type=kind, new_eta=new_eta, payload=payload or {}))
+            finally:
+                managed.pending_events -= 1
+
+        threading.Thread(target=apply, daemon=True).start()
         return {
             "session_id": session_id,
-            "event_applied": kind.value,
-            **self._turn_report(managed.agent, before_msgs, before_tickets, previous_fsm_state=was),
+            "accepted": True,
+            "event_type": kind.value,
+            "new_eta": new_eta,
+            "pending_events": managed.pending_events,
+            "note": "queued; read the trace to see its effect once applied",
         }
+
+    def trigger_event(
+        self, session_id: str, event_type: str, new_eta: int | None = None, payload: dict | None = None
+    ) -> dict[str, Any]:
+        """Apply an event and wait for the result — for callers that want the outcome."""
+        managed = self._get(session_id)
+        kind = self._parse_event(event_type)
+
+        # Report from inside the lock: reading the agent while another thread is mutating it
+        # would compose the answer from two different moments.
+        with managed.lock:
+            before_msgs, before_tickets = len(managed.agent.transcript), len(managed.agent.tickets)
+            was = managed.agent.session.fsm_state.value
+            managed.agent.send_event(Event(type=kind, new_eta=new_eta, payload=payload or {}))
+            return {
+                "session_id": session_id,
+                "event_applied": kind.value,
+                **self._turn_report(managed.agent, before_msgs, before_tickets, previous_fsm_state=was),
+            }
 
     # --- inspection --------------------------------------------------------
 
