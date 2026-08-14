@@ -1,0 +1,19 @@
+# Without this, git guesses that WRITEUP.pdf is text and rewrites LF to CRLF on checkout,
+# which corrupts it — a clone on Windows produced a file 117 bytes larger than the original
+# and no longer a readable PDF. Mark binary formats explicitly.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+
+# Keep text files normalized to LF in the repository regardless of the checkout platform.
+*.py    text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.html  text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
