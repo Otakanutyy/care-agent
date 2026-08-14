@@ -588,6 +588,7 @@ async function loadEval(){
   const box=$("#evalBox");
   try{
     const r=await api("/api/report");
+    S.report=r;
     const s=r.summary||{},runs=r.results||[];
     const pct=v=>v===undefined||v===null?"—":(Math.round(v*100)+"%");
     box.innerHTML=
@@ -596,21 +597,89 @@ async function loadEval(){
         <span class="chip ${s.scenarios_passed===s.scenarios?"c-green":"c-red"}">${s.scenarios_passed}/${s.scenarios} scenarios</span>
         <span class="chip ${s.guardrail_violations?"c-red":"c-green"}">${s.guardrail_violations} unauthorized promises reached a merchant</span>
         <span class="chip c-gray">policy v${esc(r.policy_version)}</span>
-        <span class="chip c-gray">${r.subjective_judge_ran?"judge ran":"objective metrics only"}</span>
+        <span class="chip ${r.mode==="live"?"c-green":"c-gray"}">${esc(r.mode||"offline")} run</span>
+        <span class="chip c-gray">${r.subjective_judge_ran?"LLM judge ran":"objective metrics only"}</span>
        </div>
-       <div class="dim" style="font-size:11.5px;margin-bottom:14px">generated ${esc(r.generated_at||"—")}</div>
-       <table><thead><tr><th>Scenario</th><th>Persona</th><th>Result</th>
+       <div class="dim" style="font-size:11.5px;margin-bottom:14px">
+         generated ${esc(r.generated_at||"—")} · click any row for the full conversation and decision trail</div>
+       <table><thead><tr><th></th><th>Scenario</th><th>Persona</th><th>Result</th>
          <th>Trajectory</th><th>Policy</th><th>Violations</th></tr></thead><tbody>`+
-      runs.map(x=>{const m=x.metrics||{};return `<tr>
+      runs.map((x,i)=>{const m=x.metrics||{};return `<tr class="runrow" onclick="toggleRun(${i})" style="cursor:pointer">
+        <td class="dim mono" id="caret-${i}">▸</td>
         <td class="mono">${esc(x.scenario_id)}<div class="dim" style="font-size:11px">${esc(x.title||"")}</div></td>
         <td class="mono" style="font-size:12px">${esc(x.persona_id)}</td>
         <td><span class="chip ${x.passed?"c-green":"c-red"}">${x.passed?"pass":"fail"}</span>
             ${x.failure_reason?`<div class="dim" style="font-size:11px">${esc(x.failure_reason)}</div>`:""}</td>
         <td class="mono">${pct(m.trajectory_correctness)}</td>
         <td class="mono">${pct(m.policy_compliance)}</td>
-        <td class="mono ${m.guardrail_violations?"":"dim"}">${m.guardrail_violations??0}</td></tr>`}).join("")+
+        <td class="mono ${m.guardrail_violations?"":"dim"}">${m.guardrail_violations??0}</td></tr>
+        <tr id="detail-${i}" class="hide"><td colspan="7" style="background:var(--bg);padding:0">
+          <div id="detailbody-${i}" style="padding:14px 18px"></div></td></tr>`}).join("")+
       `</tbody></table>`;
   }catch(e){box.textContent="Could not load report.json: "+e.message}
+}
+
+/* Expand one run into its full evidence — the conversation, the rule behind each step, the
+   tool order, and every check the scorer ran. A pass you cannot inspect is a number on trust. */
+function toggleRun(i){
+  const row=$("#detail-"+i), caret=$("#caret-"+i);
+  const open=!row.classList.contains("hide");
+  row.classList.toggle("hide",open);
+  caret.textContent=open?"▸":"▾";
+  if(open)return;
+
+  const x=(S.report.results||[])[i]||{}, e=x.evidence||{}, ctx=e.context||{};
+  const convo=(e.transcript||[]).map(m=>{
+    const who=m.speaker==="merchant"?"Merchant":"Agent";
+    const tag=m.action?`<span class="chip ${RULE_C[m.rule_id]||"c-gray"}">${esc(m.rule_id||"—")}</span> `
+        +`<span class="chip c-gray">${esc(m.action)}</span> `:"";
+    const cls=m.speaker==="merchant"?"c-blue":"c-gray";
+    return `<div style="padding:6px 0;border-bottom:1px solid var(--line)">
+      <span class="chip ${cls}">${who}</span> ${tag}
+      <div${isAr(m.text)?' dir="rtl"':''} style="margin-top:4px">${esc(m.text)}</div></div>`;
+  }).join("")||"<span class='dim'>no messages — this scenario is log-only</span>";
+
+  const checks=(x.checks||[]).map(c=>
+    `<div class="kv"><span class="k">${c.passed?"PASS":"FAIL"} · ${esc(c.name)}</span>
+     <span class="v dim" style="font-size:12px">${esc(c.detail||"")}</span></div>`).join("");
+
+  const judge=x.judge?`<div class="card" style="margin:0 0 12px">
+      <h3>LLM judge (subjective only)</h3>
+      <div class="kv"><span class="k">unauthorized promise</span><span class="v">${
+        x.judge.unauthorized_promise?'<span class="chip c-red">yes</span>':'<span class="chip c-green">no</span>'}</span></div>
+      <div class="kv"><span class="k">language appropriate</span><span class="v">${
+        x.judge.language_appropriate?'<span class="chip c-green">yes</span>':'<span class="chip c-red">no</span>'}</span></div>
+      <div class="kv"><span class="k">coherent</span><span class="v">${
+        x.judge.coherent?'<span class="chip c-green">yes</span>':'<span class="chip c-red">no</span>'}</span></div>
+      ${x.judge.notes?`<div class="dim" style="font-size:12.5px;margin-top:8px">${esc(x.judge.notes)}</div>`:""}
+    </div>`:"";
+
+  $("#detailbody-"+i).innerHTML=`
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="chip c-gray">${esc(ctx.merchant_tier||"?")}</span>
+      <span class="chip c-gray">${esc(ctx.delay_minutes??"?")} min delay</span>
+      <span class="chip c-gray mono">${esc(ctx.order_id||"")}</span>
+      ${(ctx.active_system_overrides||[]).map(o=>`<span class="chip c-amber">${esc(o)}</span>`).join("")}
+    </div>
+    <div class="k muted" style="font-size:12px;margin-bottom:6px">Conversation</div>
+    <div style="margin-bottom:14px">${convo}</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px">
+      <div>
+        <div class="k muted" style="font-size:12px;margin-bottom:6px">Trajectory</div>
+        <pre style="margin-bottom:12px">${esc(["INIT",...(e.trajectory||[]),"["+(e.final_state||"?")+"]"].join(" -> "))}</pre>
+        <div class="kv"><span class="k">terminal reason</span><span class="v mono">${esc(e.terminal_reason||"—")}</span></div>
+        <div class="kv"><span class="k">tool calls in order</span><span class="v">${
+          (e.tool_call_order||[]).map(c=>`<span class="chip c-gray mono">${esc(c)}</span>`).join(" ")||"<span class='dim'>none</span>"}</span></div>
+        <div class="kv"><span class="k">guardrail blocks</span><span class="v">${x.guardrail_blocks||0}</span></div>
+        ${(e.tickets||[]).map(t=>`<div class="kv"><span class="k">escalation</span>
+          <span class="v mono" style="font-size:12px">${esc(t.ticket_id)} · ${esc(t.reason)}</span></div>`).join("")}
+      </div>
+      <div>
+        ${judge}
+        <div class="k muted" style="font-size:12px;margin-bottom:6px">Scorer checks (recomputed from the policy file)</div>
+        ${checks||"<span class='dim'>none</span>"}
+      </div>
+    </div>`;
 }
 
 /* ── prompts + guardrails tabs ── */

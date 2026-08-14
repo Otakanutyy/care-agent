@@ -95,7 +95,7 @@ _REQUEST_MARKERS = (
 
 _HUMAN_NOUNS = (
     # English
-    "human", "person", "agent", "representative", "rep", "supervisor", "manager",
+    "human", "person", "agent", "representative", "supervisor", "manager",
     "someone", "somebody", "real person", "staff", "operator",
     # Arabic
     "انسان", "إنسان", "بشر", "موظف", "مسؤول", "مسئول", "مدير", "ممثل", "شخص", "خدمة العملاء",
@@ -119,11 +119,13 @@ _SPEECH_VERBS = (
     "atkalam", "atkallem", "at7adas",
 )
 
-# Short nouns matched on a **whole-word** boundary rather than as substrings. حد ("someone") is
-# the ordinary way to ask for a person in Egyptian Arabic — "عايز اكلم حد" — but as a substring
-# it also fires inside لحد ("until"), تحديد ("scheduling"), and حدث ("event"), any of which would
-# escalate a perfectly normal message. The boundary keeps the intent and drops the collisions.
-_SHORT_HUMAN_NOUNS = ("حد", "حدا", "7ad", "7ada")
+# Short nouns matched on a **whole-word** boundary rather than as substrings, because as
+# substrings they fire inside unrelated words and escalate perfectly normal messages:
+#   حد   ("someone")        also inside لحد ("until"), تحديد ("scheduling"), حدث ("event")
+#   rep  ("representative") also inside reputation, replace, report, repeat, replacement
+# The `rep` case was the worse of the two: "I want you to replace the driver" — a merchant
+# *accepting a reassignment* — matched `rep` + `want` and escalated to a human instead.
+_SHORT_HUMAN_NOUNS = ("حد", "حدا", "7ad", "7ada", "rep", "reps")
 
 _SHORT_NOUN_RE = re.compile(
     r"(?<!\w)(?:" + "|".join(re.escape(n) for n in _SHORT_HUMAN_NOUNS) + r")(?!\w)"
@@ -166,13 +168,50 @@ def detect_human_request(text: str) -> bool:
 # --- Classification ------------------------------------------------------------
 
 
-def _coerce(data: dict) -> ClassifierFlags:
+#: A message must be *mostly* Arabic to be answered in Arabic. Tuned against the live
+#: evaluation: "Haram 3alaykom" inside 35 words of English is ~6% and must stay English, while
+#: "3ayez akalem 7ad" is 67% and must not.
+_ARABIC_DOMINANCE = 0.30
+_FRANCO_DOMINANCE = 0.20
+
+
+def reconcile_language(claimed: str, text: str) -> str:
+    """Decide the reply language by which script *dominates*, not by which is merely present.
+
+    The tag chooses the language the merchant is answered in, so getting it wrong switches the
+    entire reply. Two live failures motivated this, and they fail in opposite directions:
+
+    * An English message mentioning "500 AED credit" was labelled Franco-Arabic by the model
+      with no Arabic in it at all — so a claim of Arabic now requires actual script evidence.
+    * A merchant wrote 35 words of English ending "Haram 3alaykom". Arabic *was* present, both
+      the model and a presence test agreed, and the agent answered wholly in Darija. Presence is
+      the wrong test: code-switching a couple of words does not change the conversation's
+      language.
+
+    Dominance handles both, and needs no model cooperation. The residual risk is Franco-Arabic
+    written with no numerals — unusual, since the numerals are its defining feature — which
+    degrades to answering in English, far milder than answering an English speaker in Darija.
+    """
+    words = normalize(text).split()
+    if not words:
+        return claimed if claimed in ("en", "ar", "ar-latn") else "en"
+
+    arabic = sum(1 for w in words if _ARABIC_SCRIPT.search(w))
+    franco = sum(1 for w in words if _FRANCO_ARABIC.search(w))
+    if arabic / len(words) >= _ARABIC_DOMINANCE:
+        return "ar"
+    if (arabic + franco) / len(words) >= _FRANCO_DOMINANCE:
+        return "ar-latn"
+    return "en"
+
+
+def _coerce(data: dict, text: str = "") -> ClassifierFlags:
     """Build flags from the model's object, ignoring unknown keys and coercing types."""
     values = {field: bool(data.get(field, False)) for field in BOOLEAN_FIELDS}
     language = data.get("language", "en")
     if not isinstance(language, str) or language not in ("en", "ar", "ar-latn"):
         language = "en"
-    return ClassifierFlags(**values, language=language)
+    return ClassifierFlags(**values, language=reconcile_language(language, text))
 
 
 def classify(text: str, client: LLMClient, model: str = CLASSIFIER_MODEL) -> ClassifierFlags:
@@ -198,4 +237,4 @@ def classify(text: str, client: LLMClient, model: str = CLASSIFIER_MODEL) -> Cla
 
     if not isinstance(data, dict):
         raise ClassifierError(f"classifier returned {type(data).__name__}, expected an object")
-    return _coerce(data)
+    return _coerce(data, text)

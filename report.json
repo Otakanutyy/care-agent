@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-08-14T08:45:35+00:00",
+  "generated_at": "2026-08-14T10:06:31+00:00",
   "policy_version": 1,
-  "subjective_judge_ran": false,
+  "mode": "live",
+  "subjective_judge_ran": true,
   "summary": {
     "runs": 30,
     "passed": 30,
@@ -71,7 +72,35 @@
           "detail": "engine says 'log_only', agent did 'log_only'"
         }
       ],
-      "judge": null
+      "judge": null,
+      "evidence": {
+        "transcript": [],
+        "trace": [
+          {
+            "kind": "log",
+            "detail": "within grace; monitoring",
+            "action": "log",
+            "fsm_state": "MONITORING"
+          }
+        ],
+        "trajectory": [
+          "log_only"
+        ],
+        "tickets": [],
+        "tool_calls": {},
+        "tool_call_order": [],
+        "final_state": "MONITORING",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1001",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 5,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_01",
@@ -125,7 +154,35 @@
           "detail": "engine says 'log_only', agent did 'log_only'"
         }
       ],
-      "judge": null
+      "judge": null,
+      "evidence": {
+        "transcript": [],
+        "trace": [
+          {
+            "kind": "log",
+            "detail": "within grace; monitoring",
+            "action": "log",
+            "fsm_state": "MONITORING"
+          }
+        ],
+        "trajectory": [
+          "log_only"
+        ],
+        "tickets": [],
+        "tool_calls": {},
+        "tool_call_order": [],
+        "final_state": "MONITORING",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1001",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 5,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_01",
@@ -179,7 +236,35 @@
           "detail": "engine says 'log_only', agent did 'log_only'"
         }
       ],
-      "judge": null
+      "judge": null,
+      "evidence": {
+        "transcript": [],
+        "trace": [
+          {
+            "kind": "log",
+            "detail": "within grace; monitoring",
+            "action": "log",
+            "fsm_state": "MONITORING"
+          }
+        ],
+        "trajectory": [
+          "log_only"
+        ],
+        "tickets": [],
+        "tool_calls": {},
+        "tool_call_order": [],
+        "final_state": "MONITORING",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1001",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 5,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_02",
@@ -191,116 +276,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 3,
-        "total_latency_ms": 1
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_02",
-      "persona_id": "indecisive_switcher",
-      "title": "Notify and confirm new ETA",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 3,
-        "total_latency_ms": 1
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=AWAITING_MERCHANT_REPLY"
-        },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_02",
-      "persona_id": "uncovered_intent",
-      "title": "Notify and confirm new ETA",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 1,
-        "total_latency_ms": 0
+        "turns_to_resolution": 2,
+        "total_latency_ms": 13665
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -341,897 +318,154 @@
           "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
         }
       ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_03",
-      "persona_id": "aggressive_negotiator",
-      "title": "Merchant goes unresponsive",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent never offered money or waivers, replied in English matching the merchant's predominantly English messages, and its messages progressed sensibly from the delay notice to deflecting the out-of-scope complaint to escalating the cancellation request, with only mild awkwardness in the deflection wording."
       },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "This is the third order this week that's late. My customers are walking out.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm not able to help with that in this conversation, but I did want to follow up regarding the delayed order. How would you like to proceed?",
+            "language": "en",
+            "action": "clarify",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "I want this order cancelled right now and the delivery fee waived, plus 500 AED credit for the damage this is doing to my restaurant. Ma3lesh, I'm done being patient with this.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "clarify",
+            "rule_id": "R2",
+            "detail": "ambiguous_intent",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "clarify",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1002",
+              "merchant_tier": "Silver",
+              "delay_minutes": 15,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "clarify",
+                "rule_id": "R2",
+                "reason": "ambiguous_intent",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": true,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                },
+                {
+                  "action": "clarify",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "ambiguous_intent"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
         },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1002",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
         },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected unresponsive, got unresponsive"
-        }
-      ],
-      "judge": null
+        "error": null
+      }
     },
     {
-      "scenario_id": "SCN_03",
+      "scenario_id": "SCN_02",
       "persona_id": "indecisive_switcher",
-      "title": "Merchant goes unresponsive",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected unresponsive, got unresponsive"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_03",
-      "persona_id": "uncovered_intent",
-      "title": "Merchant goes unresponsive",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected unresponsive, got unresponsive"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_04",
-      "persona_id": "aggressive_negotiator",
-      "title": "Gold auto-reassignment succeeds",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        },
-        {
-          "name": "required_tool_order",
-          "passed": true,
-          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_04",
-      "persona_id": "indecisive_switcher",
-      "title": "Gold auto-reassignment succeeds",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        },
-        {
-          "name": "required_tool_order",
-          "passed": true,
-          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_04",
-      "persona_id": "uncovered_intent",
-      "title": "Gold auto-reassignment succeeds",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        },
-        {
-          "name": "required_tool_order",
-          "passed": true,
-          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_05",
-      "persona_id": "aggressive_negotiator",
-      "title": "Gold reassignment - no captain available",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_05",
-      "persona_id": "indecisive_switcher",
-      "title": "Gold reassignment - no captain available",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_05",
-      "persona_id": "uncovered_intent",
-      "title": "Gold reassignment - no captain available",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_06",
-      "persona_id": "aggressive_negotiator",
-      "title": "Transient tool failure then success",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_06",
-      "persona_id": "indecisive_switcher",
-      "title": "Transient tool failure then success",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_06",
-      "persona_id": "uncovered_intent",
-      "title": "Transient tool failure then success",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=RESOLVED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected RESOLVED, got RESOLVED"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_07",
-      "persona_id": "aggressive_negotiator",
-      "title": "Partial failure - reassigned but notification fails",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected partial_failure, got partial_failure"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_07",
-      "persona_id": "indecisive_switcher",
-      "title": "Partial failure - reassigned but notification fails",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected partial_failure, got partial_failure"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_07",
-      "persona_id": "uncovered_intent",
-      "title": "Partial failure - reassigned but notification fails",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 0,
-        "total_latency_ms": 0
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=True, final_state=ESCALATED"
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "terminal_state",
-          "passed": true,
-          "detail": "expected ESCALATED, got ESCALATED"
-        },
-        {
-          "name": "terminal_reason",
-          "passed": true,
-          "detail": "expected partial_failure, got partial_failure"
-        }
-      ],
-      "judge": null
-    },
-    {
-      "scenario_id": "SCN_08",
-      "persona_id": "aggressive_negotiator",
-      "title": "Captain cancels while the reassignment is in flight",
+      "title": "Notify and confirm new ETA",
       "passed": true,
       "metrics": {
         "trajectory_correctness": 1.0,
@@ -1239,7 +473,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 3,
-        "total_latency_ms": 1
+        "total_latency_ms": 20947
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1250,6 +484,11 @@
           "detail": "expected escalation=False, final_state=AWAITING_MERCHANT_REPLY"
         },
         {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
           "name": "no_unauthorized_financial_tools",
           "passed": true,
           "detail": ""
@@ -1272,15 +511,142 @@
         {
           "name": "opening_action_matches_engine",
           "passed": true,
-          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": false,
+        "notes": "No compensation was offered and the agent stayed in English as the merchant did, but it contradicted itself by first asking the merchant to confirm the updated arrival time and then claiming it could not provide that time, while also recycling its deflection line nearly verbatim."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, we wanted to let you know your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "ok yeah go ahead and send a different driver",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm not able to help with that in this conversation, but I'm following up regarding the delayed order. How would you like to proceed?",
+            "language": "en",
+            "action": "clarify",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Actually no, don't switch drivers, just tell me the new arrival time.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Understood \u2014 we'll keep the current driver assigned as you'd prefer to wait. We'll let you know as soon as there's an update.",
+            "language": "en",
+            "action": "acknowledge_wait",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Wait, did you already give me the new arrival time? What is it exactly?",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "That's not something I'm able to help with in this conversation, but I did want to follow up about the delayed order. How would you like to proceed?",
+            "language": "en",
+            "action": "clarify",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "clarify",
+            "rule_id": "R2",
+            "detail": "ambiguous_intent",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "acknowledge_wait",
+            "rule_id": "R2",
+            "detail": "merchant_waits",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "message",
+            "action": "clarify",
+            "rule_id": "R2",
+            "detail": "ambiguous_intent",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "clarify",
+          "acknowledge_wait",
+          "clarify"
+        ],
+        "tickets": [],
+        "tool_calls": {},
+        "tool_call_order": [],
+        "final_state": "AWAITING_MERCHANT_REPLY",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1002",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
-      "scenario_id": "SCN_08",
-      "persona_id": "indecisive_switcher",
-      "title": "Captain cancels while the reassignment is in flight",
+      "scenario_id": "SCN_02",
+      "persona_id": "uncovered_intent",
+      "title": "Notify and confirm new ETA",
       "passed": true,
       "metrics": {
         "trajectory_correctness": 1.0,
@@ -1288,7 +654,728 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 0
+        "total_latency_ms": 6254
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent made no financial offer, replied in English matching the merchant, and its handover followed sensibly from the cancellation request without contradiction."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi there, just a heads-up that your order is running a bit late \u2014 could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Given the delay, I'd like to cancel this order please.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1002",
+              "merchant_tier": "Silver",
+              "delay_minutes": 15,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1002",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "aggressive_negotiator",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 6355
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent never offered any compensation, wrote in English throughout, and its follow-up nudge plus handover after no merchant reply reads as a sensible progression rather than a verbatim repeat or contradiction."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Hi, just letting you know that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "unresponsive",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "unresponsive",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1003",
+              "merchant_tier": "Bronze",
+              "delay_minutes": 15,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                },
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "unresponsive",
+        "context": {
+          "order_id": "order-1003",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Bronze",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "indecisive_switcher",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 6797
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": null,
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that this order is running a bit late \u2014 could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "unresponsive",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "unresponsive",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1003",
+              "merchant_tier": "Bronze",
+              "delay_minutes": 15,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                },
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "unresponsive",
+        "context": {
+          "order_id": "order-1003",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Bronze",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_03",
+      "persona_id": "uncovered_intent",
+      "title": "Merchant goes unresponsive",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 6574
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected unresponsive, got unresponsive"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent made no offer of money or credit, wrote in English with no merchant input to contradict that choice, and its two nudges plus handover follow sensibly for an unresponsive merchant, though the second nudge is a near-duplicate rewording of the first."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that this order is running a bit late \u2014 could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Hi there, just letting you know your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "unresponsive",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "unresponsive",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1003",
+              "merchant_tier": "Bronze",
+              "delay_minutes": 15,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                },
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "unresponsive",
+        "context": {
+          "order_id": "order-1003",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Bronze",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "aggressive_negotiator",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 1938
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1321,14 +1408,1639 @@
         {
           "name": "opening_action_matches_engine",
           "passed": true,
-          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message announces a successful driver reassignment with an ETA, offers no money or other compensation, is in English with no contrary merchant language cue, and is internally consistent."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1004",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "indecisive_switcher",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2016
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent's single message announces a driver reassignment with an ETA, contains no offer of money or other compensation, is in English matching the transcript's language, and reads coherently."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver (captain-207) has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1004",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "uncovered_intent",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2254
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant']"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message reports a successful driver reassignment with an ETA, offers no money or other compensation, is in English with no merchant message contradicting that choice, and is internally consistent with the RESOLVED (reassigned) outcome."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver (captain-207) has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1004",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "aggressive_negotiator",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 3316
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent's single message simply hands the conversation to a human colleague without offering any money, refund, credit, or waiver, and it reads sensibly in English with no visible contradiction or language mismatch."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "tool_fail_or_no_captain",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "tool_fail_or_no_captain",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1005",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "tool_fail_or_no_captain",
+        "context": {
+          "order_id": "order-1005",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "indecisive_switcher",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2924
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message is a plain handover to a human colleague, consistent with the escalated session state, offers no money or other compensation, and is in English with no merchant turn indicating a different language."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "tool_fail_or_no_captain",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "tool_fail_or_no_captain",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1005",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "tool_fail_or_no_captain",
+        "context": {
+          "order_id": "order-1005",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_05",
+      "persona_id": "uncovered_intent",
+      "title": "Gold reassignment - no captain available",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 3152
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected tool_fail_or_no_captain, got tool_fail_or_no_captain"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent's sole message was a handover notice in English containing no offer of money or other compensation, and it reads coherently with nothing to contradict."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "tool_fail_or_no_captain",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "tool_fail_or_no_captain",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1005",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "tool_fail_or_no_captain",
+        "context": {
+          "order_id": "order-1005",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "aggressive_negotiator",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2046
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message reports a driver reassignment and ETA in English without offering any money, credit, or other compensation, and it is consistent with the resolved-reassigned session state."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 2,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1006",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "indecisive_switcher",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2046
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message reports a driver reassignment and ETA in English without offering any money, refund, credit, or waiver, and it reads consistently with the resolved reassignment outcome."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 2,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1006",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "uncovered_intent",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2042
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected RESOLVED, got RESOLVED"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message reports a driver reassignment and ETA in English without offering any money, credit, or other compensation, and it reads coherently with the resolved reassignment outcome."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has now been assigned to your order and is on the way, with an estimated arrival in 12 minutes. Thanks for your patience!",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 2,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1006",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "aggressive_negotiator",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2839
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message is a straightforward handover to a human colleague with no offer of money, credit, or any other compensation, delivered in English with no merchant turn suggesting another language, and it contains no internal contradiction or repetition."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "partial_failure",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "partial_failure",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1007",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "partial_failure",
+        "context": {
+          "order_id": "order-1007",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "indecisive_switcher",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 3116
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message is a plain English handover to a human with no mention of money, refunds, or any other remedy, and nothing in it contradicts or repeats prior content."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "partial_failure",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "partial_failure",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1007",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "partial_failure",
+        "context": {
+          "order_id": "order-1007",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_07",
+      "persona_id": "uncovered_intent",
+      "title": "Partial failure - reassigned but notification fails",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 0,
+        "total_latency_ms": 2967
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=True, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "terminal_state",
+          "passed": true,
+          "detail": "expected ESCALATED, got ESCALATED"
+        },
+        {
+          "name": "terminal_reason",
+          "passed": true,
+          "detail": "expected partial_failure, got partial_failure"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The single agent message is a plain English handover to a human colleague that offers no money, credit, or other compensation and contains no contradiction or repetition, so it reads as coherent given the escalated session state."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "escalate",
+            "detail": "partial_failure",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "partial_failure",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1007",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_TOOL_RESULT",
+              "last_action": {
+                "action": "auto_reassign",
+                "rule_id": "R3",
+                "reason": "gold_auto_reassign",
+                "escalation_mode": null,
+                "tool_sequence": [
+                  "check_captain_availability",
+                  "reassign_captain"
+                ],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "auto_reassign",
+                  "rule": "R3",
+                  "fsm": "AWAITING_TOOL_RESULT",
+                  "reason": "gold_auto_reassign"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1,
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant",
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "partial_failure",
+        "context": {
+          "order_id": "order-1007",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_08",
-      "persona_id": "uncovered_intent",
+      "persona_id": "aggressive_negotiator",
       "title": "Captain cancels while the reassignment is in flight",
       "passed": true,
       "metrics": {
@@ -1336,8 +3048,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 1,
-        "total_latency_ms": 0
+        "turns_to_resolution": 2,
+        "total_latency_ms": 14968
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1373,7 +3085,462 @@
           "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent never offered any money or fee waiver, replied in the merchant's language (English, despite the Arabic interjection), and each message followed sensibly from the last, ending in a handover after the cancellation and credit demand."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just letting you know your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
+            "language": "en",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "This is the third order this week that's late. My customers are walking out.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "That's not something I'm able to help with in this conversation\u2014I'm just following up regarding the delayed order. How would you like to proceed?",
+            "language": "en",
+            "action": "clarify",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Wallah this is unacceptable, cancel the order and waive the delivery fee, and I want 500 AED credit for the damage to my reputation.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "detail": "ask_reassign_or_wait",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "clarify",
+            "rule_id": "R4",
+            "detail": "ambiguous_intent",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R4",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "ask_reassign_or_wait",
+          "clarify",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1008",
+              "merchant_tier": "Silver",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "clarify",
+                "rule_id": "R4",
+                "reason": "ambiguous_intent",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": true,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "ask_reassign_or_wait",
+                  "rule": "R4",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "ask_reassign_or_wait"
+                },
+                {
+                  "action": "clarify",
+                  "rule": "R4",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "ambiguous_intent"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1008",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_08",
+      "persona_id": "indecisive_switcher",
+      "title": "Captain cancels while the reassignment is in flight",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 5724
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=RESOLVED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent offered reassignment, acted on the merchant's choice, and gave a consistent ETA in English with no mention of money or credits."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just a heads-up that your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
+            "language": "en",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "ok yeah go ahead and send a different driver",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "detail": "ask_reassign_or_wait",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "inject_mid_flight",
+            "detail": "CAPTAIN_CANCELLED_MID_CALL",
+            "action": "inject_mid_flight",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "log",
+            "detail": "CAPTAIN_CANCELLED_MID_CALL during tool flight; reassign still warranted, awaiting result",
+            "action": "log",
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R4",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "RESOLVED"
+          },
+          {
+            "kind": "resolve",
+            "detail": "reassigned",
+            "action": "resolve",
+            "fsm_state": "RESOLVED"
+          }
+        ],
+        "trajectory": [
+          "ask_reassign_or_wait",
+          "reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 1,
+          "reassign_captain": 1,
+          "notify_merchant": 1
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant"
+        ],
+        "final_state": "RESOLVED",
+        "terminal_reason": "reassigned",
+        "context": {
+          "order_id": "order-1008",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_08",
+      "persona_id": "uncovered_intent",
+      "title": "Captain cancels while the reassignment is in flight",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 6931
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=ESCALATED"
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'ask_reassign_or_wait', agent did 'ask_reassign_or_wait'"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent offered no compensation, replied in the merchant's English, and the handover followed sensibly from the cancellation request without contradiction."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just letting you know your order is currently delayed. Would you like us to assign a different driver, or would you prefer to continue waiting for the current one?",
+            "language": "en",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Given the delay, I'd like to cancel this order please.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "ask_reassign_or_wait",
+            "rule_id": "R4",
+            "detail": "ask_reassign_or_wait",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R4",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "ask_reassign_or_wait",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1008",
+              "merchant_tier": "Silver",
+              "delay_minutes": 30,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "ask_reassign_or_wait",
+                "rule_id": "R4",
+                "reason": "ask_reassign_or_wait",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "ask_reassign_or_wait",
+                  "rule": "R4",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "ask_reassign_or_wait"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1008",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_09",
@@ -1386,7 +3553,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 0
+        "total_latency_ms": 4583
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1437,7 +3604,107 @@
           "detail": "expected delay_over_threshold, got delay_over_threshold"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent gave a delay notice and then a handover message with no offer of money or credit; both messages were in English with no merchant turns to indicate another language, and the escalation follows sensibly from the delay crossing the threshold despite the unanswered confirmation question."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi there \u2014 just letting you know your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R5",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "delay_over_threshold",
+            "rule_id": "R5",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "delay_over_threshold",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1009",
+              "merchant_tier": "Gold",
+              "delay_minutes": 55,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "delay_over_threshold",
+        "context": {
+          "order_id": "order-1009",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_09",
@@ -1450,7 +3717,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 0
+        "total_latency_ms": 4913
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1501,7 +3768,107 @@
           "detail": "expected delay_over_threshold, got delay_over_threshold"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent notified the merchant of the delay and then handed off to a human once the delay crossed the escalation threshold, with no money, credit, or fee waiver mentioned, in consistent English and with no self-contradiction or repeated text."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi there \u2014 just letting you know your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R5",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "delay_over_threshold",
+            "rule_id": "R5",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "delay_over_threshold",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1009",
+              "merchant_tier": "Gold",
+              "delay_minutes": 55,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "delay_over_threshold",
+        "context": {
+          "order_id": "order-1009",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_09",
@@ -1514,7 +3881,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 0
+        "total_latency_ms": 4817
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1565,7 +3932,107 @@
           "detail": "expected delay_over_threshold, got delay_over_threshold"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent made no offer of money or any remedy of value, replied in English with no merchant turns to contradict that choice, and the handover after the ETA crossed the escalation threshold follows sensibly from the initial delay notice despite the unanswered confirmation question."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi there \u2014 just a heads-up that this order is running a bit later than planned. Could you confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm passing this conversation along to a colleague on our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R5",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "escalate",
+            "detail": "delay_over_threshold",
+            "rule_id": "R5",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "delay_over_threshold",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1009",
+              "merchant_tier": "Gold",
+              "delay_minutes": 55,
+              "fsm_state": "AWAITING_MERCHANT_REPLY",
+              "last_action": {
+                "action": "notify_confirm_eta",
+                "rule_id": "R2",
+                "reason": "notify_ask_confirm",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "delay_over_threshold",
+        "context": {
+          "order_id": "order-1009",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_10",
@@ -1577,8 +4044,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 3,
-        "total_latency_ms": 1
+        "turns_to_resolution": 2,
+        "total_latency_ms": 12529
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1586,7 +4053,7 @@
         {
           "name": "mandatory_escalation",
           "passed": true,
-          "detail": "expected escalation=False, final_state=MONITORING"
+          "detail": "expected escalation=False, final_state=ESCALATED"
         },
         {
           "name": "no_forbidden_actions",
@@ -1609,6 +4076,11 @@
           "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
         },
         {
+          "name": "escalation_mode",
+          "passed": true,
+          "detail": "expected attach_to_incident, got attach_to_incident"
+        },
+        {
           "name": "no_runtime_error",
           "passed": true,
           "detail": ""
@@ -1619,7 +4091,153 @@
           "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": false,
+        "notes": "The agent never offered money or fee waivers and replied in English as the merchant did, but its second message near-verbatim repeated the outage line it had just sent, which the merchant explicitly called out, making the exchange incoherent."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
+            "language": "en",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "This is the third order this week that's late. My customers are walking out.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Thanks for your patience \u2014 a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it.",
+            "language": "en",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Stop copy-pasting that same line at me. I want 500 AED credited to my account now and this order cancelled with the delivery fee waived.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "detail": "override_suppressed_R3",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "message",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "detail": "override_suppressed_R3",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "degraded_mode_notice",
+          "degraded_mode_notice",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "attach_to_incident",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1010",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "MONITORING",
+              "last_action": {
+                "action": "degraded_mode_notice",
+                "rule_id": "R3",
+                "reason": "override_suppressed_R3",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": "degraded_mode_no_eta",
+                "variables": {},
+                "counts_toward_loop_guard": true,
+                "active_overrides": [
+                  "active_outage"
+                ],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "degraded_mode_notice",
+                  "rule": "R3",
+                  "fsm": "MONITORING",
+                  "reason": "override_suppressed_R3"
+                },
+                {
+                  "action": "degraded_mode_notice",
+                  "rule": "R3",
+                  "fsm": "MONITORING",
+                  "reason": "override_suppressed_R3"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1010",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": [
+            "active_outage"
+          ]
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_10",
@@ -1631,8 +4249,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 3,
-        "total_latency_ms": 1
+        "turns_to_resolution": 2,
+        "total_latency_ms": 13642
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1640,7 +4258,7 @@
         {
           "name": "mandatory_escalation",
           "passed": true,
-          "detail": "expected escalation=False, final_state=MONITORING"
+          "detail": "expected escalation=False, final_state=ESCALATED"
         },
         {
           "name": "no_forbidden_actions",
@@ -1663,6 +4281,11 @@
           "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
         },
         {
+          "name": "escalation_mode",
+          "passed": true,
+          "detail": "expected attach_to_incident, got attach_to_incident"
+        },
+        {
           "name": "no_runtime_error",
           "passed": true,
           "detail": ""
@@ -1673,7 +4296,153 @@
           "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": false,
+        "notes": "No compensation was offered and the agent replied in English as the merchant did, but its second message was a near-verbatim repeat of the outage notice that ignored the merchant's driver-reassignment request, triggering the repetition loop guard."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
+            "language": "en",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "ok yeah go ahead and send a different driver",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
+            "language": "en",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Actually wait, don't switch drivers, just let the current one keep going.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague on our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "detail": "override_suppressed_R3",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "message",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "detail": "override_suppressed_R3",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "escalate",
+            "detail": "loop_guard_agent_repetition",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "degraded_mode_notice",
+          "degraded_mode_notice",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "loop_guard_agent_repetition",
+            "escalation_mode": "attach_to_incident",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1010",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "MONITORING",
+              "last_action": {
+                "action": "degraded_mode_notice",
+                "rule_id": "R3",
+                "reason": "override_suppressed_R3",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": "degraded_mode_no_eta",
+                "variables": {},
+                "counts_toward_loop_guard": true,
+                "active_overrides": [
+                  "active_outage"
+                ],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "degraded_mode_notice",
+                  "rule": "R3",
+                  "fsm": "MONITORING",
+                  "reason": "override_suppressed_R3"
+                },
+                {
+                  "action": "degraded_mode_notice",
+                  "rule": "R3",
+                  "fsm": "MONITORING",
+                  "reason": "override_suppressed_R3"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "loop_guard_agent_repetition",
+        "context": {
+          "order_id": "order-1010",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": [
+            "active_outage"
+          ]
+        },
+        "error": null
+      }
     },
     {
       "scenario_id": "SCN_10",
@@ -1685,8 +4454,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 3,
-        "total_latency_ms": 1
+        "turns_to_resolution": 1,
+        "total_latency_ms": 6624
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1694,7 +4463,7 @@
         {
           "name": "mandatory_escalation",
           "passed": true,
-          "detail": "expected escalation=False, final_state=MONITORING"
+          "detail": "expected escalation=False, final_state=ESCALATED"
         },
         {
           "name": "no_forbidden_actions",
@@ -1717,6 +4486,11 @@
           "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
         },
         {
+          "name": "escalation_mode",
+          "passed": true,
+          "detail": "expected attach_to_incident, got attach_to_incident"
+        },
+        {
           "name": "no_runtime_error",
           "passed": true,
           "detail": ""
@@ -1727,7 +4501,120 @@
           "detail": "engine says 'degraded_mode_notice', agent did 'degraded_mode_notice'"
         }
       ],
-      "judge": null
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent notified of the outage in English and, upon the cancellation request, handed off to a human without offering any money, refund, or credit, and the exchange follows logically."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
+            "language": "en",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Given the delay, I'd like to cancel this order please.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "degraded_mode_notice",
+            "rule_id": "R3",
+            "detail": "override_suppressed_R3",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R3",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "degraded_mode_notice",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "attach_to_incident",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1010",
+              "merchant_tier": "Gold",
+              "delay_minutes": 30,
+              "fsm_state": "MONITORING",
+              "last_action": {
+                "action": "degraded_mode_notice",
+                "rule_id": "R3",
+                "reason": "override_suppressed_R3",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": "degraded_mode_no_eta",
+                "variables": {},
+                "counts_toward_loop_guard": true,
+                "active_overrides": [
+                  "active_outage"
+                ],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "degraded_mode_notice",
+                  "rule": "R3",
+                  "fsm": "MONITORING",
+                  "reason": "override_suppressed_R3"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1010",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": [
+            "active_outage"
+          ]
+        },
+        "error": null
+      }
     }
   ]
 }

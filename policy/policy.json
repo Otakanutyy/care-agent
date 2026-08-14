@@ -3,24 +3,88 @@
   "delay_formula": "max(0, promised_delivery_ts - now)",
   "tick_interval_seconds": 60,
   "rules": [
-    { "id": "R1", "delay": [0, 10],    "tier": "*",                  "action": "log_only",             "escalates": "never" },
-    { "id": "R2", "delay": [10, 20],   "tier": "*",                  "action": "notify_confirm_eta",   "escalates": "unresponsive_after_attempts" },
-    { "id": "R3", "delay": [20, 40],   "tier": "Gold",               "action": "auto_reassign",        "escalates": "tool_fail_or_no_captain" },
-    { "id": "R4", "delay": [20, 40],   "tier": ["Silver", "Bronze"], "action": "ask_reassign_or_wait", "escalates": "cancellation_requested" },
-    { "id": "R5", "delay": [40, null], "tier": "*",                  "action": "escalate_immediate",   "escalates": "always" }
+    {
+      "id": "R1",
+      "delay": [
+        0,
+        10
+      ],
+      "tier": "*",
+      "action": "log_only",
+      "escalates": "never"
+    },
+    {
+      "id": "R2",
+      "delay": [
+        10,
+        20
+      ],
+      "tier": "*",
+      "action": "notify_confirm_eta",
+      "escalates": "unresponsive_after_attempts"
+    },
+    {
+      "id": "R3",
+      "delay": [
+        20,
+        40
+      ],
+      "tier": "Gold",
+      "action": "auto_reassign",
+      "escalates": "tool_fail_or_no_captain"
+    },
+    {
+      "id": "R4",
+      "delay": [
+        20,
+        40
+      ],
+      "tier": [
+        "Silver",
+        "Bronze"
+      ],
+      "action": "ask_reassign_or_wait",
+      "escalates": "cancellation_requested"
+    },
+    {
+      "id": "R5",
+      "delay": [
+        40,
+        null
+      ],
+      "tier": "*",
+      "action": "escalate_immediate",
+      "escalates": "always"
+    }
   ],
-  "boundary_inclusivity": { "R3_R4_upper": "inclusive", "R5_lower": "exclusive" },
-  "r6_preemption": { "flag": "requests_human", "action": "escalate" },
-  "boolean_precedence": ["requests_human", "requests_cancellation", "accepts_reassignment", "prefers_to_wait", "confirms_new_eta"],
+  "boundary_inclusivity": {
+    "R3_R4_upper": "inclusive",
+    "R5_lower": "exclusive"
+  },
+  "r6_preemption": {
+    "flag": "requests_human",
+    "action": "escalate"
+  },
+  "boolean_precedence": [
+    "requests_human",
+    "requests_cancellation",
+    "accepts_reassignment",
+    "prefers_to_wait",
+    "confirms_new_eta"
+  ],
   "override_map": {
     "active_outage": {
-      "suppressed_rules": ["R3", "R4"],
+      "suppressed_rules": [
+        "R3",
+        "R4"
+      ],
       "escalation_mode": "attach_to_incident",
       "notification": "degraded_mode_no_eta"
     }
   },
   "retry_cap": 2,
   "loop_guard_threshold": 3,
+  "agent_repetition_threshold": 2,
   "unresponsive_attempts": 2,
   "authoring_gaps": [
     "40-min boundary undefined in source policy; adopted <=40 -> R3/R4, >40 -> R5.",

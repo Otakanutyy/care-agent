@@ -70,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
         judged=bool(judgements),
         policy_version=policy.version,
         authoring_gaps=list(policy.authoring_gaps),
+        mode="live" if args.live else "offline",
     )
     write_report(report, REPO_ROOT / args.json, REPO_ROOT / args.md)
 

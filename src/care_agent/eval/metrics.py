@@ -64,6 +64,10 @@ class ScoredRun(BaseModel):
     checks: list[Check] = Field(default_factory=list)
     guardrail_blocks: int = 0
     judge: dict[str, Any] | None = None
+    #: The raw evidence behind the verdict — the conversation, the rule that fired at each
+    #: step, and the tool calls in order. A pass that cannot be inspected is a number the
+    #: reader has to take on trust, which is exactly what this submission argues against.
+    evidence: dict[str, Any] = Field(default_factory=dict)
 
 
 # --- the oracle ------------------------------------------------------------------
@@ -269,6 +273,18 @@ def score_run(result: RunResult, policy: PolicySnapshot, judge: dict[str, Any] |
         checks=all_checks,
         guardrail_blocks=result.guardrail_blocks,
         judge=judge,
+        evidence={
+            "transcript": result.transcript,
+            "trace": result.trace,
+            "trajectory": result.trajectory,
+            "tickets": result.tickets,
+            "tool_calls": result.tool_calls,
+            "tool_call_order": result.tool_call_order,
+            "final_state": result.final_state,
+            "terminal_reason": result.terminal_reason,
+            "context": result.expect.get("_context", {}),
+            "error": result.error,
+        },
     )
 
 

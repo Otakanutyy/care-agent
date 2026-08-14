@@ -137,6 +137,7 @@
     },
     "retry_cap": { "type": "integer", "minimum": 1 },
     "loop_guard_threshold": { "type": "integer", "minimum": 1 },
+    "agent_repetition_threshold": { "type": "integer", "minimum": 1 },
     "unresponsive_attempts": { "type": "integer", "minimum": 1 },
     "authoring_gaps": { "type": "array", "items": { "type": "string" } }
   }

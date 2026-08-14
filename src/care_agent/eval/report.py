@@ -18,7 +18,12 @@ from care_agent.eval.metrics import ScoredRun
 
 
 def build_report(
-    scored: list[ScoredRun], *, judged: bool, policy_version: int, authoring_gaps: list[str]
+    scored: list[ScoredRun],
+    *,
+    judged: bool,
+    policy_version: int,
+    authoring_gaps: list[str],
+    mode: str = "offline",
 ) -> dict[str, Any]:
     passed = sum(1 for s in scored if s.passed)
     scenarios = sorted({s.scenario_id for s in scored})
@@ -28,6 +33,10 @@ def build_report(
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "policy_version": policy_version,
+        # Which run produced this. Policy decisions are identical either way; the transcripts
+        # differ, since offline phrases replies from templates. Stated so a reader reproducing
+        # it offline is not surprised by different wording.
+        "mode": mode,
         "subjective_judge_ran": judged,
         "summary": {
             "runs": len(scored),
@@ -51,6 +60,10 @@ def build_report(
                 "guardrail_blocks": s.guardrail_blocks,
                 "checks": [c.model_dump() for c in s.checks],
                 "judge": s.judge,
+                # The conversation and decision trail behind the verdict, so a reader can audit
+                # a pass rather than trust it. Additive: the assessment's required fields above
+                # keep their exact shape.
+                "evidence": s.evidence,
             }
             for s in scored
         ],

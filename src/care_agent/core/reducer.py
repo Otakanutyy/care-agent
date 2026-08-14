@@ -42,7 +42,7 @@ from care_agent.domain.models import (
     SessionState,
 )
 from care_agent.guardrails.loop_guard import next_counter
-from care_agent.policy.engine import decide, escalation_mode_for
+from care_agent.policy.engine import decide, escalate_for_repetition, escalation_mode_for
 from care_agent.policy.loader import PolicySnapshot
 
 ASYNC_EVENTS = (
@@ -181,6 +181,34 @@ def _on_merchant_message(session, event, policy):
             "last_off_policy_signature": sig,
         }
     )
+
+    # The counter above keys on the *merchant's* intent, so it resets whenever they change the
+    # subject — and the agent can then repeat one non-progressing reply indefinitely. The live
+    # evaluation caught exactly that: during an outage the merchant asked three different
+    # things and got the identical degraded-mode notice four times. The spec requires a handover
+    # when "the conversation enters a loop", which is a property of the conversation, not of the
+    # merchant, so the agent's own repetition is counted separately.
+    repeats = session.repeat_action_count + 1 if env.action == session.last_emitted_action else 1
+    session = session.model_copy(
+        update={"last_emitted_action": env.action, "repeat_action_count": repeats}
+    )
+    # This is a *backstop*, not a replacement: when the merchant repeats one intent the
+    # signature counter is already climbing and will escalate with the more specific
+    # `loop_guard_tripped`, so this stays out of the way and only fires for the case that
+    # counter structurally cannot see — the merchant changing intent every turn while the
+    # agent repeats itself.
+    # When the merchant repeats one intent, both counters climb together and the merchant-side
+    # guard owns the case — it escalates with the more specific `loop_guard_tripped`. Only when
+    # its counter falls behind (the merchant keeps changing intent, so it keeps resetting) is
+    # the repetition invisible to it, and this backstop takes over.
+    merchant_counter_is_tracking = count >= repeats
+    if (
+        env.counts_toward_loop_guard
+        and not merchant_counter_is_tracking
+        and repeats >= policy.agent_repetition_threshold
+    ):
+        env = escalate_for_repetition(env, policy)
+
     return _route(session, env)
 
 

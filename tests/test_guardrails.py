@@ -9,7 +9,15 @@ import pytest
 
 from care_agent.core.reducer import bootstrap, reduce
 from care_agent.core.session import FsmState
-from care_agent.domain.models import ClassifierFlags, Event, EventType, MerchantTier, SessionState
+from care_agent.domain.models import (
+    ActionType,
+    ClassifierFlags,
+    EscalationMode,
+    Event,
+    EventType,
+    MerchantTier,
+    SessionState,
+)
 from care_agent.guardrails.loop_guard import intent_signature, next_counter
 from care_agent.guardrails.normalize import fold_digits, normalize
 from care_agent.guardrails.promise_guard import check_promise
@@ -131,11 +139,73 @@ def test_same_push_repeated_trips_safe_halt():
     assert effects[0].guardrail_halt is True  # auditor-visible SAFE_HALT
 
 
-def test_alternating_pushes_do_not_trip_as_fast():
+def test_alternating_pushes_never_accumulate_the_intent_counter():
+    """The signature counter keys on the merchant's intent, so switching intent resets it."""
     session = _r4_session()
-    # alternate two different off-policy pushes; the counter resets each switch, so no trip
     pushes = [_msg(), _msg(accepts_reassignment=True, prefers_to_wait=True)] * 3
     for push in pushes:
-        session, effects = reduce(session, push, POLICY)
-        assert session.fsm_state is FsmState.AWAITING_MERCHANT_REPLY
+        session, _ = reduce(session, push, POLICY)
         assert session.data.off_policy_push_count == 1  # never accumulates
+
+
+def test_agent_repetition_still_trips_when_the_merchant_keeps_switching():
+    """...which is precisely why a second, agent-side counter is needed.
+
+    Alternating intents hold the counter above at 1 forever, so before this the agent could
+    emit `clarify` indefinitely. The live evaluation caught the same shape during an outage:
+    three different merchant requests, four identical degraded-mode notices. The spec requires
+    a handover when "the conversation enters a loop" — a property of the conversation, not of
+    the merchant.
+    """
+    session = _r4_session()
+    pushes = [_msg(), _msg(accepts_reassignment=True, prefers_to_wait=True)] * 3
+    states = []
+    for push in pushes:
+        session, effects = reduce(session, push, POLICY)
+        states.append(session.fsm_state)
+        if session.fsm_state is FsmState.ESCALATED:
+            assert effects[0].reason == "loop_guard_agent_repetition"
+            break
+    assert FsmState.ESCALATED in states, "agent repeated indefinitely without handing over"
+    assert session.data.off_policy_push_count == 1, "and not because the intent counter fired"
+
+
+# --- an override suppresses reassignment, not the escalation triggers ------------
+
+
+def test_cancellation_still_escalates_during_an_outage():
+    """`active_outage` suppresses R3/R4 so no reassignment is attempted. It must not also
+    swallow a cancellation request: that has financial consequences and policy sends it to a
+    human. R6 is already exempt for the same reason. Caught live — the agent answered "just
+    cancel the order" with the degraded-mode notice."""
+    data = SessionState(
+        order_id="o1", merchant_name="M", merchant_tier="Gold", delay_minutes=30,
+        current_captain_id="c1", active_system_overrides=["active_outage"],
+    )
+    session, _ = bootstrap(data, POLICY)
+    assert session.last_action.action is ActionType.DEGRADED_MODE_NOTICE
+
+    session, effects = reduce(session, _msg(requests_cancellation=True), POLICY)
+    assert session.fsm_state is FsmState.ESCALATED
+    assert effects[0].reason == "cancellation_requested"
+    # Still attached to the incident, not opened as a per-order ticket.
+    assert effects[0].escalation_mode is EscalationMode.ATTACH_TO_INCIDENT
+
+
+def test_repeated_degraded_notice_hands_over_to_a_human():
+    """During an outage the merchant can ask three different things and get the identical
+    notice each time; the intent counter resets every switch, so only the agent-side guard
+    catches it."""
+    data = SessionState(
+        order_id="o1", merchant_name="M", merchant_tier="Gold", delay_minutes=30,
+        current_captain_id="c1", active_system_overrides=["active_outage"],
+    )
+    session, _ = bootstrap(data, POLICY)
+    reasons = []
+    for push in [_msg(accepts_reassignment=True), _msg(prefers_to_wait=True), _msg(), _msg()]:
+        session, effects = reduce(session, push, POLICY)
+        reasons.append(session.last_action.reason)
+        if session.fsm_state is FsmState.ESCALATED:
+            break
+    assert session.fsm_state is FsmState.ESCALATED
+    assert reasons[-1] == "loop_guard_agent_repetition"

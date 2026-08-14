@@ -15,6 +15,7 @@ from care_agent.llm.classifier import (
     classify,
     detect_human_request,
     detect_language,
+    reconcile_language,
 )
 from care_agent.llm.client import LLMError, MockLLMClient
 
@@ -126,10 +127,25 @@ def test_backstop_catches_someone_as_a_human_noun(text):
         "استنى لحد بكرة",        # "until tomorrow" - لحد contains حد but is a different word
         "عايز تحديد الوقت",       # "I want to set the time" - تحديد contains حد
         "ممكن تحديد موعد",        # "can we schedule an appointment"
+        # `rep` (representative) as a substring fires inside all of these. The first is the
+        # damaging one: a merchant accepting a reassignment, escalated to a human instead.
+        "I want you to replace the driver",
+        "can I get a replacement captain",
+        "I want a report on this delay",
+        "I want to repeat my order",
+        "I want compensation for my reputation",
     ],
 )
 def test_short_noun_matching_is_word_bounded(text):
     assert detect_human_request(text) is False
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["I want a rep", "can I speak to a rep please", "get me a representative"],
+)
+def test_rep_as_a_whole_word_is_still_a_human_request(text):
+    assert detect_human_request(text) is True
 
 
 # --- "one" is a counter, not a person ------------------------------------------
@@ -164,6 +180,43 @@ def test_wanting_another_one_is_not_a_human_request(text):
 )
 def test_one_plus_a_speech_verb_is_a_human_request(text):
     assert detect_human_request(text) is True
+
+
+# --- reply language follows the dominant script, not mere presence ---------------
+#
+# Both directions were live-evaluation failures the judge caught, and offline cannot reproduce
+# either: offline phrases from templates, so the reply always matches whatever tag was set.
+#
+#   1. An English message mentioning "500 AED credit" was labelled Franco-Arabic with no Arabic
+#      in it at all, and the merchant was answered in Darija.
+#   2. A merchant wrote 35 words of English ending "Haram 3alaykom". Arabic *was* present, so a
+#      presence test kept ar-latn and the agent again answered wholly in Darija.
+
+
+@pytest.mark.parametrize(
+    ("text", "claimed", "expected"),
+    [
+        # (1) no Arabic at all, model claims Franco-Arabic
+        ("No, I want compensation now, 500 AED credit, and cancel this order", "ar-latn", "en"),
+        ("My order is late again", "ar", "en"),
+        # (2) code-switching: a couple of Arabic words inside English stays English
+        (
+            "I want this order cancelled and the delivery fee waived, plus 500 AED credit for "
+            "the damage this is doing to my reputation. Haram 3alaykom, you keep doing this.",
+            "ar-latn",
+            "en",
+        ),
+        # genuinely Arabic-dominant messages are unaffected, in both scripts
+        ("عايز اكلم حد", "en", "ar"),
+        ("الطلب متأخر", "ar", "ar"),
+        ("3ayez akalem 7ad", "ar-latn", "ar-latn"),
+        ("ana 3ayez captain tani", "en", "ar-latn"),
+        ("badi ahki ma3 insan", "ar-latn", "ar-latn"),
+        ("yes please reassign", "en", "en"),
+    ],
+)
+def test_reply_language_follows_the_dominant_script(text, claimed, expected):
+    assert reconcile_language(claimed, text) == expected
 
 
 def test_backstop_language_detection():

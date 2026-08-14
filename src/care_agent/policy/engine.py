@@ -137,6 +137,35 @@ def _matched_rule(state: SessionState, policy: PolicySnapshot) -> Mapping[str, A
     return None
 
 
+REASON_AGENT_REPETITION = "loop_guard_agent_repetition"
+
+
+def escalate_for_repetition(env: ActionEnvelope, policy: PolicySnapshot) -> ActionEnvelope:
+    """Convert a stuck, endlessly-repeating reply into a human handover.
+
+    The policy's own loop-guard threshold decides when: repeating the same non-progressing
+    action more times than a merchant is allowed to push the same intent is the same failure
+    seen from the other side.
+    """
+    return ActionEnvelope(
+        action=ActionType.ESCALATE,
+        rule_id=env.rule_id,
+        reason=REASON_AGENT_REPETITION,
+        escalation_mode=escalation_mode_for_envelope(env, policy),
+        active_overrides=list(env.active_overrides),
+        is_terminal=True,
+    )
+
+
+def escalation_mode_for_envelope(env: ActionEnvelope, policy: PolicySnapshot) -> EscalationMode:
+    """Attach-to-incident during an outage, per-order otherwise."""
+    for name in env.active_overrides:
+        spec = policy.override_map.get(name)
+        if spec:
+            return EscalationMode(spec["escalation_mode"])
+    return EscalationMode.PER_ORDER
+
+
 def _escalate(rule_id: str | None, reason: str, overrides: OverrideEffect) -> ActionEnvelope:
     return ActionEnvelope(
         action=ActionType.ESCALATE,
@@ -230,12 +259,20 @@ def decide(state: SessionState, flags: ClassifierFlags | None, policy: PolicySna
 
     # --- Phase 1 applied: override suppresses this rule (e.g. active_outage -> no reassign) ---
     if rid in overrides.suppressed_rules:
+        # An override suppresses *reassignment*, not the mandatory escalation triggers. R6 is
+        # already exempt (phase 0); cancellation is exempt for the same reason — it has
+        # financial consequences and policy sends it to a human. Without this, an outage
+        # swallows "just cancel the order" and answers with the degraded-mode notice, which the
+        # live evaluation caught as the agent talking past the merchant.
+        if flags is not None and flags.requests_cancellation:
+            return _escalate(rid, REASON_CANCELLATION_REQUESTED, overrides)
         return ActionEnvelope(
             action=ActionType.DEGRADED_MODE_NOTICE,
             rule_id=rid,
             reason=f"{REASON_OVERRIDE_SUPPRESSED}_{rid}",
             notification=overrides.notification,
             active_overrides=list(overrides.names),
+            counts_toward_loop_guard=True,
         )
 
     action = rule["action"]

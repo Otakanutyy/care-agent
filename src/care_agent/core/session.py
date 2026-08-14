@@ -11,7 +11,7 @@ from typing import Any, Literal, Union
 
 from pydantic import BaseModel, Field
 
-from care_agent.domain.models import ActionEnvelope, EscalationMode, SessionState
+from care_agent.domain.models import ActionEnvelope, ActionType, EscalationMode, SessionState
 
 
 class FsmState(str, Enum):
@@ -106,3 +106,8 @@ class Session(BaseModel):
     history: list[dict[str, Any]] = Field(default_factory=list)
     terminal_reason: str | None = None
     last_off_policy_signature: tuple[bool, ...] | None = None  # loop-guard: last off-policy intent
+    # Agent-side repetition. The signature counter above keys on the merchant's intent, so it
+    # resets when they change the subject; these two catch the agent repeating one
+    # non-progressing reply while the merchant keeps asking different things.
+    last_emitted_action: ActionType | None = None
+    repeat_action_count: int = 0

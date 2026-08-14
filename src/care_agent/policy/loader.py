@@ -49,7 +49,12 @@ VALID_FLAGS = {
 }
 VALID_ESCALATION_MODES = {"attach_to_incident", "per_order"}
 VALID_INCLUSIVITY = {"inclusive", "exclusive"}
-POSITIVE_INT_FIELDS = ("retry_cap", "loop_guard_threshold", "unresponsive_attempts")
+POSITIVE_INT_FIELDS = (
+    "retry_cap",
+    "loop_guard_threshold",
+    "agent_repetition_threshold",
+    "unresponsive_attempts",
+)
 
 SCHEMA_FILENAME = "policy.schema.json"
 
@@ -120,6 +125,15 @@ class PolicySnapshot:
     @property
     def loop_guard_threshold(self) -> int:
         return self.raw["loop_guard_threshold"]
+
+    @property
+    def agent_repetition_threshold(self) -> int:
+        """How many identical non-progressing replies before handing to a human.
+
+        Lower than the merchant-side threshold on purpose: a merchant repeating themselves is
+        insistence, but an agent repeating itself verbatim is a stuck conversation.
+        """
+        return self.raw.get("agent_repetition_threshold", self.raw["loop_guard_threshold"])
 
     @property
     def unresponsive_attempts(self) -> int:
