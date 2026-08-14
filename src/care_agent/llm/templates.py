@@ -101,15 +101,23 @@ TEMPLATES: dict[ActionType, MessageSpec] = {
             "ar-latn": "Halla2 fi moshkile 3amme bel khidme 3am tathir 3ala el tawsil. El team 3am yishtighil 3aleha w ra7 nkhabbrak awwal ma nfik.",
         },
     ),
+    # Reached when the merchant's intent is outside what this conversation can act on — the
+    # "uncovered intent" case. It must NOT claim incomprehension: the classifier usually
+    # understood perfectly, there is simply no authorized action for the request. Saying "I
+    # didn't catch that" is both false and reads as a broken bot. Say what is true instead, and
+    # put the actual choice back. If the merchant keeps pushing, the loop guard hands off.
     ActionType.CLARIFY: MessageSpec(
         intent=(
-            "Politely say you did not quite understand, and ask the merchant to restate what "
-            "they would like to do."
+            "Say that this is not something you can help with in this conversation, that you "
+            "are following up about the delayed order, and ask how they would like to proceed. "
+            "Do not name or offer any specific option."
         ),
         fallback={
-            "en": "Sorry, I didn't quite catch that. Could you let me know what you'd like to do?",
-            "ar": "عذرًا، لم أفهم تمامًا. هل يمكنك توضيح ما الذي تريد فعله؟",
-            "ar-latn": "3afwan, ma fhemet mnee7. Momken twaddi7 shu bidak ta3mil?",
+            "en": "That's not something I can help with here — I'm following up about your "
+                  "delayed order. How would you like to proceed?",
+            "ar": "هذا ليس أمرًا يمكنني مساعدتك به هنا — أنا أتابع معك بخصوص تأخر طلبك. كيف تحب أن نكمل؟",
+            "ar-latn": "Hayda mish shi fiyye sa3dak fi hon — ana 3am tabe3 ma3ak bi khusus "
+                       "ta2akhur talabak. Kif btheb nkammel?",
         },
     ),
     ActionType.ESCALATE: MessageSpec(

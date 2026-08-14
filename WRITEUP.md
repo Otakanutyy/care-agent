@@ -92,8 +92,7 @@ is already immune — an explicit request for a human is caught by a determinist
 runs *before* any model call, so R6 never depends on the model. Beyond that: bounded
 per-provider concurrency, a timeout budget shorter than the merchant-visible SLA, prompt caching
 on the stable system prefix, and a circuit breaker that degrades to the deterministic template
-path (which already exists and is exercised offline) rather than failing the session.
-Classification failure already fails **safe**, escalating rather than guessing an intent.
+path rather than failing the session. Classification failure already fails **safe**.
 
 ## 4. Gaps the specification left open
 
@@ -101,17 +100,26 @@ The brief notes that several production realities are not spelled out. The ones 
 decisions taken:
 
 - **No escalation tool exists**, despite R5 and R6 mandating escalation. Added, carrying a
-  `context_snapshot` of the full conversation — otherwise a human inherits an angry merchant
-  and no idea why.
+  `context_snapshot` — otherwise a human inherits an angry merchant and no idea why.
 - **The 40-minute boundary is undefined** (R3/R4 say "20–40", R5 says ">40", so exactly 40
   matches nothing). Adopted ≤40 → R3/R4, >40 → R5, and **flagged in the report** rather than
-  silently patched: an authoring gap belongs back with the policy's owner.
+  silently patched: an authoring gap belongs back with the policy's owner. Every gap here is
+  flagged the same way.
 - **R4's cancellation branch is explicitly unspecified.** Adopted mandatory escalation.
 - **`active_system_overrides` appears in the session context but in no rule.** During an outage
-  the delay is systemic, so reassigning is actively harmful and per-order escalation floods ops
-  exactly when it is least able to absorb it. Adopted: suppress reassignment, send a
-  degraded-mode notice promising no ETA, and escalate as *attach-to-incident*.
+  the delay is systemic, so reassigning is harmful and per-order escalation floods ops exactly
+  when it can least absorb it. Adopted: suppress reassignment, send a degraded-mode notice
+  promising no ETA, escalate as *attach-to-incident*.
 - **Guardrails must be language-invariant**, or code-switching is an evasion path.
+- **R6 overrides everything "at any point" — but does an already closed session count?**
+  Adopted: terminal sessions are inert, since escalation is a one-way latch and in production a
+  new message opens a new session. Flagged, as the literal reading would require reviving it.
+- **Nothing in the policy covers what the merchant *asks*.** R1–R6 describe only what the agent
+  *initiates*. "How late is it?" matches no rule and routes to `clarify` — correctly, since an
+  answer action would mean inventing policy. What needed fixing was that message *claiming
+  incomprehension*: the classifier understood, there was simply no authorized action. It now
+  says so and re-puts the question, naming no option — `clarify` also fires under R2, where
+  reassignment is not authorized.
 
 Deferred as out of scope: session timeouts for a silent merchant, and coalescing messages that
 arrive before the agent has replied.
@@ -122,3 +130,7 @@ original captain cancelled, then re-issued — a genuine double-assignment. The 
 "would policy dispatch a reassignment now?" instead of "does policy still *permit* reassigning
 this order?". It surfaced only once a persona drove a full session, which is the case for
 adversarial evaluation over static transcripts in one sentence.
+
+Two more surfaced in the R6 backstop, both multilingual: it first missed حد ("someone"), then
+over-matched واحد ("one"), escalating "I want another one" about the *captain*. Deterministic
+means auditable, not correct — hand-maintained vocabulary needs adversarial multilingual tests.

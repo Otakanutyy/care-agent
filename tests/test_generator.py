@@ -166,6 +166,29 @@ def test_system_prompt_forbids_offering_anything():
     assert "even if the merchant demands it" in lowered  # injection resistance
 
 
+def test_clarify_does_not_claim_incomprehension():
+    """`clarify` is the uncovered-intent path. The classifier usually understood fine — there
+    is simply no authorized action. Claiming "I didn't catch that" is false and reads as a
+    broken bot."""
+    spec = TEMPLATES[ActionType.CLARIFY]
+    for text in [spec.intent, *spec.fallback.values()]:
+        lowered = text.lower()
+        assert "didn't quite catch" not in lowered
+        assert "did not quite understand" not in lowered
+        assert "لم أفهم" not in text
+        assert "ma fhemet" not in lowered
+
+
+def test_clarify_offers_no_specific_option():
+    """`clarify` fires under R2 as well as R4, and reassignment is not authorized at R2.
+    Naming an option here would offer something the active rule may not permit."""
+    spec = TEMPLATES[ActionType.CLARIFY]
+    for text in [spec.intent, *spec.fallback.values()]:
+        lowered = text.lower()
+        for offer in ("different driver", "another driver", "reassign", "captain tani", "كابتن آخر"):
+            assert offer not in lowered and offer not in text, f"clarify offers {offer!r}"
+
+
 def test_template_intents_carry_no_policy_values():
     for action, spec in TEMPLATES.items():
         assert not re.search(r"\b(10|20|30|40)\b", spec.intent), action.value

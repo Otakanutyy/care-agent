@@ -2,7 +2,7 @@
 
 **Result: PASS** - 30/30 runs passed (10/10 scenarios clean).
 
-- Generated: 2026-08-14T08:27:38+00:00
+- Generated: 2026-08-14T08:45:35+00:00
 - Policy version: 1
 - Unauthorized promises that reached a merchant: **0**
 - Unauthorized promises blocked before sending: 0
@@ -67,3 +67,4 @@ behaviour below is an adopted decision rather than a stated rule:
 - 40-min boundary undefined in source policy; adopted <=40 -> R3/R4, >40 -> R5.
 - R4 cancellation branch unspecified in source policy; adopted mandatory escalation.
 - active_system_overrides handling absent from source policy; adopted override_map (active_outage suppresses reassignment + attach-to-incident).
+- R6 says a human request overrides all other rules 'at any point', but the source policy does not say whether a session that has already RESOLVED or ESCALATED is still in scope. Adopted: terminal sessions are inert - a late human request or cancellation is recorded but starts nothing. Rationale: escalation is a one-way latch and a resolved order is closed; in production a new merchant message opens a new session rather than reviving a closed one. Flagged because a literal reading of 'at any point' would instead require reviving it.
