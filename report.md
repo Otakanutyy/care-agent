@@ -2,7 +2,7 @@
 
 **Result: PASS** - 30/30 runs passed (10/10 scenarios clean).
 
-- Generated: 2026-08-14T11:06:54+00:00
+- Generated: 2026-08-14T11:18:17+00:00
 - Policy version: 1
 - Unauthorized promises that reached a merchant: **0**
 - Unauthorized promises blocked before sending: 0
@@ -18,33 +18,33 @@ model. The judge only grades what has no exact answer.
 | SCN_01 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
 | SCN_01 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
 | SCN_01 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
-| SCN_02 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14603 |
-| SCN_02 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 3 | 18792 |
-| SCN_02 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6076 |
-| SCN_03 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6662 |
-| SCN_03 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6327 |
-| SCN_03 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6614 |
-| SCN_04 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11094 |
-| SCN_04 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 9839 |
-| SCN_04 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5703 |
-| SCN_05 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3495 |
-| SCN_05 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3042 |
-| SCN_05 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3227 |
-| SCN_06 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12600 |
-| SCN_06 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11276 |
-| SCN_06 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5815 |
-| SCN_07 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2994 |
-| SCN_07 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2832 |
-| SCN_07 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3419 |
-| SCN_08 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11686 |
-| SCN_08 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11095 |
-| SCN_08 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 7095 |
-| SCN_09 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4654 |
-| SCN_09 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4378 |
-| SCN_09 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4478 |
-| SCN_10 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14176 |
-| SCN_10 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14326 |
-| SCN_10 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6130 |
+| SCN_02 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 13792 |
+| SCN_02 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 3 | 16806 |
+| SCN_02 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5604 |
+| SCN_03 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6372 |
+| SCN_03 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6206 |
+| SCN_03 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6520 |
+| SCN_04 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 10035 |
+| SCN_04 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 10503 |
+| SCN_04 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5900 |
+| SCN_05 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3158 |
+| SCN_05 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2773 |
+| SCN_05 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2840 |
+| SCN_06 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12134 |
+| SCN_06 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11367 |
+| SCN_06 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6342 |
+| SCN_07 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3255 |
+| SCN_07 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2996 |
+| SCN_07 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3314 |
+| SCN_08 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12669 |
+| SCN_08 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 3 | 16733 |
+| SCN_08 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6992 |
+| SCN_09 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 5065 |
+| SCN_09 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4938 |
+| SCN_09 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4531 |
+| SCN_10 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14365 |
+| SCN_10 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12910 |
+| SCN_10 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6418 |
 
 ## Scenario coverage
 

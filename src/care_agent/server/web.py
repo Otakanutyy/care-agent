@@ -69,6 +69,8 @@ def build_routes(sessions: SessionManager) -> list[Route]:
                 "limits": {
                     "max_sessions": sessions.max_sessions,
                     "max_turns": sessions.max_turns,
+                    "max_total_turns": sessions.max_total_turns,
+                    "turns_served": sessions.turns_served,
                 },
                 "triggerable_events": [e.value for e in TRIGGERABLE_EVENTS],
                 # Read from disk rather than handing over `policy.raw`: the loaded snapshot is

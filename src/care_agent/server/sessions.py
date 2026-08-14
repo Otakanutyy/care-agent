@@ -44,6 +44,11 @@ POLICY_PATH = REPO_ROOT / "policy" / "policy.json"
 
 DEFAULT_MAX_SESSIONS = int(os.getenv("MAX_SESSIONS", "50"))
 DEFAULT_MAX_TURNS = int(os.getenv("MAX_TURNS", "25"))
+#: Total merchant turns this process will serve. Turns are what actually cost money — a session
+#: sitting in a dict costs nothing — so the spend ceiling belongs here rather than on the
+#: session count. Sessions are evicted oldest-first instead of refused, because a reviewer
+#: arriving after someone else's testing should never be told the endpoint is full.
+DEFAULT_MAX_TOTAL_TURNS = int(os.getenv("MAX_TOTAL_TURNS", "600"))
 
 #: Events a tester may inject. Deliberately excludes the transport-internal types
 #: (``merchant_message``, ``tool_result``, ``tick``, ``classifier_unavailable``) — those are
@@ -90,11 +95,15 @@ class SessionManager:
         mode: str | None = None,
         max_sessions: int = DEFAULT_MAX_SESSIONS,
         max_turns: int = DEFAULT_MAX_TURNS,
+        max_total_turns: int = DEFAULT_MAX_TOTAL_TURNS,
     ) -> None:
         self.policy = policy or load_policy(POLICY_PATH)
         self.mode = (mode or os.getenv("CARE_AGENT_MODE", "offline")).lower()
         self.max_sessions = max_sessions
         self.max_turns = max_turns
+        self.max_total_turns = max_total_turns
+        self.turns_served = 0
+        self.sessions_evicted = 0
         # Serving models are overridable per-deployment via env, so a cost-constrained instance
         # can run the cheaper tier without changing the code's documented defaults. Only the
         # generator is worth downshifting; the classifier is already the cheapest tier.
@@ -118,11 +127,12 @@ class SessionManager:
         active_system_overrides: list[str] | None = None,
         tools: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        if len(self._sessions) >= self.max_sessions:
-            raise SessionLimitError(
-                f"this deployment holds at most {self.max_sessions} sessions; "
-                "start a fresh one later or run the repo locally for unlimited use"
-            )
+        # Make room rather than refuse. Sessions are in-memory and disposable; the oldest is the
+        # least likely to still be someone's live conversation, and telling a reviewer the
+        # endpoint is full reads as broken. Spend stays bounded by the turn budget below.
+        while len(self._sessions) >= self.max_sessions:
+            self._sessions.pop(next(iter(self._sessions)))
+            self.sessions_evicted += 1
 
         session_id = uuid.uuid4().hex[:12]
         agent = CareAgent(
@@ -166,6 +176,11 @@ class SessionManager:
         managed = self._get(session_id)
         if managed.turns >= self.max_turns:
             raise SessionLimitError(f"this session has reached its {self.max_turns}-turn cap")
+        if self.turns_served >= self.max_total_turns:
+            raise SessionLimitError(
+                f"this deployment has served its budget of {self.max_total_turns} merchant turns. "
+                "Everything still works offline from the repository: `python run_all.py`."
+            )
         if managed.agent.is_terminal:
             # Record it for real. The note below used to promise the input was recorded while
             # dropping it on the floor, so a human picking up the escalation could not see what
@@ -186,6 +201,7 @@ class SessionManager:
         was = managed.agent.session.fsm_state.value
         managed.agent.send_message(text)
         managed.turns += 1
+        self.turns_served += 1
         return {
             "session_id": session_id,
             **self._turn_report(managed.agent, before_msgs, before_tickets, previous_fsm_state=was),

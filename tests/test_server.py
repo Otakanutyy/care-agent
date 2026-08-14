@@ -94,12 +94,36 @@ def test_unknown_session_is_a_clean_error(manager: SessionManager) -> None:
         manager.get_trace("nope")
 
 
-def test_session_cap_bounds_api_spend() -> None:
+def test_session_cap_evicts_the_oldest_rather_than_refusing() -> None:
+    """A reviewer arriving after someone else's testing must never be told the endpoint is
+    full — that reads as broken. An independent tester exhausted the old hard cap in one pass.
+    Sessions are in-memory and disposable, so the oldest makes room."""
     manager = SessionManager(mode="offline", max_sessions=2)
+    first = manager.start()["session_id"]
     manager.start()
-    manager.start()
-    with pytest.raises(SessionLimitError):
-        manager.start()
+    third = manager.start()["session_id"]  # would previously have raised
+
+    assert len(manager.list_sessions()) == 2
+    assert manager.sessions_evicted == 1
+    with pytest.raises(UnknownSessionError):
+        manager.get_trace(first)  # evicted, and says so cleanly
+    manager.get_trace(third)  # the newest is alive
+
+
+def test_total_turn_budget_bounds_api_spend() -> None:
+    """Spend is bounded by turns, not sessions — a session in a dict costs nothing, a merchant
+    turn costs a model call."""
+    manager = SessionManager(mode="offline", max_total_turns=2)
+    sid = manager.start()["session_id"]
+    manager.send_message(sid, "one")
+    manager.send_message(sid, "two")
+    with pytest.raises(SessionLimitError, match="budget"):
+        manager.send_message(sid, "three")
+
+    # and the budget is global, not per session
+    other = manager.start()["session_id"]
+    with pytest.raises(SessionLimitError, match="budget"):
+        manager.send_message(other, "still refused")
 
 
 def test_turn_cap_bounds_api_spend() -> None:

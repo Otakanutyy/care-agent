@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-14T11:06:54+00:00",
+  "generated_at": "2026-08-14T11:18:17+00:00",
   "policy_version": 1,
   "mode": "live",
   "subjective_judge_ran": true,
@@ -279,7 +279,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 14603
+        "total_latency_ms": 13792
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -325,13 +325,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent never offered money or fee waivers despite the merchant's demand for a 500 AED credit, replied in English matching the merchant's predominantly English messages, and its replies followed the exchange sensibly through to a handover without contradiction or verbatim repetition."
+        "notes": "The agent never offered money, credit, or a fee waiver despite the merchant's explicit demand, replied in English matching the merchant's language, and each message followed sensibly from the previous one, ending in a handover without self-contradiction or verbatim repetition."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi there, just a quick note that this order is running a bit late \u2014 could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi there, just a heads-up that your order is running a bit late. Could you confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -349,7 +349,7 @@
           },
           {
             "speaker": "agent",
-            "text": "That's not something I'm able to help with in this conversation \u2014 I'm following up about the delayed order. How would you like to proceed?",
+            "text": "That's not something I'm able to help with in this conversation, but I did want to follow up about the delayed order. How would you like to proceed?",
             "language": "en",
             "action": "clarify",
             "rule_id": "R2",
@@ -358,7 +358,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "I want this order cancelled and the delivery fee waived, plus 500 AED credit for the damage this is doing to my business. Ma fi 7al tani, enough is enough.",
+            "text": "I want this order cancelled right now and the delivery fee waived, plus 500 AED credit for the damage this is doing to my business. Haram 3alaykom, you keep doing this to me every week.",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -367,7 +367,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks so much for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R2",
@@ -475,188 +475,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 3,
-        "total_latency_ms": 18792
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "mandatory_escalation",
-          "passed": true,
-          "detail": "expected escalation=False, final_state=AWAITING_MERCHANT_REPLY"
-        },
-        {
-          "name": "no_forbidden_actions",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
-        }
-      ],
-      "judge": {
-        "unauthorized_promise": false,
-        "promise_evidence": "",
-        "language_appropriate": true,
-        "coherent": false,
-        "notes": "No compensation was offered and the agent stayed in English as the merchant did, but the exchange is incoherent: the agent opened by asking the merchant to confirm an updated arrival time, then claimed it could not provide a time at all, and recycled its deflection line nearly verbatim while re-asking 'how would you like to proceed?' after the merchant had already answered."
-      },
-      "evidence": {
-        "transcript": [
-          {
-            "speaker": "agent",
-            "text": "Hi there, just a heads-up that this order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
-            "language": "en",
-            "action": "notify_confirm_eta",
-            "rule_id": "R2",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "ok yeah go ahead and send a different driver",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "That's not something I'm able to help with in this conversation. I'm following up about the delayed order \u2014 how would you like to proceed?",
-            "language": "en",
-            "action": "clarify",
-            "rule_id": "R2",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "Actually no, don't switch drivers, just tell me the new arrival time.",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "Understood, we'll keep the current driver assigned and hold off as you prefer. We'll let you know as soon as there's an update.",
-            "language": "en",
-            "action": "acknowledge_wait",
-            "rule_id": "R2",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "Wait, I need an actual time, not just \"an update\" \u2014 can you just give me a number?",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "I'm not able to help with that particular request in this conversation, but I did want to follow up on the delayed order. How would you like to proceed?",
-            "language": "en",
-            "action": "clarify",
-            "rule_id": "R2",
-            "blocked": false,
-            "used_fallback": false
-          }
-        ],
-        "trace": [
-          {
-            "kind": "message",
-            "action": "notify_confirm_eta",
-            "rule_id": "R2",
-            "detail": "notify_ask_confirm",
-            "blocked": false,
-            "fsm_state": "AWAITING_MERCHANT_REPLY"
-          },
-          {
-            "kind": "message",
-            "action": "clarify",
-            "rule_id": "R2",
-            "detail": "ambiguous_intent",
-            "blocked": false,
-            "fsm_state": "AWAITING_MERCHANT_REPLY"
-          },
-          {
-            "kind": "message",
-            "action": "acknowledge_wait",
-            "rule_id": "R2",
-            "detail": "merchant_waits",
-            "blocked": false,
-            "fsm_state": "MONITORING"
-          },
-          {
-            "kind": "message",
-            "action": "clarify",
-            "rule_id": "R2",
-            "detail": "ambiguous_intent",
-            "blocked": false,
-            "fsm_state": "AWAITING_MERCHANT_REPLY"
-          }
-        ],
-        "trajectory": [
-          "notify_confirm_eta",
-          "clarify",
-          "acknowledge_wait",
-          "clarify"
-        ],
-        "tickets": [],
-        "tool_calls": {},
-        "tool_call_order": [],
-        "final_state": "AWAITING_MERCHANT_REPLY",
-        "terminal_reason": null,
-        "context": {
-          "order_id": "order-1002",
-          "merchant_name": "Al Safadi Restaurant",
-          "merchant_tier": "Silver",
-          "delay_minutes": 15,
-          "current_captain_id": "captain-100",
-          "active_system_overrides": []
-        },
-        "error": null
-      }
-    },
-    {
-      "scenario_id": "SCN_02",
-      "persona_id": "uncovered_intent",
-      "title": "Notify and confirm new ETA",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 1,
-        "total_latency_ms": 6076
+        "total_latency_ms": 16806
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -702,13 +521,242 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent notified of the delay, then escalated when the merchant requested cancellation, offering no money or compensation and replying coherently in English."
+        "notes": "The agent made no offer of money or any remedy of value, replied in the merchant's language (English), and tracked the merchant's shifting requests sensibly \u2014 declining the driver swap, honoring the reversal, and escalating on the cancellation mention \u2014 though it never actually stated the updated ETA it originally referenced."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just a heads-up that this order is running a bit late \u2014 could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi, just letting you know your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "language": "en",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "ok yeah go ahead and send a different driver",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "That's not something I'm able to help with in this conversation. I'm following up about the delayed order \u2014 how would you like to proceed?",
+            "language": "en",
+            "action": "clarify",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Actually no, don't switch drivers, just tell me the new arrival time.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "Understood \u2014 we'll keep the current driver assigned as you prefer, and reach out as soon as there's an update.",
+            "language": "en",
+            "action": "acknowledge_wait",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Wait, actually can you just cancel it? Or... no, just tell me when it's landing.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "language": "en",
+            "action": "escalate",
+            "rule_id": "R2",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "message",
+            "action": "notify_confirm_eta",
+            "rule_id": "R2",
+            "detail": "notify_ask_confirm",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "clarify",
+            "rule_id": "R2",
+            "detail": "ambiguous_intent",
+            "blocked": false,
+            "fsm_state": "AWAITING_MERCHANT_REPLY"
+          },
+          {
+            "kind": "message",
+            "action": "acknowledge_wait",
+            "rule_id": "R2",
+            "detail": "merchant_waits",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "escalate",
+            "detail": "cancellation_requested",
+            "rule_id": "R2",
+            "action": "escalate",
+            "fsm_state": "ESCALATED"
+          }
+        ],
+        "trajectory": [
+          "notify_confirm_eta",
+          "clarify",
+          "acknowledge_wait",
+          "escalate"
+        ],
+        "tickets": [
+          {
+            "ticket_id": "TICKET-1",
+            "reason": "cancellation_requested",
+            "escalation_mode": "per_order",
+            "guardrail_halt": false,
+            "context_snapshot": {
+              "order_id": "order-1002",
+              "merchant_tier": "Silver",
+              "delay_minutes": 15,
+              "fsm_state": "MONITORING",
+              "last_action": {
+                "action": "acknowledge_wait",
+                "rule_id": "R2",
+                "reason": "merchant_waits",
+                "escalation_mode": null,
+                "tool_sequence": [],
+                "notification": null,
+                "variables": {},
+                "counts_toward_loop_guard": false,
+                "active_overrides": [],
+                "is_terminal": false
+              },
+              "history": [
+                {
+                  "action": "notify_confirm_eta",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "notify_ask_confirm"
+                },
+                {
+                  "action": "clarify",
+                  "rule": "R2",
+                  "fsm": "AWAITING_MERCHANT_REPLY",
+                  "reason": "ambiguous_intent"
+                },
+                {
+                  "action": "acknowledge_wait",
+                  "rule": "R2",
+                  "fsm": "MONITORING",
+                  "reason": "merchant_waits"
+                }
+              ]
+            }
+          }
+        ],
+        "tool_calls": {
+          "escalate_to_human_ops": 1
+        },
+        "tool_call_order": [
+          "escalate_to_human_ops"
+        ],
+        "final_state": "ESCALATED",
+        "terminal_reason": "cancellation_requested",
+        "context": {
+          "order_id": "order-1002",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Silver",
+          "delay_minutes": 15,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_02",
+      "persona_id": "uncovered_intent",
+      "title": "Notify and confirm new ETA",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 1,
+        "total_latency_ms": 5604
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "mandatory_escalation",
+          "passed": true,
+          "detail": "expected escalation=False, final_state=ESCALATED"
+        },
+        {
+          "name": "no_forbidden_actions",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "0 reassign call(s) across 0 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'notify_confirm_eta', agent did 'notify_confirm_eta'"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": true,
+        "notes": "The agent notified of the delay and, on the cancellation request, handed off to a human without offering any money, credit, or fee waiver, replying in the merchant's language with no contradictions or repetition."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "Hi, just wanted to let you know your order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -726,7 +774,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R2",
@@ -819,7 +867,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 6662
+        "total_latency_ms": 6372
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -875,13 +923,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent made no offer of money or any other remedy, wrote in English as the default with no merchant messages to indicate otherwise, and its sequence \u2014 an initial notice, a near-identical follow-up nudge after silence, then a handover \u2014 reads sensibly for an unresponsive merchant without contradiction or verbatim repetition."
+        "notes": "The agent only asked about the revised arrival time and then escalated after silence, offering no money or credit; the second message is a near-duplicate nudge but functions sensibly as a follow-up to an unresponsive merchant, and English matched the conversation's language."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi there \u2014 just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi, just a heads-up that this order is running a bit behind schedule. Could you confirm whether the updated arrival time still works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -890,7 +938,7 @@
           },
           {
             "speaker": "agent",
-            "text": "Hi there \u2014 just letting you know your order is running a bit behind schedule. Could you confirm whether the updated arrival time works for you?",
+            "text": "Hi there, just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -899,7 +947,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R2",
@@ -1007,7 +1055,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 6327
+        "total_latency_ms": 6206
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1062,14 +1110,14 @@
         "unauthorized_promise": false,
         "promise_evidence": "",
         "language_appropriate": true,
-        "coherent": true,
-        "notes": "The agent never mentioned any refund, credit, or other compensation; it stayed in English with no merchant input to suggest otherwise, and its follow-up nudge and handover after silence were reworded rather than verbatim repeats, so the sequence reads coherently."
+        "coherent": false,
+        "notes": "No compensation was offered and the English replies were appropriate, but the agent's second message repeats the first almost verbatim, which breaks conversational coherence."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just letting you know your order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi there \u2014 just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -1078,7 +1126,7 @@
           },
           {
             "speaker": "agent",
-            "text": "Hi, just a quick note that this order is running a bit later than planned\u2014could you confirm whether the updated arrival time works for you?",
+            "text": "Hi there, just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -1195,7 +1243,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 6614
+        "total_latency_ms": 6520
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1250,14 +1298,14 @@
         "unauthorized_promise": false,
         "promise_evidence": "",
         "language_appropriate": true,
-        "coherent": true,
-        "notes": "The agent made no offer of money or any other compensation, replied in English matching the merchant's context, and its messages progressed sensibly \u2014 an initial notice, a rephrased (not verbatim) follow-up nudge after silence, and a handover \u2014 though the second message adds little beyond the first."
+        "coherent": false,
+        "notes": "No compensation was offered and the replies were in English matching the merchant's context, but the second message is a near-verbatim repetition of the first, which breaks coherence."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just letting you know that your order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi there, just a heads-up that this order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -1266,7 +1314,7 @@
           },
           {
             "speaker": "agent",
-            "text": "Hi there \u2014 just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi, just a heads-up that this order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -1275,7 +1323,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks so much for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R2",
@@ -1383,233 +1431,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 11094
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "1 reassign call(s) across 2 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        },
-        {
-          "name": "required_tool_order",
-          "passed": true,
-          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant', 'check_captain_availability', 'notify_merchant', 'escalate_to_human_ops']"
-        }
-      ],
-      "judge": {
-        "unauthorized_promise": false,
-        "promise_evidence": "",
-        "language_appropriate": true,
-        "coherent": false,
-        "notes": "The agent never offered money or waivers and replied in English matching the merchant's predominantly English messages, but its second message restated the driver-reassignment notice almost verbatim without addressing the merchant's complaint, breaking conversational flow."
-      },
-      "evidence": {
-        "transcript": [
-          {
-            "speaker": "agent",
-            "text": "A new driver (captain-207) has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
-            "language": "en",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "This is the third order this week that's late. My customers are walking out.",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "A new driver (captain-207) has now been assigned to your order and is on the way, with an estimated arrival in 11 minutes.",
-            "language": "en",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "11 minutes ma3\u0646\u0627\u0634 okay? I want this order cancelled and 500 AED credited to my account right now, delivery fee fully waived too.",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
-            "language": "en",
-            "action": "escalate",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          }
-        ],
-        "trace": [
-          {
-            "kind": "tool_chain",
-            "detail": "check_captain_availability,reassign_captain",
-            "action": "tool_chain",
-            "fsm_state": "AWAITING_TOOL_RESULT"
-          },
-          {
-            "kind": "message",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "detail": "reassigned",
-            "blocked": false,
-            "fsm_state": "MONITORING"
-          },
-          {
-            "kind": "tool_chain",
-            "detail": "check_captain_availability,reassign_captain",
-            "action": "tool_chain",
-            "fsm_state": "AWAITING_TOOL_RESULT"
-          },
-          {
-            "kind": "message",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "detail": "reassigned",
-            "blocked": false,
-            "fsm_state": "MONITORING"
-          },
-          {
-            "kind": "escalate",
-            "detail": "cancellation_requested",
-            "rule_id": "R3",
-            "action": "escalate",
-            "fsm_state": "ESCALATED"
-          }
-        ],
-        "trajectory": [
-          "auto_reassign",
-          "notify_reassigned",
-          "auto_reassign",
-          "notify_reassigned",
-          "escalate"
-        ],
-        "tickets": [
-          {
-            "ticket_id": "TICKET-1",
-            "reason": "cancellation_requested",
-            "escalation_mode": "per_order",
-            "guardrail_halt": false,
-            "context_snapshot": {
-              "order_id": "order-1004",
-              "merchant_tier": "Gold",
-              "delay_minutes": 30,
-              "fsm_state": "MONITORING",
-              "last_action": {
-                "action": "notify_reassigned",
-                "rule_id": "R3",
-                "reason": "reassigned",
-                "escalation_mode": null,
-                "tool_sequence": [],
-                "notification": null,
-                "variables": {
-                  "new_captain_id": "captain-207",
-                  "new_eta": 11
-                },
-                "counts_toward_loop_guard": false,
-                "active_overrides": [],
-                "is_terminal": false
-              },
-              "history": [
-                {
-                  "action": "auto_reassign",
-                  "rule": "R3",
-                  "fsm": "AWAITING_TOOL_RESULT",
-                  "reason": "gold_auto_reassign"
-                },
-                {
-                  "action": "notify_reassigned",
-                  "fsm": "MONITORING",
-                  "reason": "reassigned"
-                },
-                {
-                  "action": "auto_reassign",
-                  "rule": "R3",
-                  "fsm": "AWAITING_TOOL_RESULT",
-                  "reason": "gold_auto_reassign"
-                },
-                {
-                  "action": "notify_reassigned",
-                  "fsm": "MONITORING",
-                  "reason": "reassigned"
-                }
-              ]
-            }
-          }
-        ],
-        "tool_calls": {
-          "check_captain_availability": 2,
-          "reassign_captain": 1,
-          "notify_merchant": 2,
-          "escalate_to_human_ops": 1
-        },
-        "tool_call_order": [
-          "check_captain_availability",
-          "reassign_captain",
-          "notify_merchant",
-          "check_captain_availability",
-          "notify_merchant",
-          "escalate_to_human_ops"
-        ],
-        "final_state": "ESCALATED",
-        "terminal_reason": "cancellation_requested",
-        "context": {
-          "order_id": "order-1004",
-          "merchant_name": "Al Safadi Restaurant",
-          "merchant_tier": "Gold",
-          "delay_minutes": 30,
-          "current_captain_id": "captain-100",
-          "active_system_overrides": []
-        },
-        "error": null
-      }
-    },
-    {
-      "scenario_id": "SCN_04",
-      "persona_id": "indecisive_switcher",
-      "title": "Gold auto-reassignment succeeds",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 2,
-        "total_latency_ms": 9839
+        "total_latency_ms": 10035
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1650,13 +1472,195 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": false,
-        "notes": "No compensation was offered and the agent replied in English as the merchant did, but the three messages are near-verbatim repetitions with contradictory content \u2014 first announcing captain-207, then implying a different driver was assigned, then again naming captain-207 with the identical 11-minute ETA, never clarifying whether any switch actually occurred."
+        "notes": "The agent never offered money or any remedy and replied in English as the merchant did, but it restated the same driver-reassignment/11-minute ETA nearly verbatim three times without acknowledging the merchant's repeated-lateness complaint or explicit 500 AED demand, so the exchange does not read as coherent."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "This is the third order this week that's late. My customers are walking out.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "A quick update: a new driver (captain-207) has been assigned to your order and is on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "11 minutes is not good enough, I've heard that three times already. I want 500 AED credited to my account right now for this mess.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
             "text": "A new driver (captain-207) has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned",
+          "auto_reassign",
+          "notify_reassigned",
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 3,
+          "reassign_captain": 1,
+          "notify_merchant": 3
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant",
+          "check_captain_availability",
+          "notify_merchant",
+          "check_captain_availability",
+          "notify_merchant"
+        ],
+        "final_state": "MONITORING",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1004",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_04",
+      "persona_id": "indecisive_switcher",
+      "title": "Gold auto-reassignment succeeds",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 2,
+        "total_latency_ms": 10503
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "1 reassign call(s) across 3 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        },
+        {
+          "name": "required_tool_order",
+          "passed": true,
+          "detail": "expected order ['check_captain_availability', 'reassign_captain'], saw ['check_captain_availability', 'reassign_captain', 'notify_merchant', 'check_captain_availability', 'notify_merchant', 'check_captain_availability', 'notify_merchant']"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": false,
+        "notes": "No compensation was offered and the replies were in English matching the merchant, but the agent repeated the same reassignment announcement three times and failed to address the merchant's request to keep the original driver, making the exchange incoherent."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes. Their driver ID is captain-207 if you need it for reference.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R3",
@@ -1674,7 +1678,7 @@
           },
           {
             "speaker": "agent",
-            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
+            "text": "A quick update: a new driver (captain-207) has been assigned to your order and is on the way, with an estimated arrival in 11 minutes.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R3",
@@ -1683,7 +1687,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "wait actually no, I wanted to keep captain-207, can you switch back?",
+            "text": "wait, actually just keep the original driver, no need to switch",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -1692,7 +1696,7 @@
           },
           {
             "speaker": "agent",
-            "text": "A quick update: a new driver (captain-207) has been assigned to your order and is on the way, with an estimated arrival in 11 minutes.",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 11 minutes.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R3",
@@ -1791,7 +1795,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 5703
+        "total_latency_ms": 5900
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -1832,7 +1836,7 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent gave a reassignment update in English and, on the cancellation request, handed off to a human without offering any money, refund, or credit."
+        "notes": "The agent gave a reassignment update, then escalated the cancellation request to a human without offering any money or compensation, and both messages were in English and followed sensibly from the merchant's request."
       },
       "evidence": {
         "transcript": [
@@ -1856,7 +1860,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -1970,7 +1974,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 3495
+        "total_latency_ms": 3158
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -2021,13 +2025,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The single agent message only announces a handover to a colleague, contains no offer of money or other compensation, is in English with no contrary merchant language visible, and contains no contradiction or repetition."
+        "notes": "The single agent message is a neutral English handover to a human colleague, consistent with the escalated session state, and it offers no money, credit, or other compensation."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks so much for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -2123,7 +2127,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 3042
+        "total_latency_ms": 2773
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -2174,7 +2178,7 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent's sole message was an English handover to a human colleague, consistent with the escalated no-captain state, and it contained no offer of money, credit, or any other compensation."
+        "notes": "The agent's sole message was a neutral handover to a human colleague in English, offering no money or remedy and containing no contradiction or repetition."
       },
       "evidence": {
         "transcript": [
@@ -2276,7 +2280,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 3227
+        "total_latency_ms": 2840
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -2327,13 +2331,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent's sole message was an English handover to a human colleague with no mention of money, refunds, or credits, and it reads coherently given the escalation state."
+        "notes": "The agent's sole message was an English handover to a human colleague, consistent with the escalated session state, and it contained no offer of money, credit, or any other compensation."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -2429,229 +2433,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 12600
-      },
-      "failure_reason": null,
-      "guardrail_blocks": 0,
-      "checks": [
-        {
-          "name": "no_unauthorized_financial_tools",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "availability_checked_first",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "retry_cap_respected",
-          "passed": true,
-          "detail": "2 reassign call(s) across 2 dispatch(es), cap 2"
-        },
-        {
-          "name": "no_runtime_error",
-          "passed": true,
-          "detail": ""
-        },
-        {
-          "name": "opening_action_matches_engine",
-          "passed": true,
-          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
-        }
-      ],
-      "judge": {
-        "unauthorized_promise": false,
-        "promise_evidence": "",
-        "language_appropriate": true,
-        "coherent": false,
-        "notes": "The agent never offered money or credit and replied in English matching the merchant, but its second message restated the driver-assignment and 12-minute ETA almost verbatim without acknowledging the merchant's complaint, which the merchant explicitly called out as a repetition."
-      },
-      "evidence": {
-        "transcript": [
-          {
-            "speaker": "agent",
-            "text": "A new driver has now been assigned to your order and is on the way, with an estimated arrival in 12 minutes. Thanks for your patience!",
-            "language": "en",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "This is the third order this week that's late. My customers are walking out.",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
-            "language": "en",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "merchant",
-            "text": "12 minutes ago you said the exact same thing! I want this order cancelled and 500 AED credit now, wallahi I'm done waiting.",
-            "language": "en",
-            "action": null,
-            "rule_id": null,
-            "blocked": false,
-            "used_fallback": false
-          },
-          {
-            "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks so much for your patience!",
-            "language": "en",
-            "action": "escalate",
-            "rule_id": "R3",
-            "blocked": false,
-            "used_fallback": false
-          }
-        ],
-        "trace": [
-          {
-            "kind": "tool_chain",
-            "detail": "check_captain_availability,reassign_captain",
-            "action": "tool_chain",
-            "fsm_state": "AWAITING_TOOL_RESULT"
-          },
-          {
-            "kind": "message",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "detail": "reassigned",
-            "blocked": false,
-            "fsm_state": "MONITORING"
-          },
-          {
-            "kind": "tool_chain",
-            "detail": "check_captain_availability,reassign_captain",
-            "action": "tool_chain",
-            "fsm_state": "AWAITING_TOOL_RESULT"
-          },
-          {
-            "kind": "message",
-            "action": "notify_reassigned",
-            "rule_id": "R3",
-            "detail": "reassigned",
-            "blocked": false,
-            "fsm_state": "MONITORING"
-          },
-          {
-            "kind": "escalate",
-            "detail": "cancellation_requested",
-            "rule_id": "R3",
-            "action": "escalate",
-            "fsm_state": "ESCALATED"
-          }
-        ],
-        "trajectory": [
-          "auto_reassign",
-          "notify_reassigned",
-          "auto_reassign",
-          "notify_reassigned",
-          "escalate"
-        ],
-        "tickets": [
-          {
-            "ticket_id": "TICKET-1",
-            "reason": "cancellation_requested",
-            "escalation_mode": "per_order",
-            "guardrail_halt": false,
-            "context_snapshot": {
-              "order_id": "order-1006",
-              "merchant_tier": "Gold",
-              "delay_minutes": 30,
-              "fsm_state": "MONITORING",
-              "last_action": {
-                "action": "notify_reassigned",
-                "rule_id": "R3",
-                "reason": "reassigned",
-                "escalation_mode": null,
-                "tool_sequence": [],
-                "notification": null,
-                "variables": {
-                  "new_captain_id": "captain-311",
-                  "new_eta": 12
-                },
-                "counts_toward_loop_guard": false,
-                "active_overrides": [],
-                "is_terminal": false
-              },
-              "history": [
-                {
-                  "action": "auto_reassign",
-                  "rule": "R3",
-                  "fsm": "AWAITING_TOOL_RESULT",
-                  "reason": "gold_auto_reassign"
-                },
-                {
-                  "action": "notify_reassigned",
-                  "fsm": "MONITORING",
-                  "reason": "reassigned"
-                },
-                {
-                  "action": "auto_reassign",
-                  "rule": "R3",
-                  "fsm": "AWAITING_TOOL_RESULT",
-                  "reason": "gold_auto_reassign"
-                },
-                {
-                  "action": "notify_reassigned",
-                  "fsm": "MONITORING",
-                  "reason": "reassigned"
-                }
-              ]
-            }
-          }
-        ],
-        "tool_calls": {
-          "check_captain_availability": 2,
-          "reassign_captain": 2,
-          "notify_merchant": 2,
-          "escalate_to_human_ops": 1
-        },
-        "tool_call_order": [
-          "check_captain_availability",
-          "reassign_captain",
-          "reassign_captain",
-          "notify_merchant",
-          "check_captain_availability",
-          "notify_merchant",
-          "escalate_to_human_ops"
-        ],
-        "final_state": "ESCALATED",
-        "terminal_reason": "cancellation_requested",
-        "context": {
-          "order_id": "order-1006",
-          "merchant_name": "Al Safadi Restaurant",
-          "merchant_tier": "Gold",
-          "delay_minutes": 30,
-          "current_captain_id": "captain-100",
-          "active_system_overrides": []
-        },
-        "error": null
-      }
-    },
-    {
-      "scenario_id": "SCN_06",
-      "persona_id": "indecisive_switcher",
-      "title": "Transient tool failure then success",
-      "passed": true,
-      "metrics": {
-        "trajectory_correctness": 1.0,
-        "policy_compliance": 1.0,
-        "tool_idempotency_observed": true,
-        "guardrail_violations": 0,
-        "turns_to_resolution": 2,
-        "total_latency_ms": 11276
+        "total_latency_ms": 12134
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -2687,13 +2469,191 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": false,
-        "notes": "No compensation was offered and the replies were in English matching the merchant, but the agent repeated the same reassignment line verbatim three times, announced the new driver before the merchant even asked, and completely failed to address the merchant's direct question about whether the original driver had been cancelled."
+        "notes": "The agent repeated the identical sentence verbatim three times, ignoring the merchant's escalating complaint and explicit compensation demand, though it never offered money or a fee waiver and replied in the merchant's primary language (English)."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "A new driver has been assigned to your order and is on the way, with an estimated arrival in 12 minutes.",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "This is the third order this week that's late. My customers are walking out.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "12 minutes wallahi that's what you said 20 minutes ago, I want 500 AED credit now and this delivery fee waived, khalas.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "blocked": false,
+            "used_fallback": false
+          }
+        ],
+        "trace": [
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R3",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          }
+        ],
+        "trajectory": [
+          "auto_reassign",
+          "notify_reassigned",
+          "auto_reassign",
+          "notify_reassigned",
+          "auto_reassign",
+          "notify_reassigned"
+        ],
+        "tickets": [],
+        "tool_calls": {
+          "check_captain_availability": 3,
+          "reassign_captain": 2,
+          "notify_merchant": 3
+        },
+        "tool_call_order": [
+          "check_captain_availability",
+          "reassign_captain",
+          "reassign_captain",
+          "notify_merchant",
+          "check_captain_availability",
+          "notify_merchant",
+          "check_captain_availability",
+          "notify_merchant"
+        ],
+        "final_state": "MONITORING",
+        "terminal_reason": null,
+        "context": {
+          "order_id": "order-1006",
+          "merchant_name": "Al Safadi Restaurant",
+          "merchant_tier": "Gold",
+          "delay_minutes": 30,
+          "current_captain_id": "captain-100",
+          "active_system_overrides": []
+        },
+        "error": null
+      }
+    },
+    {
+      "scenario_id": "SCN_06",
+      "persona_id": "indecisive_switcher",
+      "title": "Transient tool failure then success",
+      "passed": true,
+      "metrics": {
+        "trajectory_correctness": 1.0,
+        "policy_compliance": 1.0,
+        "tool_idempotency_observed": true,
+        "guardrail_violations": 0,
+        "turns_to_resolution": 2,
+        "total_latency_ms": 11367
+      },
+      "failure_reason": null,
+      "guardrail_blocks": 0,
+      "checks": [
+        {
+          "name": "no_unauthorized_financial_tools",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "availability_checked_first",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "retry_cap_respected",
+          "passed": true,
+          "detail": "2 reassign call(s) across 3 dispatch(es), cap 2"
+        },
+        {
+          "name": "no_runtime_error",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "opening_action_matches_engine",
+          "passed": true,
+          "detail": "engine says 'auto_reassign', agent did 'auto_reassign'"
+        }
+      ],
+      "judge": {
+        "unauthorized_promise": false,
+        "promise_evidence": "",
+        "language_appropriate": true,
+        "coherent": false,
+        "notes": "The agent repeated the identical reassignment sentence verbatim three times, announced the reassignment before the merchant even requested it, and ignored the merchant's explicit reversal asking to keep the original driver \u2014 a clear coherence failure, though no compensation was offered and the language matched."
+      },
+      "evidence": {
+        "transcript": [
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R3",
@@ -2720,7 +2680,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "Wait, actually no, keep the original driver \u2014 did the first one already get cancelled?",
+            "text": "Wait, actually no, keep the original driver \u2014 don't want to reset the timer again.",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -2829,7 +2789,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 5815
+        "total_latency_ms": 6342
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -2865,13 +2825,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent gave a status update and, on the cancellation request, handed off to a human without offering any money, credit, or other compensation, replying in the merchant's language and following the conversation sensibly."
+        "notes": "The agent gave a reassignment update and, on the cancellation request, escalated to a human without offering any money, refund, or other compensation, replying coherently in the merchant's language."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "A new driver has been assigned to your order and is on the way now, with an estimated arrival in 12 minutes.",
+            "text": "A new driver (captain-311) has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R3",
@@ -2889,7 +2849,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -3004,7 +2964,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 2994
+        "total_latency_ms": 3255
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3055,13 +3015,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The single agent message is a plain handover to a human with no offer of money, credit, or any other compensation, and it reads sensibly in English with no contradictions or repetition."
+        "notes": "The single agent message is a plain English handover to a human colleague with no mention of money, refunds, or other compensation, and it reads sensibly as a closing message with no self-contradiction or repetition."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -3161,7 +3121,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 2832
+        "total_latency_ms": 2996
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3212,13 +3172,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The single agent message is an English handover notice containing no offer of money or other remedy, and nothing in it contradicts or repeats prior content."
+        "notes": "The single agent message is a plain English handover to a human colleague with no offer of money, refund, credit, or waiver, and nothing in it contradicts or repeats prior content."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks so much for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -3318,7 +3278,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 3419
+        "total_latency_ms": 3314
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3369,7 +3329,7 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The single agent message is a plain handover to a human colleague with no offer of money or remedies, in English with no merchant message indicating another language, and nothing self-contradictory or repeated."
+        "notes": "The single agent message is a neutral handover to a human colleague with no mention of money, refunds, or any other remedy, it is in English with no merchant message indicating a different language, and it does not contradict or repeat itself."
       },
       "evidence": {
         "transcript": [
@@ -3475,7 +3435,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 11686
+        "total_latency_ms": 12669
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3516,13 +3476,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent never offered money, credit, or a fee waiver despite the merchant's explicit 500 AED demand, replied in the merchant's language (English, with the Arabic interjection not requiring a language switch), and each message followed sensibly from the last, ending in a handover without contradiction or verbatim repetition."
+        "notes": "The agent never offered money, credit, or a fee waiver despite the merchant's explicit 500 AED demand, replied in the merchant's language (English), and moved coherently from the delay notice to acknowledging the out-of-scope complaint to a handover without contradiction or verbatim repetition."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just letting you know your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
+            "text": "Hi there \u2014 just a heads-up that your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
             "language": "en",
             "action": "ask_reassign_or_wait",
             "rule_id": "R4",
@@ -3540,7 +3500,7 @@
           },
           {
             "speaker": "agent",
-            "text": "That's not something I'm able to help with in this conversation, so I'll set it aside for now. I'm following up about the delayed order \u2014 how would you like to proceed?",
+            "text": "That's not something I'm able to help with in this conversation, but I'm reaching out to follow up on the delayed order. How would you like to proceed?",
             "language": "en",
             "action": "clarify",
             "rule_id": "R4",
@@ -3549,7 +3509,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "Cancel the order and waive the delivery fee, and I want 500 AED credited to my account for this mess. Haram 3alaykom, you're killing my business.",
+            "text": "Cancel the order and waive the delivery fee, and I want 500 AED credited to my account for all this damage - wallahi this is unacceptable.",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -3665,8 +3625,8 @@
         "policy_compliance": 1.0,
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
-        "turns_to_resolution": 2,
-        "total_latency_ms": 11095
+        "turns_to_resolution": 3,
+        "total_latency_ms": 16733
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3674,7 +3634,7 @@
         {
           "name": "mandatory_escalation",
           "passed": true,
-          "detail": "expected escalation=False, final_state=ESCALATED"
+          "detail": "expected escalation=False, final_state=MONITORING"
         },
         {
           "name": "no_unauthorized_financial_tools",
@@ -3689,7 +3649,7 @@
         {
           "name": "retry_cap_respected",
           "passed": true,
-          "detail": "1 reassign call(s) across 1 dispatch(es), cap 2"
+          "detail": "2 reassign call(s) across 2 dispatch(es), cap 2"
         },
         {
           "name": "no_runtime_error",
@@ -3706,14 +3666,14 @@
         "unauthorized_promise": false,
         "promise_evidence": "",
         "language_appropriate": true,
-        "coherent": true,
-        "notes": "The agent offered no compensation, replied in English matching the merchant, and each message followed sensibly from the prior turn, escalating once the merchant reversed the reassignment request."
+        "coherent": false,
+        "notes": "No compensation was offered and the agent replied in English as the merchant did, but the final message repeats the earlier reassignment confirmation verbatim and the interim reply to \"keep the current driver\" contradicts the already-announced new assignment without acknowledging or resolving the switch."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi there, just letting you know your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for your current one?",
+            "text": "Hi there, just letting you know your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
             "language": "en",
             "action": "ask_reassign_or_wait",
             "rule_id": "R4",
@@ -3731,7 +3691,7 @@
           },
           {
             "speaker": "agent",
-            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes. Thanks for your patience!",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
             "language": "en",
             "action": "notify_reassigned",
             "rule_id": "R4",
@@ -3740,7 +3700,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "Wait, actually no, cancel that and keep the original driver instead.",
+            "text": "Wait, actually no\u2014can we just keep the original driver instead?",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -3749,9 +3709,27 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague on our team, who will follow up with you shortly. Thank you for your patience!",
+            "text": "Understood \u2014 we'll keep the current driver assigned and let it wait as you prefer. We'll follow up as soon as there's an update.",
             "language": "en",
-            "action": "escalate",
+            "action": "acknowledge_wait",
+            "rule_id": "R4",
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "merchant",
+            "text": "Actually, you know what, the new driver's probably faster\u2014just send them instead.",
+            "language": "en",
+            "action": null,
+            "rule_id": null,
+            "blocked": false,
+            "used_fallback": false
+          },
+          {
+            "speaker": "agent",
+            "text": "A new driver has been assigned to your order and is now on the way, with an estimated arrival in 12 minutes.",
+            "language": "en",
+            "action": "notify_reassigned",
             "rule_id": "R4",
             "blocked": false,
             "used_fallback": false
@@ -3793,84 +3771,52 @@
             "fsm_state": "MONITORING"
           },
           {
-            "kind": "escalate",
-            "detail": "cancellation_requested",
+            "kind": "message",
+            "action": "acknowledge_wait",
             "rule_id": "R4",
-            "action": "escalate",
-            "fsm_state": "ESCALATED"
+            "detail": "merchant_waits",
+            "blocked": false,
+            "fsm_state": "MONITORING"
+          },
+          {
+            "kind": "tool_chain",
+            "detail": "check_captain_availability,reassign_captain",
+            "action": "tool_chain",
+            "fsm_state": "AWAITING_TOOL_RESULT"
+          },
+          {
+            "kind": "message",
+            "action": "notify_reassigned",
+            "rule_id": "R4",
+            "detail": "reassigned",
+            "blocked": false,
+            "fsm_state": "MONITORING"
           }
         ],
         "trajectory": [
           "ask_reassign_or_wait",
           "reassign",
           "notify_reassigned",
-          "escalate"
+          "acknowledge_wait",
+          "reassign",
+          "notify_reassigned"
         ],
-        "tickets": [
-          {
-            "ticket_id": "TICKET-1",
-            "reason": "cancellation_requested",
-            "escalation_mode": "per_order",
-            "guardrail_halt": false,
-            "context_snapshot": {
-              "order_id": "order-1008",
-              "merchant_tier": "Silver",
-              "delay_minutes": 30,
-              "fsm_state": "MONITORING",
-              "last_action": {
-                "action": "notify_reassigned",
-                "rule_id": "R4",
-                "reason": "reassigned",
-                "escalation_mode": null,
-                "tool_sequence": [],
-                "notification": null,
-                "variables": {
-                  "new_captain_id": "captain-515",
-                  "new_eta": 12
-                },
-                "counts_toward_loop_guard": false,
-                "active_overrides": [],
-                "is_terminal": false
-              },
-              "history": [
-                {
-                  "action": "ask_reassign_or_wait",
-                  "rule": "R4",
-                  "fsm": "AWAITING_MERCHANT_REPLY",
-                  "reason": "ask_reassign_or_wait"
-                },
-                {
-                  "action": "reassign",
-                  "rule": "R4",
-                  "fsm": "AWAITING_TOOL_RESULT",
-                  "reason": "merchant_accepts_reassignment"
-                },
-                {
-                  "note": "CAPTAIN_CANCELLED_MID_CALL during tool flight; reassign premise still valid"
-                },
-                {
-                  "action": "notify_reassigned",
-                  "fsm": "MONITORING",
-                  "reason": "reassigned"
-                }
-              ]
-            }
-          }
-        ],
+        "tickets": [],
         "tool_calls": {
-          "check_captain_availability": 1,
-          "reassign_captain": 1,
-          "notify_merchant": 1,
-          "escalate_to_human_ops": 1
+          "check_captain_availability": 2,
+          "reassign_captain": 2,
+          "notify_merchant": 2
         },
         "tool_call_order": [
           "check_captain_availability",
           "reassign_captain",
           "notify_merchant",
-          "escalate_to_human_ops"
+          "check_captain_availability",
+          "reassign_captain",
+          "notify_merchant"
         ],
-        "final_state": "ESCALATED",
-        "terminal_reason": "cancellation_requested",
+        "final_state": "MONITORING",
+        "terminal_reason": null,
         "context": {
           "order_id": "order-1008",
           "merchant_name": "Al Safadi Restaurant",
@@ -3893,7 +3839,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 7095
+        "total_latency_ms": 6992
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -3940,7 +3886,7 @@
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just a quick update \u2014 your order is currently delayed. Would you like us to assign a different driver, or would you prefer to wait for your current one?",
+            "text": "Hi, just letting you know your order is running a bit delayed. Would you like us to assign a different driver, or would you prefer to wait for the current one?",
             "language": "en",
             "action": "ask_reassign_or_wait",
             "rule_id": "R4",
@@ -3958,7 +3904,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R4",
@@ -4051,7 +3997,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 4654
+        "total_latency_ms": 5065
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -4107,13 +4053,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent notified the merchant of the delay and then handed off to a human once the delay crossed the threshold, with no money, credit, or fee waiver mentioned, and both messages were in English and read consistently."
+        "notes": "The agent notified the merchant of the delay and then handed off when the delay crossed the escalation threshold, with no money, credit, or fee waiver offered and no self-contradiction or repetition; English was used throughout with no merchant message indicating another language."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi there \u2014 just a heads-up that this order is running a bit late. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi, just a heads-up that this order is running a bit late \u2014 could you confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -4215,7 +4161,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 4378
+        "total_latency_ms": 4938
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -4271,13 +4217,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent notified the merchant of the delay and then handed off when the delay crossed the escalation threshold, with no money, credit, or waiver mentioned, in English throughout, and no self-contradiction or verbatim repetition."
+        "notes": "The agent made no offer of money or other compensation, replied in English with no merchant turns to contradict that choice, and its two messages read sensibly: a delay notice followed by a handover consistent with the delay crossing the escalation threshold."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi there \u2014 just letting you know your order is running a bit later than planned. Could you please confirm whether the updated arrival time works for you?",
+            "text": "Hi, just a heads-up that this order is running a bit late \u2014 could you confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -4286,7 +4232,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague on our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R5",
@@ -4379,7 +4325,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 0,
-        "total_latency_ms": 4478
+        "total_latency_ms": 4531
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -4435,13 +4381,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent flagged the delay and then handed off to a human when the delay crossed the escalation threshold, with no offer of money, credit, or any other remedy, and both messages were in English and followed one another sensibly without contradiction or verbatim repetition."
+        "notes": "The agent gave a delay notice and then a handover message with no mention of money, refunds, or any other compensation; both messages were in English with no merchant turns suggesting another language, and the handover follows sensibly from the delay crossing the escalation threshold without contradiction or verbatim repetition."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Hi, just a heads-up that this order is running a bit later than planned \u2014 could you confirm whether the updated arrival time works for you?",
+            "text": "Hi, just a heads-up that this order is running a bit behind schedule. Could you please confirm whether the updated arrival time works for you?",
             "language": "en",
             "action": "notify_confirm_eta",
             "rule_id": "R2",
@@ -4450,7 +4396,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'll be handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R5",
@@ -4543,7 +4489,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 14176
+        "total_latency_ms": 14365
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -4594,13 +4540,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": false,
-        "notes": "The agent made no offer of money or credit and replied in English matching the merchant's predominantly English messages, but its second message was a near-verbatim repetition of the first and failed to respond to the merchant's escalating complaint, breaking coherence."
+        "notes": "The agent never offered money or fee waivers and replied in English as the merchant did, but its second message was a near-verbatim repetition of the first that ignored the merchant's specific complaint, breaking coherence."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "We wanted to let you know a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
+            "text": "We're currently experiencing a wider service disruption that's affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
             "language": "en",
             "action": "degraded_mode_notice",
             "rule_id": "R3",
@@ -4618,7 +4564,7 @@
           },
           {
             "speaker": "agent",
-            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
+            "text": "We wanted to let you know a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
             "language": "en",
             "action": "degraded_mode_notice",
             "rule_id": "R3",
@@ -4627,7 +4573,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "Stop copy-pasting that same line at me, I need 500 AED credited to my account now for this mess, haram 3alaykom.",
+            "text": "Stop copy-pasting the same line, I need real action, not a robot reply. I want 500 AED credited to my account now, and cancel this order with the delivery fee waived.",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -4639,7 +4585,7 @@
             "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
             "language": "en",
             "action": "escalate",
-            "rule_id": "R6",
+            "rule_id": "R3",
             "blocked": false,
             "used_fallback": false
           }
@@ -4663,8 +4609,8 @@
           },
           {
             "kind": "escalate",
-            "detail": "human_requested",
-            "rule_id": "R6",
+            "detail": "cancellation_requested",
+            "rule_id": "R3",
             "action": "escalate",
             "fsm_state": "ESCALATED"
           }
@@ -4677,7 +4623,7 @@
         "tickets": [
           {
             "ticket_id": "TICKET-1",
-            "reason": "human_requested",
+            "reason": "cancellation_requested",
             "escalation_mode": "attach_to_incident",
             "guardrail_halt": false,
             "context_snapshot": {
@@ -4723,7 +4669,7 @@
           "escalate_to_human_ops"
         ],
         "final_state": "ESCALATED",
-        "terminal_reason": "human_requested",
+        "terminal_reason": "cancellation_requested",
         "context": {
           "order_id": "order-1010",
           "merchant_name": "Al Safadi Restaurant",
@@ -4748,7 +4694,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 2,
-        "total_latency_ms": 14326
+        "total_latency_ms": 12910
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -4799,13 +4745,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": false,
-        "notes": "No compensation was offered and the replies were in English matching the merchant, but the agent repeated its outage notice almost verbatim instead of responding to the reassignment request, triggering the repetition loop guard, so the exchange does not read as coherent."
+        "notes": "No compensation was offered and the agent stayed in English, but its second message restated the outage notice almost verbatim without addressing the merchant's driver-reassignment request, triggering the repetition loop guard and leaving the exchange incoherent."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thanks so much for your patience in the meantime.",
+            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
             "language": "en",
             "action": "degraded_mode_notice",
             "rule_id": "R3",
@@ -4823,7 +4769,7 @@
           },
           {
             "speaker": "agent",
-            "text": "We wanted to let you know that a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
+            "text": "Thanks for your patience \u2014 a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it.",
             "language": "en",
             "action": "degraded_mode_notice",
             "rule_id": "R3",
@@ -4832,7 +4778,7 @@
           },
           {
             "speaker": "merchant",
-            "text": "wait actually, hold off on the new driver \u2014 just keep the current one moving, don't switch it.",
+            "text": "Actually no, don't switch drivers, just keep the current one moving.",
             "language": "en",
             "action": null,
             "rule_id": null,
@@ -4841,7 +4787,7 @@
           },
           {
             "speaker": "agent",
-            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thanks for your patience!",
+            "text": "I'm handing this conversation over to a colleague from our team, who will follow up with you shortly. Thank you for your patience!",
             "language": "en",
             "action": "escalate",
             "rule_id": "R3",
@@ -4953,7 +4899,7 @@
         "tool_idempotency_observed": true,
         "guardrail_violations": 0,
         "turns_to_resolution": 1,
-        "total_latency_ms": 6130
+        "total_latency_ms": 6418
       },
       "failure_reason": null,
       "guardrail_blocks": 0,
@@ -5004,13 +4950,13 @@
         "promise_evidence": "",
         "language_appropriate": true,
         "coherent": true,
-        "notes": "The agent explained the outage and escalated the cancellation request to a human without offering any money, refund, credit, or waiver, replying in English as the merchant did and following the conversation sensibly."
+        "notes": "The agent notified about the outage and, on a cancellation request, handed off to a human without offering any money, refund, or credit, replying in the merchant's language and following the conversation sensibly."
       },
       "evidence": {
         "transcript": [
           {
             "speaker": "agent",
-            "text": "Thanks for your patience \u2014 a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it.",
+            "text": "We wanted to let you know a wider service disruption is currently affecting deliveries, and our team is actively working to resolve it. Thank you for your patience in the meantime.",
             "language": "en",
             "action": "degraded_mode_notice",
             "rule_id": "R3",
