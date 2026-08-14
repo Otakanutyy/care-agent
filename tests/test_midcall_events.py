@@ -67,7 +67,7 @@ def test_captain_cancelled_keeps_reassign_in_flight():
     assert effects[0].kind == "log"
     # the in-flight result then applies normally
     session, effects = reduce(session, tool("reassigned", new_captain_id="cap-9", new_eta=10), POLICY)
-    assert session.fsm_state is FsmState.RESOLVED
+    assert session.fsm_state is FsmState.MONITORING
     assert session.data.current_captain_id == "cap-9"
 
 
@@ -86,7 +86,7 @@ def test_captain_cancelled_does_not_discard_a_non_gold_reassignment():
     assert effects[0].kind == "log"
 
     session, _ = reduce(session, tool("reassigned", new_captain_id="cap-42", new_eta=9), POLICY)
-    assert session.fsm_state is FsmState.RESOLVED
+    assert session.fsm_state is FsmState.MONITORING
     assert session.data.current_captain_id == "cap-42"
 
 

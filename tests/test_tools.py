@@ -150,7 +150,7 @@ def test_broker_reassigned_result_resolves_session():
     session = _session_awaiting_tool()
     result = b.run_reassign_chain(ORDER, session.pending_tool.idempotency_key)
     session, _ = reduce(session, result, POLICY)
-    assert session.fsm_state is FsmState.RESOLVED
+    assert session.fsm_state is FsmState.MONITORING
     assert session.data.current_captain_id == "cap-2"
 
 

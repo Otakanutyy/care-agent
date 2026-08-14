@@ -111,3 +111,5 @@ class Session(BaseModel):
     # non-progressing reply while the merchant keeps asking different things.
     last_emitted_action: ActionType | None = None
     repeat_action_count: int = 0
+    #: Consecutive replies that left the merchant where they were, whether or not identical.
+    stall_count: int = 0

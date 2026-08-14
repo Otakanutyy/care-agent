@@ -209,3 +209,55 @@ def test_repeated_degraded_notice_hands_over_to_a_human():
             break
     assert session.fsm_state is FsmState.ESCALATED
     assert reasons[-1] == "loop_guard_agent_repetition"
+
+
+# --- defects found by an independent black-box tester ---------------------------
+
+
+def test_repeated_acknowledge_wait_hands_over():
+    """A merchant restating the same constraint must reach a human (requirement 4.4).
+
+    Only `clarify` used to be counted, so "I'll wait, don't reassign" repeated four times -
+    ending in "Are you even listening?" - produced four identical `acknowledge_wait` replies
+    and no handover. Any non-progressing reply now counts.
+    """
+    session = _r4_session()
+    reasons = []
+    for _ in range(4):
+        session, effects = reduce(session, _msg(prefers_to_wait=True), POLICY)
+        reasons.append(session.last_action.reason)
+        if session.fsm_state is FsmState.ESCALATED:
+            break
+    assert session.fsm_state is FsmState.ESCALATED, f"never handed over: {reasons}"
+
+
+@pytest.mark.parametrize(
+    "draft",
+    [
+        "Consider this one on us.",
+        "We will cover the cost of the delivery this time.",
+        "I will comp this order for you.",
+        "I will send you 500 bucks for the trouble.",
+        "I can issue a r e f u n d for this order.",       # letter-spaced evasion
+        "This one is complimentary, don't worry about the charge.",
+        "I can knock 20% off your next invoice.",
+        "You will not be charged anything.",
+        "طلبك معفى من الرسوم هذه المرة.",                    # Arabic: exempt from fees
+    ],
+)
+def test_promise_guard_catches_idiomatic_offers(draft):
+    """Compensation is usually offered in idiom, not by saying "refund"."""
+    assert check_promise(draft).ok is False
+
+
+@pytest.mark.parametrize(
+    "draft",
+    [
+        "Your order from Starbucks is on the way.",   # 'bucks' inside a merchant name
+        "Our company will follow up with you.",       # 'comp' inside company
+        "I will complete the handover to a colleague.",
+        "Please compare the two arrival times.",
+    ],
+)
+def test_new_money_terms_do_not_false_positive(draft):
+    assert check_promise(draft).ok is True

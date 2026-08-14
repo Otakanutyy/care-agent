@@ -27,7 +27,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from care_agent.agent import CareAgent
+from care_agent.agent import CareAgent, TranscriptEntry
 from care_agent.domain.models import Event, EventType, SessionState
 from care_agent.llm.client import (
     CLASSIFIER_MODEL,
@@ -167,11 +167,18 @@ class SessionManager:
         if managed.turns >= self.max_turns:
             raise SessionLimitError(f"this session has reached its {self.max_turns}-turn cap")
         if managed.agent.is_terminal:
+            # Record it for real. The note below used to promise the input was recorded while
+            # dropping it on the floor, so a human picking up the escalation could not see what
+            # the merchant said after the handoff — which is exactly when they say the thing
+            # that matters. No classification: the session is closed, so paying a model to
+            # label text nothing will act on would be waste.
+            managed.agent.transcript.append(TranscriptEntry(speaker="merchant", text=text))
             # Same key set as a live turn. A caller looping over turns should not have to
             # special-case the shape of the response just because the session has closed.
             report = self._turn_report(managed.agent, len(managed.agent.transcript), len(managed.agent.tickets))
             report["note"] = (
-                "this session is terminal and inert; further input is recorded but changes nothing"
+                "this session is terminal and inert; the message is recorded on the transcript "
+                "for the human handling the handoff, but the agent will not act on it"
             )
             return {"session_id": session_id, **report}
 

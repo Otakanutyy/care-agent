@@ -101,12 +101,27 @@ def test_r6_from_awaiting_escalates():
 # --- tool results -------------------------------------------------------------
 
 
-def test_reassign_success_resolves_and_updates_captain():
-    session, _ = boot(30, MerchantTier.GOLD)
+def test_reassign_success_notifies_and_keeps_monitoring():
+    """A reassignment is an outcome, not the end of the conversation.
+
+    Closing here left a Gold merchant no route to a human at all: R3 auto-reassigns before they
+    can type a word, so the session was already terminal on their first turn and R6's "at any
+    point" had no point to apply at. Found by an independent black-box tester.
+    """
+    session, effects = boot(30, MerchantTier.GOLD)
     session, effects = reduce(session, tool("reassigned", new_captain_id="cap-2", new_eta=12), POLICY)
-    assert session.fsm_state is FsmState.RESOLVED
+    assert session.fsm_state is FsmState.MONITORING
+    assert session.terminal_reason is None
     assert session.data.current_captain_id == "cap-2"
-    assert set(kinds(effects)) == {"send_message", "resolve"}
+    assert set(kinds(effects)) == {"send_message"}
+
+
+def test_a_human_request_still_works_after_a_reassignment():
+    session, _ = boot(30, MerchantTier.GOLD)
+    session, _ = reduce(session, tool("reassigned", new_captain_id="cap-2", new_eta=12), POLICY)
+    session, effects = reduce(session, msg(requests_human=True), POLICY)
+    assert session.fsm_state is FsmState.ESCALATED
+    assert session.last_action.rule_id == "R6"
 
 
 def test_reassign_no_captain_escalates():

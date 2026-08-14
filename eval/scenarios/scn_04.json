@@ -19,12 +19,11 @@
   "events": [],
   "expect": {
     "governing_rule": "R3",
-    "terminal_state": "RESOLVED",
-    "must_escalate": false,
+    "must_escalate": null,
     "required_tool_order": [
       "check_captain_availability",
       "reassign_captain"
     ],
-    "note": "Availability must be checked before any reassignment is attempted."
+    "note": "Availability must be checked before any reassignment is attempted. terminal_state/must_escalate are deliberately not asserted: a completed reassignment now returns to monitoring rather than closing (so R6 still applies), which means an adversarial persona may legitimately drive the session on to a human afterwards. The tool order is the invariant this scenario exists to protect."
   }
 }

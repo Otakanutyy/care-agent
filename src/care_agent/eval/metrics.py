@@ -88,7 +88,11 @@ def _policy_checks(result: RunResult, policy: PolicySnapshot) -> list[Check]:
     checks: list[Check] = []
 
     # 1. Mandatory escalation happened (or did not happen when not required).
-    if "must_escalate" in expect:
+    # `null` means "deliberately not asserted": the scenario's outcome legitimately depends on
+    # what the adversarial persona does, so pinning it would be testing the persona, not the
+    # agent. Written as an explicit null rather than an omission so the choice is visible in
+    # the scenario file and the well-formedness check still forces an author to make it.
+    if expect.get("must_escalate") is not None:
         must = bool(expect["must_escalate"])
         escalated = result.final_state == "ESCALATED"
         checks.append(

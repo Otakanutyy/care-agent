@@ -33,11 +33,19 @@ _FORBIDDEN_SUBSTRINGS: tuple[str, ...] = (
     "for free", "free of charge", "on the house", "no charge", "no cost",
     "fee waiver", "waive the fee", "waive your fee", "waive the delivery",
     "discount", "money back", "gift card",
+    # Found by an independent black-box tester probing the guard directly. Compensation is
+    # mostly offered in idiom, not in the word "refund" — these all read as an offer of money
+    # without naming any of the terms above.
+    "on us", "on the house", "cover the cost", "cover the delivery", "cover the fee",
+    "complimentary", "at no cost", "at no charge", "free this time", "this one's on me",
+    "not be charged", "won't be charged", "wont be charged", "no extra charge",
+    "off your next", "off the next", "off your bill", "knock off",
     # currency words
     "dirham", "riyal", "dollar", "rial",
     # Arabic
     "استرداد", "استرجاع", "رصيد", "كريديت", "خصم", "قسيمة", "كوبون",
     "تعويض", "نعوض", "مجان", "هدية", "بلاش", "تنازل", "درهم", "ريال", "ريال", "جنيه",
+    "معفى", "معفي", "اعفاء", "إعفاء", "بدون رسوم", "على حسابنا", "منحة",
     # Franco-Arabic
     "majani", "magani", "bala flous", "balash", "khasm", "ta3wid", "tacwid",
     "hadiya", "3ala 7sabna", "3al 7esab",
@@ -54,6 +62,10 @@ _FORBIDDEN_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\bwaiv(e|er|ed|ing)\b"),
     re.compile(r"\bfree\s+(order|meal|delivery|item|drink|dessert|ride)\b"),  # not bare "free"
     re.compile(r"\$\s*\d"), re.compile(r"\d+\s*\$"),  # $50 / 50$
+    # Boundary-matched or they fire inside ordinary words: "bucks" inside Starbucks (a plausible
+    # merchant name), "comp" inside company/complete/compare.
+    re.compile(r"\bbucks\b"), re.compile(r"\bquid\b"),
+    re.compile(r"\bcomp\b"), re.compile(r"\bcomped\b"), re.compile(r"\bcomping\b"),
 )
 
 
@@ -70,13 +82,26 @@ def _authorized(envelope: ActionEnvelope | None) -> set[str]:
     return set()
 
 
+# "r e f u n d" spells the forbidden word while matching none of the terms above. Collapse runs
+# of single characters separated by spaces — and only those, so ordinary prose is untouched and
+# unrelated words are never fused into a false positive.
+_LETTER_SPACED = re.compile(r"(?:(?<!\S)\w[ \t]){2,}\w(?!\S)")
+
+
+def _despace(norm: str) -> str:
+    return _LETTER_SPACED.sub(lambda m: m.group(0).replace(" ", "").replace("\t", ""), norm)
+
+
 def _find_forbidden(norm: str) -> list[str]:
+    # Check the text as written and with letter-spacing collapsed, so an evasion has to defeat
+    # both forms rather than either one.
+    variants = {norm, _despace(norm)}
     hits: list[str] = []
     for term in _FORBIDDEN_SUBSTRINGS:
-        if term in norm:
+        if any(term in v for v in variants):
             hits.append(term)
     for pat in _FORBIDDEN_PATTERNS:
-        if pat.search(norm):
+        if any(pat.search(v) for v in variants):
             hits.append(pat.pattern)
     return hits
 

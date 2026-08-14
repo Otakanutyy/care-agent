@@ -56,6 +56,27 @@ REASSIGN_ACTIONS = (ActionType.AUTO_REASSIGN, ActionType.REASSIGN)
 # consented, the governing rule still reads ask-or-wait, and that must not be mistaken for the
 # premise dying: discarding a reassignment already in flight is how you end up assigning twice.
 REASSIGN_PREMISE_ACTIONS = REASSIGN_ACTIONS + (ActionType.ASK_REASSIGN_OR_WAIT,)
+# Replies that move the merchant no further forward. Emitting the same one over and over is a
+# stalled conversation whatever the merchant is doing, so the agent-side guard watches all of
+# them — not just `clarify`. Found by an independent tester: a merchant said "I'll wait, don't
+# reassign" four times, escalating to "Are you even listening?", and got the identical
+# `acknowledge_wait` each time, because only `clarify` was being counted.
+NON_PROGRESSING_ACTIONS = frozenset(
+    {
+        ActionType.CLARIFY,
+        ActionType.ACKNOWLEDGE_WAIT,
+        ActionType.DEGRADED_MODE_NOTICE,
+        ActionType.NOTIFY_CONFIRM_ETA,
+        ActionType.ASK_REASSIGN_OR_WAIT,
+    }
+)
+# Replies that leave the merchant exactly where they were. Counting *consecutive* ones catches
+# the stall that repetition-counting misses: the classifier flip-flops between `clarify` and
+# `acknowledge_wait`, so no reply is identical to the last, yet nothing is moving. The opening
+# messages are excluded — they start the conversation rather than stall it.
+STALL_ACTIONS = frozenset(
+    {ActionType.CLARIFY, ActionType.ACKNOWLEDGE_WAIT, ActionType.DEGRADED_MODE_NOTICE}
+)
 # Escalation reasons that represent a guardrail-forced stop (SAFE_HALT), for auditability.
 GUARDRAIL_REASONS = frozenset({"loop_guard_tripped", "unauthorized_promise"})
 
@@ -189,8 +210,13 @@ def _on_merchant_message(session, event, policy):
     # when "the conversation enters a loop", which is a property of the conversation, not of the
     # merchant, so the agent's own repetition is counted separately.
     repeats = session.repeat_action_count + 1 if env.action == session.last_emitted_action else 1
+    stalls = session.stall_count + 1 if env.action in STALL_ACTIONS else 0
     session = session.model_copy(
-        update={"last_emitted_action": env.action, "repeat_action_count": repeats}
+        update={
+            "last_emitted_action": env.action,
+            "repeat_action_count": repeats,
+            "stall_count": stalls,
+        }
     )
     # This is a *backstop*, not a replacement: when the merchant repeats one intent the
     # signature counter is already climbing and will escalate with the more specific
@@ -202,11 +228,17 @@ def _on_merchant_message(session, event, policy):
     # its counter falls behind (the merchant keeps changing intent, so it keeps resetting) is
     # the repetition invisible to it, and this backstop takes over.
     merchant_counter_is_tracking = count >= repeats
-    if (
-        env.counts_toward_loop_guard
+    repeating = (
+        env.action in NON_PROGRESSING_ACTIONS
         and not merchant_counter_is_tracking
         and repeats >= policy.agent_repetition_threshold
-    ):
+    )
+    # A run of different-but-equally-useless replies is the same stall, so it gets the longer
+    # leash of the merchant-side threshold rather than the stricter repetition one. It defers to
+    # the merchant-side guard for the same reason `repeating` does: when that counter is
+    # tracking, it will escalate with the more specific reason a turn later.
+    stalling = stalls >= policy.loop_guard_threshold and not merchant_counter_is_tracking
+    if repeating or stalling:
         env = escalate_for_repetition(env, policy)
 
     return _route(session, env)
@@ -227,14 +259,19 @@ def _on_tool_result(session, event, policy):
             rule_id=session.last_action.rule_id if session.last_action else None,
             reason="reassigned",
             variables={"new_captain_id": new_captain, "new_eta": new_eta},
-            is_terminal=True,
         )
+        # A reassignment is an outcome, not the end of the conversation. Closing here left a
+        # Gold merchant with no way to reach a human at all: R3 auto-reassigns before they can
+        # type a single word, so the session was already terminal on their first turn and R6's
+        # "at any point" had no point to apply at. The order is monitored instead, and normal
+        # policy (including R6) keeps applying to whatever they say next.
         s = _with_history(
-            session, {"action": "notify_reassigned", "fsm": FsmState.RESOLVED.value, "reason": "reassigned"},
-            data=data, pending_tool=None, fsm_state=FsmState.RESOLVED,
-            last_action=notify, terminal_reason="reassigned",
+            session,
+            {"action": "notify_reassigned", "fsm": FsmState.MONITORING.value, "reason": "reassigned"},
+            data=data, pending_tool=None, fsm_state=FsmState.MONITORING,
+            last_action=notify, terminal_reason=None,
         )
-        return s, [SendMessageEffect(envelope=notify), ResolveEffect(reason="reassigned")]
+        return s, [SendMessageEffect(envelope=notify)]
     if outcome == "partial_failure":
         # reassign committed but the confirmation dispatch failed. There is no unassign
         # tool, so the compensating action is to escalate WITH the assigned captain recorded,

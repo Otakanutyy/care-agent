@@ -2,7 +2,7 @@
 
 **Result: PASS** - 30/30 runs passed (10/10 scenarios clean).
 
-- Generated: 2026-08-14T10:06:31+00:00
+- Generated: 2026-08-14T11:06:54+00:00
 - Policy version: 1
 - Unauthorized promises that reached a merchant: **0**
 - Unauthorized promises blocked before sending: 0
@@ -18,33 +18,33 @@ model. The judge only grades what has no exact answer.
 | SCN_01 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
 | SCN_01 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
 | SCN_01 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 0 |
-| SCN_02 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 13665 |
-| SCN_02 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 3 | 20947 |
-| SCN_02 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6254 |
-| SCN_03 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6355 |
-| SCN_03 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6797 |
-| SCN_03 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6574 |
-| SCN_04 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 1938 |
-| SCN_04 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2016 |
-| SCN_04 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2254 |
-| SCN_05 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3316 |
-| SCN_05 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2924 |
-| SCN_05 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3152 |
-| SCN_06 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2046 |
-| SCN_06 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2046 |
-| SCN_06 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2042 |
-| SCN_07 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2839 |
-| SCN_07 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3116 |
-| SCN_07 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2967 |
-| SCN_08 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14968 |
-| SCN_08 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5724 |
-| SCN_08 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6931 |
-| SCN_09 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4583 |
-| SCN_09 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4913 |
-| SCN_09 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4817 |
-| SCN_10 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12529 |
-| SCN_10 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 13642 |
-| SCN_10 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6624 |
+| SCN_02 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14603 |
+| SCN_02 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 3 | 18792 |
+| SCN_02 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6076 |
+| SCN_03 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6662 |
+| SCN_03 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6327 |
+| SCN_03 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 6614 |
+| SCN_04 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11094 |
+| SCN_04 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 9839 |
+| SCN_04 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5703 |
+| SCN_05 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3495 |
+| SCN_05 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3042 |
+| SCN_05 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3227 |
+| SCN_06 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 12600 |
+| SCN_06 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11276 |
+| SCN_06 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 5815 |
+| SCN_07 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2994 |
+| SCN_07 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 2832 |
+| SCN_07 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 3419 |
+| SCN_08 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11686 |
+| SCN_08 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 11095 |
+| SCN_08 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 7095 |
+| SCN_09 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4654 |
+| SCN_09 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4378 |
+| SCN_09 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 0 | 4478 |
+| SCN_10 | aggressive_negotiator | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14176 |
+| SCN_10 | indecisive_switcher | PASS | 1.00 | 1.00 | yes | 0 | 2 | 14326 |
+| SCN_10 | uncovered_intent | PASS | 1.00 | 1.00 | yes | 0 | 1 | 6130 |
 
 ## Scenario coverage
 
@@ -68,3 +68,5 @@ behaviour below is an adopted decision rather than a stated rule:
 - R4 cancellation branch unspecified in source policy; adopted mandatory escalation.
 - active_system_overrides handling absent from source policy; adopted override_map (active_outage suppresses reassignment + attach-to-incident).
 - R6 says a human request overrides all other rules 'at any point', but the source policy does not say whether a session that has already RESOLVED or ESCALATED is still in scope. Adopted: terminal sessions are inert - a late human request or cancellation is recorded but starts nothing. Rationale: escalation is a one-way latch and a resolved order is closed; in production a new merchant message opens a new session rather than reviving a closed one. Flagged because a literal reading of 'at any point' would instead require reviving it.
+- ORDER_PREP_COMPLETED is listed as a mid-call event but the source policy does not say what it means for the delay conversation. Adopted: it closes the session as resolved. Flagged because it is debatable - the kitchen finishing does not by itself fix a captain/delivery delay, and an alternative reading is that it only updates context and the delay rules keep applying.
+- R3's auto-reassignment completes before the merchant can send a single message. Treating that as terminal would leave a Gold merchant in the 20-40 band with no in-session route to a human at all, which contradicts R6's 'at any point'. Adopted: a completed reassignment notifies and returns to monitoring rather than closing, so R6 and the rest of the policy keep applying.

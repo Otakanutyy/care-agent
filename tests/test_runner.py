@@ -82,7 +82,7 @@ def test_scn03_unresponsive_escalates():
 
 def test_scn04_gold_reassign_checks_availability_first():
     result = run("SCN_04")
-    assert result.final_state == "RESOLVED"
+    assert result.final_state == "MONITORING"
     assert result.final_captain_id == "captain-207"
     assert result.tool_call_order[:2] == ["check_captain_availability", "reassign_captain"]
 
@@ -96,7 +96,7 @@ def test_scn05_no_captain_escalates_without_reassigning():
 
 def test_scn06_transient_failure_is_retried_once_under_one_key():
     result = run("SCN_06")
-    assert result.final_state == "RESOLVED"
+    assert result.final_state == "MONITORING"
     assert result.tool_calls["reassign_captain"] == 2   # retried within the policy cap
     assert result.final_captain_id == "captain-311"     # exactly one captain ended up assigned
 

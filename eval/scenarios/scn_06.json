@@ -22,9 +22,8 @@
   "events": [],
   "expect": {
     "governing_rule": "R3",
-    "terminal_state": "RESOLVED",
-    "must_escalate": false,
+    "must_escalate": null,
     "expect_idempotent_retry": true,
-    "note": "A retry must reuse the key; only one captain may end up assigned."
+    "note": "A retry must reuse the key; only one captain may end up assigned. terminal_state/must_escalate are deliberately not asserted - see scn_04: what happens after the reassignment is the persona's business, the idempotency is the invariant."
   }
 }

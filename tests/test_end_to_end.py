@@ -100,7 +100,7 @@ def test_r3_gold_auto_reassign_end_to_end():
         client, ToolConfig(available=True, new_captain_id="captain-9", estimated_eta_minutes=8)
     ).start(context(30, MerchantTier.GOLD))
 
-    assert agent.session.fsm_state is FsmState.RESOLVED
+    assert agent.session.fsm_state is FsmState.MONITORING
     assert agent.session.data.current_captain_id == "captain-9"
     assert agent.trajectory() == ["auto_reassign", "notify_reassigned"]
     # availability was checked before the reassignment, exactly once each
@@ -246,8 +246,8 @@ def test_sending_before_start_raises():
 
 def test_cli_demo_scenario_runs_offline():
     agent = run_scenario(DEMO_SCENARIO, OfflineLLMClient(), policy=POLICY)
-    assert agent.session.fsm_state is FsmState.RESOLVED
-    assert agent.session.terminal_reason == "reassigned"
+    assert agent.session.fsm_state is FsmState.MONITORING
+    assert agent.session.terminal_reason is None  # reassigned, but the conversation stays open
     assert agent.session.data.current_captain_id == "captain-207"
 
 
