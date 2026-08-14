@@ -69,7 +69,8 @@ Paste the token from the submission email and you are in. Nothing to install.
   then reproduce it in the Console. This is how you confirm nothing is hardcoded in a prompt.
 - **Evidence** — the full decision record for the current session: transcript, trajectory, tool
   calls in order, guardrail blocks, escalation tickets.
-- **Evaluation** — the committed 30-run offline report (10 scenarios × 3 adversarial personas).
+- **Evaluation** — the committed 33-run report (11 scenarios × 3 adversarial personas), generated
+  against the live API with the Opus judge. Expand any row for that run's full evidence.
 
 **The fastest tour:** click the one-click probes down the left — *Demand a refund*, *Prompt
 injection*, *Ask in Arabic*, *Repeat (loop guard)* — and watch the decision panel. Then inject a
@@ -142,7 +143,7 @@ Four resources are readable directly, so you can verify rather than trust:
 |---|---|
 | `policy://policy.json` | The actual rule table. Read it, see that R4 covers 20–40 minutes, then call `start_session(delay_minutes=25)` and watch R4 fire. Nothing is hardcoded in a prompt. |
 | `policy://authoring-gaps` | Where the source policy is silent and the behaviour is an adopted decision rather than a stated rule. |
-| `eval://report.json` | The offline adversarial suite's results — 30 runs, independent of this server. |
+| `eval://report.json` | The adversarial suite's results — 33 runs, independent of this server. |
 | `doc://testing`, `doc://writeup` | This file and the architectural write-up. |
 
 The `probe_full_sweep` prompt leans on this deliberately: predicting each outcome from the policy
