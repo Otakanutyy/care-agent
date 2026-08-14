@@ -90,9 +90,9 @@ Haiku 4.5 (classifier), Sonnet 5 (generator and adversarial personas), Opus 5 (j
 different tier from the agent, so it is not grading its own prose).
 
 The serving models are overridable per deployment via `CLASSIFIER_MODEL` / `GENERATOR_MODEL`.
-The hosted console runs **Haiku for both** to keep a public endpoint's worst-case spend bounded,
-which is why its `/health` reports a different generator than the default above. Policy
-decisions, guardrails, and rule matching are identical either way — only the phrasing differs.
+The hosted console runs the defaults above, and `/health` reports exactly what is live — so you
+can confirm the models rather than trust this paragraph. Policy decisions, guardrails, and rule
+matching are identical whichever models are configured; only the phrasing differs.
 
 ---
 

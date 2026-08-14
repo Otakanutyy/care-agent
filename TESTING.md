@@ -263,17 +263,18 @@ Finish with `get_session_trace` — it is the evidence for everything above.
 - **Sessions live in memory** and do not survive a restart. `get_session_trace` on an expired id
   returns a readable error, not a crash. This is deliberate — persistence is a swappable
   interface, discussed in [WRITEUP.md](WRITEUP.md) §3.
-- **Caps are in force** (50 sessions, 25 turns each) so a leaked URL cannot run up an unbounded
-  API bill. Hitting one returns an explanatory error. Run it locally for unlimited use.
+- **Caps are in force** so a leaked URL cannot run up an unbounded API bill: 25 turns per session
+  plus a deployment-wide turn budget, both reported by `/health`. Hitting the per-session cap
+  returns an explanatory error. The oldest session is evicted once 50 are open, so you are never
+  refused a new one. Run it locally for unlimited use.
 - **Errors come back as data**, not exceptions, so a driving agent can read the failure and adapt.
 - **Terminal sessions are inert.** After an escalation the session is closed; further input is
   recorded but changes nothing. That is the intended one-way latch, not a bug.
 - **Offline mode phrases replies from pre-approved templates** and labels them `used_fallback`.
   Policy decisions are identical either way — only the wording differs — so the invariant is
   fully testable without an API key.
-- **The hosted instance runs Haiku 4.5 for both the classifier and the generator**, set via
-  `GENERATOR_MODEL`, to bound a public endpoint's worst-case spend. The repository's default is
-  Sonnet 5 for the generator, so `/health` reports a different model than `README.md` documents.
-  Policy decisions, guardrails, and rule matching are unaffected — only phrasing.
+- **The hosted instance runs the documented defaults** — Haiku 4.5 classifier, Sonnet 5
+  generator — overridable per deployment via `CLASSIFIER_MODEL` / `GENERATOR_MODEL`. Policy
+  decisions, guardrails, and rule matching are unaffected by the choice — only phrasing.
 - **`/health` needs no token** and reports mode, policy version, and the active models, so you can
   confirm what is actually running before you start.
