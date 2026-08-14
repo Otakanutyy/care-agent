@@ -5,7 +5,7 @@ when their order is delayed, negotiates strictly within an external policy, and 
 human when the policy says it must.
 
 Everything below runs **offline with no API key** — the state machine, policy engine, tool
-chain, guardrails, and the full 30-run evaluation are all deterministic and reproducible.
+chain, guardrails, and the full 33-run evaluation are all deterministic and reproducible.
 
 ---
 
@@ -19,7 +19,7 @@ something you can check rather than take on trust.
 
 One-click probes are built in — demand a refund, attempt a prompt injection, ask for a human in
 Arabic — alongside tabs for the live policy file, the full decision record, and the committed
-30-run evaluation. See **[TESTING.md](TESTING.md)**.
+33-run evaluation. See **[TESTING.md](TESTING.md)**.
 
 > The hosted instance is a convenience, not a dependency. If it is down, this repository proves
 > the same things offline: `python run_all.py`.
@@ -52,7 +52,7 @@ merchant text ──▶ classifier ──▶ Event ──▶ mailbox ──▶ r
 
 All inputs for one order — merchant messages, backend events, tool results, timers — go onto
 **one ordered mailbox keyed by `order_id`** and are applied one at a time. That single-writer
-property is what makes the concurrency story tractable; see [PLAN.md](PLAN.md) §1.
+property is what makes the concurrency story tractable; see [WRITEUP.md](WRITEUP.md) §1.
 
 ---
 
@@ -70,7 +70,7 @@ Then, in order of what they prove:
 
 ```bash
 python scripts/verify_policy.py    # the policy pack is valid and safe
-python -m pytest -q                # 279 tests
+python -m pytest -q                # 346 tests
 python -m care_agent.cli           # watch one session play out
 python run_all.py                  # the full evaluation -> report.json + report.md
 ```
@@ -112,7 +112,7 @@ phrasing model available.
 ## Running the evaluation
 
 ```bash
-python run_all.py           # 10 scenarios x 3 adversarial personas = 30 runs
+python run_all.py           # 11 scenarios x 3 adversarial personas = 33 runs
 ```
 
 Writes `report.json` (one entry per run, in the schema the assessment specifies) and
@@ -169,8 +169,8 @@ src/care_agent/
   agent.py           the orchestrator that assembles all of the above
   cli.py             run one session
 eval/personas/       3 adversarial merchant suites
-eval/scenarios/      10 scenarios
-tests/               279 tests
+eval/scenarios/      11 scenarios
+tests/               346 tests
 run_all.py           the full evaluation suite
 ```
 
@@ -222,11 +222,16 @@ dependencies.
 
 ## Design documents
 
-- **[PLAN.md](PLAN.md)** — architecture, the 14 locked policy-gap decisions, build plan.
-- **[DESIGN_DECISIONS.md](DESIGN_DECISIONS.md)** — the open design forks, their trade-offs, and
-  what was chosen, written to be readable without the assessment brief.
-- **[DESIGN_AUDIT.md](DESIGN_AUDIT.md)** — a 78-finding adversarial audit of the spec's gaps and
-  production risks, which fed the decisions above.
+- **[WRITEUP.md](WRITEUP.md)** — the architectural write-up: why an FSM rather than a DAG or an
+  autonomous loop, how the tool boundaries are secured, three production vulnerabilities at high
+  concurrency, and the gaps the specification left open.
+- **[TESTING.md](TESTING.md)** — how to drive the running agent yourself, from a browser or from
+  your own AI agent.
+
+Every interpretive decision — the places the source policy is silent and the behaviour is an
+adopted choice rather than a stated rule — is recorded in `policy.json` under `authoring_gaps`,
+printed by `scripts/verify_policy.py`, and carried into the evaluation report. They live with
+the policy rather than in a side document, so they cannot drift out of sync with it.
 
 ## Tests
 

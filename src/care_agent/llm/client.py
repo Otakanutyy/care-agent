@@ -21,7 +21,7 @@ import time
 from abc import ABC, abstractmethod
 from typing import Any
 
-# Model IDs per PLAN.md §0. The classifier runs on the cheapest capable tier because it is
+# The classifier runs on the cheapest capable tier because it is
 # the highest-volume call; the generator needs stronger multilingual phrasing.
 CLASSIFIER_MODEL = "claude-haiku-4-5"
 GENERATOR_MODEL = "claude-sonnet-5"
