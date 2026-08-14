@@ -130,7 +130,10 @@
       A live console for the delayed-order Care agent. Paste the access token from the
       submission email to begin.
     </p>
-    <input id="tok" type="password" placeholder="Access token" autocomplete="off">
+    <!-- Enter submits: pasting a token and hitting Enter is what everyone does first, and
+         reaching for the mouse to finish is a bad first impression of the whole thing. -->
+    <input id="tok" type="password" placeholder="Access token" autocomplete="off" autofocus
+           onkeydown="if(event.key==='Enter'){event.preventDefault();connect()}">
     <button class="primary" style="width:100%;margin-top:10px" onclick="connect()">Connect</button>
     <div id="gateErr" class="err hide"></div>
   </div>
@@ -174,7 +177,8 @@
         <div class="field"><label>Merchant tier</label>
           <select id="tier"><option>Gold</option><option selected>Silver</option><option>Bronze</option></select></div>
         <div class="field"><label>Delay (minutes)</label>
-          <input id="delay" type="number" value="25" min="0" max="500"></div>
+          <input id="delay" type="number" value="25" min="0" max="500"
+                 onkeydown="if(event.key==='Enter'){event.preventDefault();startSession()}"></div>
         <div class="field"><label>System override</label>
           <select id="override">
             <option value="">none</option>
@@ -436,7 +440,7 @@ async function startSession(){
     $("#sessMeta").textContent="session "+r.session_id;
     sys(`Session opened · ${r.context.merchant_tier} merchant · ${r.context.delay_minutes} min delay`
         +(ov?` · override: ${ov}`:""));
-    apply(r);lockInputs(false);
+    apply(r);lockInputs(false);$("#msg").focus();
   }catch(e){sys("Could not start: "+e.message)}
 }
 async function send(){
@@ -851,9 +855,12 @@ function tab(n){
 /* ── init ── */
 (function(){
   const saved=sessionStorage.getItem("careTok");
-  if(saved){$("#tok").value=saved;connect()}
+  if(saved){$("#tok").value=saved;connect();return}
   const h=location.hash.match(/token=([^&]+)/);
-  if(h&&!saved){$("#tok").value=decodeURIComponent(h[1]);history.replaceState(null,"",location.pathname);connect()}
+  if(h){$("#tok").value=decodeURIComponent(h[1]);history.replaceState(null,"",location.pathname);connect();return}
+  // Explicit rather than the autofocus attribute, which does not reliably win the focus race
+  // on load. Land the caret in the token box so paste-and-Enter needs no mouse at all.
+  $("#tok").focus();
 })();
 </script>
 </body>
