@@ -132,6 +132,40 @@ def test_short_noun_matching_is_word_bounded(text):
     assert detect_human_request(text) is False
 
 
+# --- "one" is a counter, not a person ------------------------------------------
+#
+# واحد / wa7ed mean "one". Treating them as a human noun on their own breaks the primary
+# conversation flow: the agent asks "a different driver, or wait?" and the merchant answers
+# "I want another one" — about the captain — which must reassign, not escalate to a human.
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "3ayez wa7ed tani",                            # I want another one (captain)
+        "عايز واحد تاني",
+        "ابغى واحد ثاني",
+        "mumkin wa7ed tani",
+        "ay wa7ed tani, 3ayez captain gedid delwa2ti",
+    ],
+)
+def test_wanting_another_one_is_not_a_human_request(text):
+    assert detect_human_request(text) is False
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "3ayez akalem wa7ed",      # I want to talk to someone
+        "عايز اكلم واحد",
+        "بدي احكي مع واحد",
+        "I want to speak to someone",
+    ],
+)
+def test_one_plus_a_speech_verb_is_a_human_request(text):
+    assert detect_human_request(text) is True
+
+
 def test_backstop_language_detection():
     assert detect_language("أريد التحدث مع موظف") == "ar"
     assert detect_language("badi ahki ma3 insan") == "ar-latn"

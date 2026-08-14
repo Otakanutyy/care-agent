@@ -99,9 +99,24 @@ _HUMAN_NOUNS = (
     "someone", "somebody", "real person", "staff", "operator",
     # Arabic
     "انسان", "إنسان", "بشر", "موظف", "مسؤول", "مسئول", "مدير", "ممثل", "شخص", "خدمة العملاء",
-    "واحد",
     # Franco-Arabic
-    "mowazaf", "muwazaf", "modeer", "mudir", "insan", "bashar", "shakhs", "wa7ed", "wahed",
+    "mowazaf", "muwazaf", "modeer", "mudir", "insan", "bashar", "shakhs",
+)
+
+# "One" — a counter, not a person, unless it sits next to a speech verb. "عايز واحد تاني" /
+# "3ayez wa7ed tani" means "I want another one" about the *captain*, which is an acceptance of
+# reassignment; escalating it to a human breaks the primary conversation flow. "3ayez akalem
+# wa7ed" ("I want to talk to someone") is a genuine R6. The speech verb is what separates them.
+_AMBIGUOUS_HUMAN_NOUNS = ("واحد", "wa7ed", "wahed", "wa7da")
+
+_SPEECH_VERBS = (
+    # English
+    "speak", "talk", "chat",
+    # Arabic
+    "اكلم", "أكلم", "كلم", "احكي", "أحكي", "حكي", "اتكلم", "أتكلم", "تكلم", "اتحدث", "أتحدث",
+    # Franco-Arabic
+    "akalem", "akallem", "kalem", "kallem", "kalimni", "a7ki", "ahki", "a7ky",
+    "atkalam", "atkallem", "at7adas",
 )
 
 # Short nouns matched on a **whole-word** boundary rather than as substrings. حد ("someone") is
@@ -132,10 +147,20 @@ def detect_human_request(text: str) -> bool:
     """True when the message plainly asks for a human, in any of the supported languages."""
     norm = normalize(text)
     has_marker = any(m in norm for m in (normalize(x) for x in _REQUEST_MARKERS))
+    if not has_marker:
+        return False
+
     has_noun = any(n in norm for n in (normalize(x) for x in _HUMAN_NOUNS)) or bool(
         _SHORT_NOUN_RE.search(norm)
     )
-    return has_marker and has_noun
+    if has_noun:
+        return True
+
+    # "one" counts as a person only alongside a speech verb — otherwise "I want another one"
+    # (about the captain) would escalate instead of reassigning.
+    if any(n in norm for n in (normalize(x) for x in _AMBIGUOUS_HUMAN_NOUNS)):
+        return any(v in norm for v in (normalize(x) for x in _SPEECH_VERBS))
+    return False
 
 
 # --- Classification ------------------------------------------------------------
